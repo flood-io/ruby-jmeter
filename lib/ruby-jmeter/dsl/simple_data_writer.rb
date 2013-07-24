@@ -24,7 +24,7 @@ module RubyJmeter
       <success>true</success>
       <label>true</label>
       <code>true</code>
-      <message>false</message>
+      <message>true</message>
       <threadName>true</threadName>
       <dataType>false</dataType>
       <encoding>false</encoding>
@@ -32,9 +32,9 @@ module RubyJmeter
       <subresults>false</subresults>
       <responseData>false</responseData>
       <samplerData>false</samplerData>
-      <xml>false</xml>
+      <xml>true</xml>
       <fieldNames>false</fieldNames>
-      <responseHeaders>false</responseHeaders>
+      <responseHeaders>true</responseHeaders>
       <requestHeaders>false</requestHeaders>
       <responseDataOnError>false</responseDataOnError>
       <saveAssertionResultsFailureMessage>false</saveAssertionResultsFailureMessage>
