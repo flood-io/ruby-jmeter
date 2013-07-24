@@ -1,10 +1,8 @@
 # RubyJmeter
 
-[![Code Climate](https://codeclimate.com/github/altentee/ruby-jmeter.png)](https://codeclimate.com/github/altentee/ruby-jmeter)
-
 Tired of using the JMeter GUI or looking at hairy XML files?
 
-This gem lets you write test plans for JMeter in your favourite text editor, and optionally run them on [flood.io](http://flood.io). Here's some background on [why we think](http://www.slideshare.net/90kts/ruby-jmeter) a DSL is necessary. Don't have Ruby? No problems, you can try out this DSL online in our [sandbox](http://sandbox.flood.io)
+This gem lets you write test plans for JMeter in your favourite text editor, and optionally run them on [flood.io](http://flood.io). 
 
 ## Installation
 
@@ -14,7 +12,7 @@ Install it yourself as:
 
 ## Basic Usage
 
-*RubyJmeter* exposes easy-to-use domain specific language for fluent communication with [JMeter](http://jmeter.apache.org/). As the name of the gem suggests, it also includes API integration with [flood.io](https://flood.io), a cloud based load testing service.
+*RubyJmeter* exposes easy-to-use domain specific language for fluent communication with [JMeter](http://jmeter.apache.org/).It also includes API integration with [flood.io](https://flood.io), a cloud based load testing service.
 
 To use the DSL, first let's require the gem:
 
@@ -99,9 +97,9 @@ end.run(
 
 ### Running a JMeter Test Plan on flood.io
 
-As the gem name implies, you can also execute JMeter test plans on flood.io using our API. To do so, you require an account and API token. If you don't know your token, sign in to the Grid and [generate a new token](http://flood.io/api).
+You can also execute JMeter test plans on flood.io using our API. To do so, you require an account and API token. If you don't know your token, sign in to [flood.io](https://flood.io/api) and check your account settings.
 
-To execute the test on the Grid, call the `grid` method on the test and pass it the API token like this.
+To execute the test on flood.io, call the `grid` method on the test and pass it the API token like this.
 
 ```ruby
 test do  
@@ -111,7 +109,7 @@ test do
 end.grid('OxtZ-4v-v0koSz5Y0enEQQ')
 ```
 
-This will then provide you with a link to the live test results on the Grid like this.
+This will then provide you with a link to the live test results on flood.io like this.
 
 ``` 
 Results at: http://prod.flood.io/shared?testguid=73608030311611e2962f123141011033&run_id=339&tags=jmeter&domain=altentee.com&cluster=54.251.48.129&status=running&view=
