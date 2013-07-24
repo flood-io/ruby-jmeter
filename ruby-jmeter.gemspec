@@ -19,4 +19,6 @@ Gem::Specification.new do |gem|
   gem.executables   << 'grid'
   gem.test_files    = `git ls-files -- {test,spec,features}/*`.split("\n")
   gem.require_paths = ['lib']
+
+  gem.license       = 'MIT'
 end
