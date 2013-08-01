@@ -73,6 +73,10 @@ describe "DSL" do
       fragment.search(".//stringProp[@name='ThreadGroup.num_threads']").text.should == '101'
     end
 
+    it 'should match on scheduler' do
+      fragment.search(".//boolProp[@name='ThreadGroup.scheduler']").text.should == 'true'
+    end
+
     it 'should match on continue_forever' do
       fragment.search(".//boolProp[@name='LoopController.continue_forever']").text.should == 'true'
     end
