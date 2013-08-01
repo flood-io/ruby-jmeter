@@ -49,6 +49,22 @@ describe "DSL" do
     end
   end
 
+
+  describe 'header manager' do
+    let(:doc) do
+      test do
+        header name: 'Accept', value: '*'
+      end.to_doc
+    end
+
+    let(:fragment) { doc.search("//HeaderManager").first }
+
+    it 'should match on accept' do
+      fragment.search(".//stringProp[@name='Header.name']").text.should == 'Accept'
+      fragment.search(".//stringProp[@name='Header.value']").text.should == '*'
+    end
+  end
+
   describe 'test plan' do
     it 'should allow to take params' do
       test_plan = test({"TestPlan.serialize_threadgroups" => "false"}) {}
