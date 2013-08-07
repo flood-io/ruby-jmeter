@@ -346,12 +346,12 @@ module RubyJmeter
       logger.info "Local Results at: #{params[:jtl] ? params[:jtl] : 'jmeter.jtl'}"
     end
 
-    def grid(token, params={})
+    def flood(token, params={})
       if params[:region] == 'local'
         logger.info "Starting test ..."
         params[:started] = Time.now
         run params
-        params[:completed] = Time.now
+        params[:stopped] = Time.now
         logger.info "Completed test ..."
         logger.debug "Uploading results ..." if params[:debug]
       end
@@ -360,20 +360,40 @@ module RubyJmeter
         file = Tempfile.new(['jmeter', '.jmx'])
         file.write(doc.to_xml(:indent => 2))
         file.rewind
-        response = RestClient.post "#{params[:endpoint] ? params[:endpoint] : 'https://flood.io'}/api?token=#{token}",
+
+        response = RestClient.post "#{params[:endpoint] ? params[:endpoint] : 'https://flood.io'}/floods?auth_token=#{token}",
         {
-          :attachment => File.new("#{file.path}", 'rb'),
+          :flood => {
+            :tool => 'jmeter',
+            :url => params[:url],
+            :plan => File.new("#{file.path}", 'rb'),
+            :plan_cache => '',
+            :name => params[:name],
+            :notes => params[:notes],
+            :tag_list => params[:tag_list],
+            :threads => params[:threads],
+            :rampup => params[:ramup],
+            :duration => params[:duration],
+            # specials for API
+            :started => params[:started],
+            :stopped => params[:stopped]
+          },
           :results => (File.new("#{params[:jtl] ? params[:jtl] : 'jmeter.jtl'}", 'rb') if params[:region] == 'local'),
+          :region => params[:region],
           :multipart => true,
-          :content_type => 'application/octet-stream',
-          :started => params[:started],
-          :completed => params[:completed]
+          :content_type => 'application/octet-stream'          
         }.merge(params)
-        logger.info "Flood results at: #{JSON.parse(response)["results"]}" if response.code == 200
+        if response.code == 200
+          logger.info "Flood results at: #{JSON.parse(response)["response"]["link"]}"
+        else
+          logger.fatal "Sorry there was an error: #{JSON.parse(response)["error_description"]}"
+        end
       rescue => e
-        logger.fatal "Sorry there was an error: #{e.message}"
+        logger.fatal "Sorry there was a fatal error: #{e.message}"
       end
     end
+
+    alias_method :grid, :flood
 
     private
 

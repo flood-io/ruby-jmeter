@@ -5,4 +5,8 @@ test do
   threads count: 1 do
     visit name: 'Home Page', url: 'http://google.com/'
   end
-end.grid('6CnGKgaTRU62LspdTFbr', {region: 'us-west-2', endpoint: '127.0.0.1:3000'})
+end.flood('qCL6dv7qzqeBB7LYSR2x', {
+  name: 'Demo using flood.io',
+  region: 'us-west-2', 
+  endpoint: 'dev.api.flood.io:3000'
+})
