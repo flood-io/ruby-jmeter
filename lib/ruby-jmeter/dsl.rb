@@ -361,7 +361,7 @@ module RubyJmeter
         file.write(doc.to_xml(:indent => 2))
         file.rewind
 
-        response = RestClient.post "#{params[:endpoint] ? params[:endpoint] : 'https://flood.io'}/floods?auth_token=#{token}",
+        response = RestClient.post "#{params[:endpoint] ? params[:endpoint] : 'https://api.flood.io'}/floods?auth_token=#{token}",
         {
           :flood => {
             :tool => 'jmeter',
