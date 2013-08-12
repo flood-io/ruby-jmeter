@@ -25,7 +25,9 @@ module RubyJmeter
     # Config Elements
 
     def user_defined_variables(params, &block)
-      params['Argument.name'] = params[:name]
+      if params.is_a?(Hash) 
+        params['Argument.name'] = params[:name]
+      end
       super
     end
 
