@@ -11,9 +11,9 @@ module RubyJmeter
     include Helper
 
     def initialize(params={})
-      params[:name] ||= 'CssjqueryExtractor'
+      testname = params.kind_of?(Array) ? 'CssjqueryExtractor' : (params[:name] || 'CssjqueryExtractor')
       @doc = Nokogiri::XML(<<-EOS.strip_heredoc)
-<HtmlExtractor guiclass="HtmlExtractorGui" testclass="HtmlExtractor" testname="#{params[:name]}" enabled="true">
+<HtmlExtractor guiclass="HtmlExtractorGui" testclass="HtmlExtractor" testname="#{testname}" enabled="true">
   <stringProp name="HtmlExtractor.refname"/>
   <stringProp name="HtmlExtractor.expr"/>
   <stringProp name="HtmlExtractor.attribute"/>
@@ -23,7 +23,7 @@ module RubyJmeter
 </HtmlExtractor>)
       EOS
       update params
-      update_at_xpath params if params[:update_at_xpath]
+      update_at_xpath params if params.is_a?(Hash) && params[:update_at_xpath]
     end
   end
 

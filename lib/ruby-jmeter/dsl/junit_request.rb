@@ -11,9 +11,9 @@ module RubyJmeter
     include Helper
 
     def initialize(params={})
-      params[:name] ||= 'JunitRequest'
+      testname = params.kind_of?(Array) ? 'JunitRequest' : (params[:name] || 'JunitRequest')
       @doc = Nokogiri::XML(<<-EOS.strip_heredoc)
-<JUnitSampler guiclass="JUnitTestSamplerGui" testclass="JUnitSampler" testname="#{params[:name]}" enabled="true">
+<JUnitSampler guiclass="JUnitTestSamplerGui" testclass="JUnitSampler" testname="#{testname}" enabled="true">
   <stringProp name="junitSampler.classname">test.RerunTest</stringProp>
   <stringProp name="junitsampler.constructorstring"/>
   <stringProp name="junitsampler.method">testRerun</stringProp>
@@ -30,7 +30,7 @@ module RubyJmeter
 </JUnitSampler>)
       EOS
       update params
-      update_at_xpath params if params[:update_at_xpath]
+      update_at_xpath params if params.is_a?(Hash) && params[:update_at_xpath]
     end
   end
 

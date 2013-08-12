@@ -11,20 +11,20 @@ module RubyJmeter
     include Helper
 
     def initialize(params={})
-      params[:name] ||= 'TestPlan'
+      testname = params.kind_of?(Array) ? 'TestPlan' : (params[:name] || 'TestPlan')
       @doc = Nokogiri::XML(<<-EOS.strip_heredoc)
-<TestPlan guiclass="TestPlanGui" testclass="TestPlan" testname="#{params[:name]}" enabled="true">
+<TestPlan guiclass="TestPlanGui" testclass="TestPlan" testname="#{testname}" enabled="true">
   <stringProp name="TestPlan.comments"/>
   <boolProp name="TestPlan.functional_mode">false</boolProp>
   <boolProp name="TestPlan.serialize_threadgroups">false</boolProp>
-  <elementProp name="TestPlan.user_defined_variables" elementType="Arguments" guiclass="ArgumentsPanel" testclass="Arguments" testname="#{params[:name]}" enabled="true">
+  <elementProp name="TestPlan.user_defined_variables" elementType="Arguments" guiclass="ArgumentsPanel" testclass="Arguments" testname="#{testname}" enabled="true">
     <collectionProp name="Arguments.arguments"/>
   </elementProp>
   <stringProp name="TestPlan.user_define_classpath"/>
 </TestPlan>)
       EOS
       update params
-      update_at_xpath params if params[:update_at_xpath]
+      update_at_xpath params if params.is_a?(Hash) && params[:update_at_xpath]
     end
   end
 

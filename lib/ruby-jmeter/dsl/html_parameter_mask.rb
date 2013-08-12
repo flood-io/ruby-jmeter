@@ -11,9 +11,9 @@ module RubyJmeter
     include Helper
 
     def initialize(params={})
-      params[:name] ||= 'HtmlParameterMask'
+      testname = params.kind_of?(Array) ? 'HtmlParameterMask' : (params[:name] || 'HtmlParameterMask')
       @doc = Nokogiri::XML(<<-EOS.strip_heredoc)
-<ParamModifier guiclass="ParamModifierGui" testclass="ParamModifier" testname="#{params[:name]}" enabled="true">
+<ParamModifier guiclass="ParamModifierGui" testclass="ParamModifier" testname="#{testname}" enabled="true">
   <elementProp name="ParamModifier.mask" elementType="ParamMask">
     <stringProp name="ParamModifier.field_name"/>
     <stringProp name="ParamModifier.prefix"/>
@@ -25,7 +25,7 @@ module RubyJmeter
 </ParamModifier>)
       EOS
       update params
-      update_at_xpath params if params[:update_at_xpath]
+      update_at_xpath params if params.is_a?(Hash) && params[:update_at_xpath]
     end
   end
 

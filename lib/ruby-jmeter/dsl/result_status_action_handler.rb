@@ -11,14 +11,14 @@ module RubyJmeter
     include Helper
 
     def initialize(params={})
-      params[:name] ||= 'ResultStatusActionHandler'
+      testname = params.kind_of?(Array) ? 'ResultStatusActionHandler' : (params[:name] || 'ResultStatusActionHandler')
       @doc = Nokogiri::XML(<<-EOS.strip_heredoc)
-<ResultAction guiclass="ResultActionGui" testclass="ResultAction" testname="#{params[:name]}" enabled="true">
+<ResultAction guiclass="ResultActionGui" testclass="ResultAction" testname="#{testname}" enabled="true">
   <intProp name="OnError.action">0</intProp>
 </ResultAction>)
       EOS
       update params
-      update_at_xpath params if params[:update_at_xpath]
+      update_at_xpath params if params.is_a?(Hash) && params[:update_at_xpath]
     end
   end
 

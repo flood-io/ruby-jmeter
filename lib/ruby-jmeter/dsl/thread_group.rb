@@ -11,11 +11,11 @@ module RubyJmeter
     include Helper
 
     def initialize(params={})
-      params[:name] ||= 'ThreadGroup'
+      testname = params.kind_of?(Array) ? 'ThreadGroup' : (params[:name] || 'ThreadGroup')
       @doc = Nokogiri::XML(<<-EOS.strip_heredoc)
-<ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="#{params[:name]}" enabled="true">
+<ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="#{testname}" enabled="true">
   <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
-  <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="#{params[:name]}" enabled="true">
+  <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="#{testname}" enabled="true">
     <boolProp name="LoopController.continue_forever">false</boolProp>
     <stringProp name="LoopController.loops">1</stringProp>
   </elementProp>
@@ -29,7 +29,7 @@ module RubyJmeter
 </ThreadGroup>)
       EOS
       update params
-      update_at_xpath params if params[:update_at_xpath]
+      update_at_xpath params if params.is_a?(Hash) && params[:update_at_xpath]
     end
   end
 

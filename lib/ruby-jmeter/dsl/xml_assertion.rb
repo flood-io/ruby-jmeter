@@ -11,12 +11,12 @@ module RubyJmeter
     include Helper
 
     def initialize(params={})
-      params[:name] ||= 'XmlAssertion'
+      testname = params.kind_of?(Array) ? 'XmlAssertion' : (params[:name] || 'XmlAssertion')
       @doc = Nokogiri::XML(<<-EOS.strip_heredoc)
-<XMLAssertion guiclass="XMLAssertionGui" testclass="XMLAssertion" testname="#{params[:name]}" enabled="true"/>)
+<XMLAssertion guiclass="XMLAssertionGui" testclass="XMLAssertion" testname="#{testname}" enabled="true"/>)
       EOS
       update params
-      update_at_xpath params if params[:update_at_xpath]
+      update_at_xpath params if params.is_a?(Hash) && params[:update_at_xpath]
     end
   end
 

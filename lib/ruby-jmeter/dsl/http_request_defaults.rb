@@ -11,10 +11,10 @@ module RubyJmeter
     include Helper
 
     def initialize(params={})
-      params[:name] ||= 'HttpRequestDefaults'
+      testname = params.kind_of?(Array) ? 'HttpRequestDefaults' : (params[:name] || 'HttpRequestDefaults')
       @doc = Nokogiri::XML(<<-EOS.strip_heredoc)
-<ConfigTestElement guiclass="HttpDefaultsGui" testclass="ConfigTestElement" testname="#{params[:name]}" enabled="true">
-  <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="#{params[:name]}" enabled="true">
+<ConfigTestElement guiclass="HttpDefaultsGui" testclass="ConfigTestElement" testname="#{testname}" enabled="true">
+  <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="#{testname}" enabled="true">
     <collectionProp name="Arguments.arguments"/>
   </elementProp>
   <stringProp name="HTTPSampler.domain"/>
@@ -37,7 +37,7 @@ module RubyJmeter
 </ConfigTestElement>)
       EOS
       update params
-      update_at_xpath params if params[:update_at_xpath]
+      update_at_xpath params if params.is_a?(Hash) && params[:update_at_xpath]
     end
   end
 

@@ -11,9 +11,9 @@ module RubyJmeter
     include Helper
 
     def initialize(params={})
-      params[:name] ||= 'SplineVisualizer'
+      testname = params.kind_of?(Array) ? 'SplineVisualizer' : (params[:name] || 'SplineVisualizer')
       @doc = Nokogiri::XML(<<-EOS.strip_heredoc)
-<ResultCollector guiclass="SplineVisualizer" testclass="ResultCollector" testname="#{params[:name]}" enabled="true">
+<ResultCollector guiclass="SplineVisualizer" testclass="ResultCollector" testname="#{testname}" enabled="true">
   <boolProp name="ResultCollector.error_logging">false</boolProp>
   <objProp>
     <name>saveConfig</name>
@@ -48,7 +48,7 @@ module RubyJmeter
 </ResultCollector>)
       EOS
       update params
-      update_at_xpath params if params[:update_at_xpath]
+      update_at_xpath params if params.is_a?(Hash) && params[:update_at_xpath]
     end
   end
 

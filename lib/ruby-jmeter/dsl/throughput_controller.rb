@@ -11,9 +11,9 @@ module RubyJmeter
     include Helper
 
     def initialize(params={})
-      params[:name] ||= 'ThroughputController'
+      testname = params.kind_of?(Array) ? 'ThroughputController' : (params[:name] || 'ThroughputController')
       @doc = Nokogiri::XML(<<-EOS.strip_heredoc)
-<ThroughputController guiclass="ThroughputControllerGui" testclass="ThroughputController" testname="#{params[:name]}" enabled="true">
+<ThroughputController guiclass="ThroughputControllerGui" testclass="ThroughputController" testname="#{testname}" enabled="true">
   <intProp name="ThroughputController.style">0</intProp>
   <boolProp name="ThroughputController.perThread">false</boolProp>
   <intProp name="ThroughputController.maxThroughput">1</intProp>
@@ -25,7 +25,7 @@ module RubyJmeter
 </ThroughputController>)
       EOS
       update params
-      update_at_xpath params if params[:update_at_xpath]
+      update_at_xpath params if params.is_a?(Hash) && params[:update_at_xpath]
     end
   end
 

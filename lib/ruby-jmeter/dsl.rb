@@ -53,7 +53,9 @@ module RubyJmeter
     end
 
     def http_header_manager(params, &block)
-      params['Header.name'] = params[:name]
+      if params.is_a?(Hash) 
+        params['Header.name'] = params[:name]
+      end
       super
     end
 

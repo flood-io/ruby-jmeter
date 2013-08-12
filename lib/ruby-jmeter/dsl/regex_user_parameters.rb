@@ -11,16 +11,16 @@ module RubyJmeter
     include Helper
 
     def initialize(params={})
-      params[:name] ||= 'RegexUserParameters'
+      testname = params.kind_of?(Array) ? 'RegexUserParameters' : (params[:name] || 'RegexUserParameters')
       @doc = Nokogiri::XML(<<-EOS.strip_heredoc)
-<RegExUserParameters guiclass="RegExUserParametersGui" testclass="RegExUserParameters" testname="#{params[:name]}" enabled="true">
+<RegExUserParameters guiclass="RegExUserParametersGui" testclass="RegExUserParameters" testname="#{testname}" enabled="true">
   <stringProp name="RegExUserParameters.regex_ref_name"/>
   <stringProp name="RegExUserParameters.param_names_gr_nr"/>
   <stringProp name="RegExUserParameters.param_values_gr_nr"/>
 </RegExUserParameters>)
       EOS
       update params
-      update_at_xpath params if params[:update_at_xpath]
+      update_at_xpath params if params.is_a?(Hash) && params[:update_at_xpath]
     end
   end
 

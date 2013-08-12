@@ -11,14 +11,14 @@ module RubyJmeter
     include Helper
 
     def initialize(params={})
-      params[:name] ||= 'IncludeController'
+      testname = params.kind_of?(Array) ? 'IncludeController' : (params[:name] || 'IncludeController')
       @doc = Nokogiri::XML(<<-EOS.strip_heredoc)
-<IncludeController guiclass="IncludeControllerGui" testclass="IncludeController" testname="#{params[:name]}" enabled="true">
+<IncludeController guiclass="IncludeControllerGui" testclass="IncludeController" testname="#{testname}" enabled="true">
   <stringProp name="IncludeController.includepath"/>
 </IncludeController>)
       EOS
       update params
-      update_at_xpath params if params[:update_at_xpath]
+      update_at_xpath params if params.is_a?(Hash) && params[:update_at_xpath]
     end
   end
 

@@ -11,9 +11,9 @@ module RubyJmeter
     include Helper
 
     def initialize(params={})
-      params[:name] ||= 'SaveResponsesToAFile'
+      testname = params.kind_of?(Array) ? 'SaveResponsesToAFile' : (params[:name] || 'SaveResponsesToAFile')
       @doc = Nokogiri::XML(<<-EOS.strip_heredoc)
-<ResultSaver guiclass="ResultSaverGui" testclass="ResultSaver" testname="#{params[:name]}" enabled="true">
+<ResultSaver guiclass="ResultSaverGui" testclass="ResultSaver" testname="#{testname}" enabled="true">
   <stringProp name="FileSaver.filename"/>
   <boolProp name="FileSaver.errorsonly">false</boolProp>
   <boolProp name="FileSaver.skipautonumber">false</boolProp>
@@ -22,7 +22,7 @@ module RubyJmeter
 </ResultSaver>)
       EOS
       update params
-      update_at_xpath params if params[:update_at_xpath]
+      update_at_xpath params if params.is_a?(Hash) && params[:update_at_xpath]
     end
   end
 

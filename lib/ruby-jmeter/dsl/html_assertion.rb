@@ -11,9 +11,9 @@ module RubyJmeter
     include Helper
 
     def initialize(params={})
-      params[:name] ||= 'HtmlAssertion'
+      testname = params.kind_of?(Array) ? 'HtmlAssertion' : (params[:name] || 'HtmlAssertion')
       @doc = Nokogiri::XML(<<-EOS.strip_heredoc)
-<HTMLAssertion guiclass="HTMLAssertionGui" testclass="HTMLAssertion" testname="#{params[:name]}" enabled="true">
+<HTMLAssertion guiclass="HTMLAssertionGui" testclass="HTMLAssertion" testname="#{testname}" enabled="true">
   <longProp name="html_assertion_error_threshold">0</longProp>
   <longProp name="html_assertion_warning_threshold">0</longProp>
   <stringProp name="html_assertion_doctype">omit</stringProp>
@@ -23,7 +23,7 @@ module RubyJmeter
 </HTMLAssertion>)
       EOS
       update params
-      update_at_xpath params if params[:update_at_xpath]
+      update_at_xpath params if params.is_a?(Hash) && params[:update_at_xpath]
     end
   end
 

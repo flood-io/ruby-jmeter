@@ -11,9 +11,9 @@ module RubyJmeter
     include Helper
 
     def initialize(params={})
-      params[:name] ||= 'ForeachController'
+      testname = params.kind_of?(Array) ? 'ForeachController' : (params[:name] || 'ForeachController')
       @doc = Nokogiri::XML(<<-EOS.strip_heredoc)
-<ForeachController guiclass="ForeachControlPanel" testclass="ForeachController" testname="#{params[:name]}" enabled="true">
+<ForeachController guiclass="ForeachControlPanel" testclass="ForeachController" testname="#{testname}" enabled="true">
   <stringProp name="ForeachController.inputVal"/>
   <stringProp name="ForeachController.returnVal"/>
   <boolProp name="ForeachController.useSeparator">true</boolProp>
@@ -22,7 +22,7 @@ module RubyJmeter
 </ForeachController>)
       EOS
       update params
-      update_at_xpath params if params[:update_at_xpath]
+      update_at_xpath params if params.is_a?(Hash) && params[:update_at_xpath]
     end
   end
 

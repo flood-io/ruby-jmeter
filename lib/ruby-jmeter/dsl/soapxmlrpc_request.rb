@@ -11,9 +11,9 @@ module RubyJmeter
     include Helper
 
     def initialize(params={})
-      params[:name] ||= 'SoapxmlrpcRequest'
+      testname = params.kind_of?(Array) ? 'SoapxmlrpcRequest' : (params[:name] || 'SoapxmlrpcRequest')
       @doc = Nokogiri::XML(<<-EOS.strip_heredoc)
-<SoapSampler guiclass="SoapSamplerGui" testclass="SoapSampler" testname="#{params[:name]}" enabled="true">
+<SoapSampler guiclass="SoapSamplerGui" testclass="SoapSampler" testname="#{testname}" enabled="true">
   <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
     <collectionProp name="Arguments.arguments"/>
   </elementProp>
@@ -26,7 +26,7 @@ module RubyJmeter
 </SoapSampler>)
       EOS
       update params
-      update_at_xpath params if params[:update_at_xpath]
+      update_at_xpath params if params.is_a?(Hash) && params[:update_at_xpath]
     end
   end
 

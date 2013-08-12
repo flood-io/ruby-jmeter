@@ -65,6 +65,28 @@ describe "DSL" do
     end
   end
 
+
+  describe 'header manager multiple values' do
+    let(:doc) do
+      test do
+        header [ { name: 'Accept', value: '1' }, { name: 'Accept', value: '2' }]
+      end.to_doc
+    end
+
+    let(:fragment) { doc.search("//HeaderManager") }
+
+
+    it 'should match on accept for fragment_first' do
+      fragment.search(".//stringProp[@name='Header.name']").first.text.should == 'Accept'
+      fragment.search(".//stringProp[@name='Header.value']").first.text.should == '1'
+    end
+
+    it 'should match on accept for fragment_last' do
+      fragment.search(".//stringProp[@name='Header.name']").last.text.should == 'Accept'
+      fragment.search(".//stringProp[@name='Header.value']").last.text.should == '2'
+    end
+  end
+
   describe 'test plan' do
     it 'should allow to take params' do
       test_plan = test({"TestPlan.serialize_threadgroups" => "false"}) {}

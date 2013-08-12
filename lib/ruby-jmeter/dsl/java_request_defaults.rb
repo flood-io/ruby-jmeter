@@ -11,9 +11,9 @@ module RubyJmeter
     include Helper
 
     def initialize(params={})
-      params[:name] ||= 'JavaRequestDefaults'
+      testname = params.kind_of?(Array) ? 'JavaRequestDefaults' : (params[:name] || 'JavaRequestDefaults')
       @doc = Nokogiri::XML(<<-EOS.strip_heredoc)
-<JavaConfig guiclass="JavaConfigGui" testclass="JavaConfig" testname="#{params[:name]}" enabled="true">
+<JavaConfig guiclass="JavaConfigGui" testclass="JavaConfig" testname="#{testname}" enabled="true">
   <elementProp name="arguments" elementType="Arguments" guiclass="ArgumentsPanel" testclass="Arguments" enabled="true">
     <collectionProp name="Arguments.arguments">
       <elementProp name="Sleep_Time" elementType="Argument">
@@ -62,7 +62,7 @@ module RubyJmeter
 </JavaConfig>)
       EOS
       update params
-      update_at_xpath params if params[:update_at_xpath]
+      update_at_xpath params if params.is_a?(Hash) && params[:update_at_xpath]
     end
   end
 

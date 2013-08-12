@@ -53,12 +53,12 @@ module RubyJmeter
     include Helper
 
     def initialize(params={})
-      params[:name] ||= '#{klass}'
+      testname = params.kind_of?(Array) ? '#{klass}' : (params[:name] || '#{klass}')
       @doc = Nokogiri::XML(<<-EOS.strip_heredoc)
-#{element.to_xml.gsub /testname=".+?"/, 'testname="#{params[:name]}"'})
+#{element.to_xml.gsub /testname=".+?"/, 'testname="#{testname}"'})
       EOS
       update params
-      update_at_xpath params if params[:update_at_xpath]
+      update_at_xpath params if params.is_a?(Hash) && params[:update_at_xpath]
     end
   end
 

@@ -11,16 +11,16 @@ module RubyJmeter
     include Helper
 
     def initialize(params={})
-      params[:name] ||= 'IfController'
+      testname = params.kind_of?(Array) ? 'IfController' : (params[:name] || 'IfController')
       @doc = Nokogiri::XML(<<-EOS.strip_heredoc)
-<IfController guiclass="IfControllerPanel" testclass="IfController" testname="#{params[:name]}" enabled="true">
+<IfController guiclass="IfControllerPanel" testclass="IfController" testname="#{testname}" enabled="true">
   <stringProp name="IfController.condition"/>
   <boolProp name="IfController.evaluateAll">false</boolProp>
   <boolProp name="IfController.useExpression">false</boolProp>
 </IfController>)
       EOS
       update params
-      update_at_xpath params if params[:update_at_xpath]
+      update_at_xpath params if params.is_a?(Hash) && params[:update_at_xpath]
     end
   end
 

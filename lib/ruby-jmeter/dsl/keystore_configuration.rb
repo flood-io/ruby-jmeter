@@ -11,16 +11,16 @@ module RubyJmeter
     include Helper
 
     def initialize(params={})
-      params[:name] ||= 'KeystoreConfiguration'
+      testname = params.kind_of?(Array) ? 'KeystoreConfiguration' : (params[:name] || 'KeystoreConfiguration')
       @doc = Nokogiri::XML(<<-EOS.strip_heredoc)
-<KeystoreConfig guiclass="TestBeanGUI" testclass="KeystoreConfig" testname="#{params[:name]}" enabled="true">
+<KeystoreConfig guiclass="TestBeanGUI" testclass="KeystoreConfig" testname="#{testname}" enabled="true">
   <stringProp name="endIndex"/>
   <stringProp name="preload">True</stringProp>
   <stringProp name="startIndex"/>
 </KeystoreConfig>)
       EOS
       update params
-      update_at_xpath params if params[:update_at_xpath]
+      update_at_xpath params if params.is_a?(Hash) && params[:update_at_xpath]
     end
   end
 

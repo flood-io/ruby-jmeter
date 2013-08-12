@@ -11,9 +11,9 @@ module RubyJmeter
     include Helper
 
     def initialize(params={})
-      params[:name] ||= 'JdbcRequest'
+      testname = params.kind_of?(Array) ? 'JdbcRequest' : (params[:name] || 'JdbcRequest')
       @doc = Nokogiri::XML(<<-EOS.strip_heredoc)
-<JDBCSampler guiclass="TestBeanGUI" testclass="JDBCSampler" testname="#{params[:name]}" enabled="true">
+<JDBCSampler guiclass="TestBeanGUI" testclass="JDBCSampler" testname="#{testname}" enabled="true">
   <stringProp name="dataSource"/>
   <stringProp name="query"/>
   <stringProp name="queryArguments"/>
@@ -24,7 +24,7 @@ module RubyJmeter
 </JDBCSampler>)
       EOS
       update params
-      update_at_xpath params if params[:update_at_xpath]
+      update_at_xpath params if params.is_a?(Hash) && params[:update_at_xpath]
     end
   end
 

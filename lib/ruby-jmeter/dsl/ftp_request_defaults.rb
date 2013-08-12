@@ -11,9 +11,9 @@ module RubyJmeter
     include Helper
 
     def initialize(params={})
-      params[:name] ||= 'FtpRequestDefaults'
+      testname = params.kind_of?(Array) ? 'FtpRequestDefaults' : (params[:name] || 'FtpRequestDefaults')
       @doc = Nokogiri::XML(<<-EOS.strip_heredoc)
-<ConfigTestElement guiclass="FtpConfigGui" testclass="ConfigTestElement" testname="#{params[:name]}" enabled="true">
+<ConfigTestElement guiclass="FtpConfigGui" testclass="ConfigTestElement" testname="#{testname}" enabled="true">
   <stringProp name="FTPSampler.server"/>
   <stringProp name="FTPSampler.port"/>
   <stringProp name="FTPSampler.filename"/>
@@ -25,7 +25,7 @@ module RubyJmeter
 </ConfigTestElement>)
       EOS
       update params
-      update_at_xpath params if params[:update_at_xpath]
+      update_at_xpath params if params.is_a?(Hash) && params[:update_at_xpath]
     end
   end
 

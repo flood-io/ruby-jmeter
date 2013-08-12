@@ -11,9 +11,9 @@ module RubyJmeter
     include Helper
 
     def initialize(params={})
-      params[:name] ||= 'TcpSampler'
+      testname = params.kind_of?(Array) ? 'TcpSampler' : (params[:name] || 'TcpSampler')
       @doc = Nokogiri::XML(<<-EOS.strip_heredoc)
-<TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="#{params[:name]}" enabled="true">
+<TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="#{testname}" enabled="true">
   <stringProp name="TCPSampler.server"/>
   <boolProp name="TCPSampler.reUseConnection">true</boolProp>
   <stringProp name="TCPSampler.port"/>
@@ -26,7 +26,7 @@ module RubyJmeter
 </TCPSampler>)
       EOS
       update params
-      update_at_xpath params if params[:update_at_xpath]
+      update_at_xpath params if params.is_a?(Hash) && params[:update_at_xpath]
     end
   end
 

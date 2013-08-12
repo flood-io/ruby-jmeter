@@ -11,16 +11,16 @@ module RubyJmeter
     include Helper
 
     def initialize(params={})
-      params[:name] ||= 'HttpCookieManager'
+      testname = params.kind_of?(Array) ? 'HttpCookieManager' : (params[:name] || 'HttpCookieManager')
       @doc = Nokogiri::XML(<<-EOS.strip_heredoc)
-<CookieManager guiclass="CookiePanel" testclass="CookieManager" testname="#{params[:name]}" enabled="true">
+<CookieManager guiclass="CookiePanel" testclass="CookieManager" testname="#{testname}" enabled="true">
   <collectionProp name="CookieManager.cookies"/>
   <boolProp name="CookieManager.clearEachIteration">false</boolProp>
   <stringProp name="CookieManager.policy">default</stringProp>
 </CookieManager>)
       EOS
       update params
-      update_at_xpath params if params[:update_at_xpath]
+      update_at_xpath params if params.is_a?(Hash) && params[:update_at_xpath]
     end
   end
 

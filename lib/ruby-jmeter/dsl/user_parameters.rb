@@ -11,9 +11,9 @@ module RubyJmeter
     include Helper
 
     def initialize(params={})
-      params[:name] ||= 'UserParameters'
+      testname = params.kind_of?(Array) ? 'UserParameters' : (params[:name] || 'UserParameters')
       @doc = Nokogiri::XML(<<-EOS.strip_heredoc)
-<UserParameters guiclass="UserParametersGui" testclass="UserParameters" testname="#{params[:name]}" enabled="true">
+<UserParameters guiclass="UserParametersGui" testclass="UserParameters" testname="#{testname}" enabled="true">
   <collectionProp name="UserParameters.names"/>
   <collectionProp name="UserParameters.thread_values">
     <collectionProp name="1"/>
@@ -22,7 +22,7 @@ module RubyJmeter
 </UserParameters>)
       EOS
       update params
-      update_at_xpath params if params[:update_at_xpath]
+      update_at_xpath params if params.is_a?(Hash) && params[:update_at_xpath]
     end
   end
 

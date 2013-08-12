@@ -11,12 +11,12 @@ module RubyJmeter
     include Helper
 
     def initialize(params={})
-      params[:name] ||= 'GenerateSummaryResults'
+      testname = params.kind_of?(Array) ? 'GenerateSummaryResults' : (params[:name] || 'GenerateSummaryResults')
       @doc = Nokogiri::XML(<<-EOS.strip_heredoc)
-<Summariser guiclass="SummariserGui" testclass="Summariser" testname="#{params[:name]}" enabled="true"/>)
+<Summariser guiclass="SummariserGui" testclass="Summariser" testname="#{testname}" enabled="true"/>)
       EOS
       update params
-      update_at_xpath params if params[:update_at_xpath]
+      update_at_xpath params if params.is_a?(Hash) && params[:update_at_xpath]
     end
   end
 

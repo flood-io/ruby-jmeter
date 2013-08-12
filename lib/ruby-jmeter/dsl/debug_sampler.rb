@@ -11,16 +11,16 @@ module RubyJmeter
     include Helper
 
     def initialize(params={})
-      params[:name] ||= 'DebugSampler'
+      testname = params.kind_of?(Array) ? 'DebugSampler' : (params[:name] || 'DebugSampler')
       @doc = Nokogiri::XML(<<-EOS.strip_heredoc)
-<DebugSampler guiclass="TestBeanGUI" testclass="DebugSampler" testname="#{params[:name]}" enabled="true">
+<DebugSampler guiclass="TestBeanGUI" testclass="DebugSampler" testname="#{testname}" enabled="true">
   <boolProp name="displayJMeterProperties">false</boolProp>
   <boolProp name="displayJMeterVariables">true</boolProp>
   <boolProp name="displaySystemProperties">false</boolProp>
 </DebugSampler>)
       EOS
       update params
-      update_at_xpath params if params[:update_at_xpath]
+      update_at_xpath params if params.is_a?(Hash) && params[:update_at_xpath]
     end
   end
 

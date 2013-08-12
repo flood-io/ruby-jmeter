@@ -11,9 +11,9 @@ module RubyJmeter
     include Helper
 
     def initialize(params={})
-      params[:name] ||= 'SmimeAssertion'
+      testname = params.kind_of?(Array) ? 'SmimeAssertion' : (params[:name] || 'SmimeAssertion')
       @doc = Nokogiri::XML(<<-EOS.strip_heredoc)
-<SMIMEAssertion guiclass="SMIMEAssertionGui" testclass="SMIMEAssertion" testname="#{params[:name]}" enabled="true">
+<SMIMEAssertion guiclass="SMIMEAssertionGui" testclass="SMIMEAssertion" testname="#{testname}" enabled="true">
   <boolProp name="SMIMEAssert.verifySignature">false</boolProp>
   <boolProp name="SMIMEAssert.notSigned">false</boolProp>
   <stringProp name="SMIMEAssert.issuerDn"/>
@@ -28,7 +28,7 @@ module RubyJmeter
 </SMIMEAssertion>)
       EOS
       update params
-      update_at_xpath params if params[:update_at_xpath]
+      update_at_xpath params if params.is_a?(Hash) && params[:update_at_xpath]
     end
   end
 

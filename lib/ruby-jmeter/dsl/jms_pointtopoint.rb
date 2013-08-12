@@ -11,9 +11,9 @@ module RubyJmeter
     include Helper
 
     def initialize(params={})
-      params[:name] ||= 'JmsPointtopoint'
+      testname = params.kind_of?(Array) ? 'JmsPointtopoint' : (params[:name] || 'JmsPointtopoint')
       @doc = Nokogiri::XML(<<-EOS.strip_heredoc)
-<JMSSampler guiclass="JMSSamplerGui" testclass="JMSSampler" testname="#{params[:name]}" enabled="true">
+<JMSSampler guiclass="JMSSamplerGui" testclass="JMSSampler" testname="#{testname}" enabled="true">
   <stringProp name="JMSSampler.queueconnectionfactory"/>
   <stringProp name="JMSSampler.SendQueue"/>
   <stringProp name="JMSSampler.ReceiveQueue"/>
@@ -24,16 +24,16 @@ module RubyJmeter
   <stringProp name="HTTPSamper.xml_data"/>
   <stringProp name="JMSSampler.initialContextFactory"/>
   <stringProp name="JMSSampler.contextProviderUrl"/>
-  <elementProp name="JMSSampler.jndiProperties" elementType="Arguments" guiclass="ArgumentsPanel" testclass="Arguments" testname="#{params[:name]}" enabled="true">
+  <elementProp name="JMSSampler.jndiProperties" elementType="Arguments" guiclass="ArgumentsPanel" testclass="Arguments" testname="#{testname}" enabled="true">
     <collectionProp name="Arguments.arguments"/>
   </elementProp>
-  <elementProp name="arguments" elementType="Arguments" guiclass="ArgumentsPanel" testclass="Arguments" testname="#{params[:name]}" enabled="true">
+  <elementProp name="arguments" elementType="Arguments" guiclass="ArgumentsPanel" testclass="Arguments" testname="#{testname}" enabled="true">
     <collectionProp name="Arguments.arguments"/>
   </elementProp>
 </JMSSampler>)
       EOS
       update params
-      update_at_xpath params if params[:update_at_xpath]
+      update_at_xpath params if params.is_a?(Hash) && params[:update_at_xpath]
     end
   end
 

@@ -11,9 +11,9 @@ module RubyJmeter
     include Helper
 
     def initialize(params={})
-      params[:name] ||= 'JdbcConnectionConfiguration'
+      testname = params.kind_of?(Array) ? 'JdbcConnectionConfiguration' : (params[:name] || 'JdbcConnectionConfiguration')
       @doc = Nokogiri::XML(<<-EOS.strip_heredoc)
-<JDBCDataSource guiclass="TestBeanGUI" testclass="JDBCDataSource" testname="#{params[:name]}" enabled="true">
+<JDBCDataSource guiclass="TestBeanGUI" testclass="JDBCDataSource" testname="#{testname}" enabled="true">
   <boolProp name="autocommit">true</boolProp>
   <stringProp name="checkQuery">Select 1</stringProp>
   <stringProp name="connectionAge">5000</stringProp>
@@ -30,7 +30,7 @@ module RubyJmeter
 </JDBCDataSource>)
       EOS
       update params
-      update_at_xpath params if params[:update_at_xpath]
+      update_at_xpath params if params.is_a?(Hash) && params[:update_at_xpath]
     end
   end
 

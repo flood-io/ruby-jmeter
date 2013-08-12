@@ -11,14 +11,14 @@ module RubyJmeter
     include Helper
 
     def initialize(params={})
-      params[:name] ||= 'RuntimeController'
+      testname = params.kind_of?(Array) ? 'RuntimeController' : (params[:name] || 'RuntimeController')
       @doc = Nokogiri::XML(<<-EOS.strip_heredoc)
-<RunTime guiclass="RunTimeGui" testclass="RunTime" testname="#{params[:name]}" enabled="true">
+<RunTime guiclass="RunTimeGui" testclass="RunTime" testname="#{testname}" enabled="true">
   <stringProp name="RunTime.seconds">1</stringProp>
 </RunTime>)
       EOS
       update params
-      update_at_xpath params if params[:update_at_xpath]
+      update_at_xpath params if params.is_a?(Hash) && params[:update_at_xpath]
     end
   end
 

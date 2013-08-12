@@ -11,9 +11,9 @@ module RubyJmeter
     include Helper
 
     def initialize(params={})
-      params[:name] ||= 'LdapExtendedRequestDefaults'
+      testname = params.kind_of?(Array) ? 'LdapExtendedRequestDefaults' : (params[:name] || 'LdapExtendedRequestDefaults')
       @doc = Nokogiri::XML(<<-EOS.strip_heredoc)
-<ConfigTestElement guiclass="LdapExtConfigGui" testclass="ConfigTestElement" testname="#{params[:name]}" enabled="true">
+<ConfigTestElement guiclass="LdapExtConfigGui" testclass="ConfigTestElement" testname="#{testname}" enabled="true">
   <stringProp name="servername"/>
   <stringProp name="port"/>
   <stringProp name="rootdn"/>
@@ -35,7 +35,7 @@ module RubyJmeter
 </ConfigTestElement>)
       EOS
       update params
-      update_at_xpath params if params[:update_at_xpath]
+      update_at_xpath params if params.is_a?(Hash) && params[:update_at_xpath]
     end
   end
 

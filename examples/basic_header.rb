@@ -2,7 +2,11 @@ $LOAD_PATH.unshift(File.join(File.dirname(__FILE__), '..', 'lib'))
 require 'ruby-jmeter'
 
 test do
-  header name: 'Accept', value: '*'
+  # header with multiple values
+  header [ 
+    { name: 'Accept', value: '*' },
+    { name: 'User-Agent', value: 'Test' }
+  ] 
 
   with_user_agent :iphone
 

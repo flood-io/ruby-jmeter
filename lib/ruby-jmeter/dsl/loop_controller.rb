@@ -11,15 +11,15 @@ module RubyJmeter
     include Helper
 
     def initialize(params={})
-      params[:name] ||= 'LoopController'
+      testname = params.kind_of?(Array) ? 'LoopController' : (params[:name] || 'LoopController')
       @doc = Nokogiri::XML(<<-EOS.strip_heredoc)
-<LoopController guiclass="LoopControlPanel" testclass="LoopController" testname="#{params[:name]}" enabled="true">
+<LoopController guiclass="LoopControlPanel" testclass="LoopController" testname="#{testname}" enabled="true">
   <boolProp name="LoopController.continue_forever">true</boolProp>
   <stringProp name="LoopController.loops">1</stringProp>
 </LoopController>)
       EOS
       update params
-      update_at_xpath params if params[:update_at_xpath]
+      update_at_xpath params if params.is_a?(Hash) && params[:update_at_xpath]
     end
   end
 

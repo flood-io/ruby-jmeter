@@ -11,9 +11,9 @@ module RubyJmeter
     include Helper
 
     def initialize(params={})
-      params[:name] ||= 'Counter'
+      testname = params.kind_of?(Array) ? 'Counter' : (params[:name] || 'Counter')
       @doc = Nokogiri::XML(<<-EOS.strip_heredoc)
-<CounterConfig guiclass="CounterConfigGui" testclass="CounterConfig" testname="#{params[:name]}" enabled="true">
+<CounterConfig guiclass="CounterConfigGui" testclass="CounterConfig" testname="#{testname}" enabled="true">
   <stringProp name="CounterConfig.start"/>
   <stringProp name="CounterConfig.end"/>
   <stringProp name="CounterConfig.incr"/>
@@ -24,7 +24,7 @@ module RubyJmeter
 </CounterConfig>)
       EOS
       update params
-      update_at_xpath params if params[:update_at_xpath]
+      update_at_xpath params if params.is_a?(Hash) && params[:update_at_xpath]
     end
   end
 

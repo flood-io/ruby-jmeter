@@ -11,9 +11,9 @@ module RubyJmeter
     include Helper
 
     def initialize(params={})
-      params[:name] ||= 'HttpUrlRewritingModifier'
+      testname = params.kind_of?(Array) ? 'HttpUrlRewritingModifier' : (params[:name] || 'HttpUrlRewritingModifier')
       @doc = Nokogiri::XML(<<-EOS.strip_heredoc)
-<URLRewritingModifier guiclass="URLRewritingModifierGui" testclass="URLRewritingModifier" testname="#{params[:name]}" enabled="true">
+<URLRewritingModifier guiclass="URLRewritingModifierGui" testclass="URLRewritingModifier" testname="#{testname}" enabled="true">
   <stringProp name="argument_name"/>
   <boolProp name="path_extension">false</boolProp>
   <boolProp name="path_extension_no_equals">false</boolProp>
@@ -22,7 +22,7 @@ module RubyJmeter
 </URLRewritingModifier>)
       EOS
       update params
-      update_at_xpath params if params[:update_at_xpath]
+      update_at_xpath params if params.is_a?(Hash) && params[:update_at_xpath]
     end
   end
 

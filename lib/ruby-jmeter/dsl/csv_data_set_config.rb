@@ -11,9 +11,9 @@ module RubyJmeter
     include Helper
 
     def initialize(params={})
-      params[:name] ||= 'CsvDataSetConfig'
+      testname = params.kind_of?(Array) ? 'CsvDataSetConfig' : (params[:name] || 'CsvDataSetConfig')
       @doc = Nokogiri::XML(<<-EOS.strip_heredoc)
-<CSVDataSet guiclass="TestBeanGUI" testclass="CSVDataSet" testname="#{params[:name]}" enabled="true">
+<CSVDataSet guiclass="TestBeanGUI" testclass="CSVDataSet" testname="#{testname}" enabled="true">
   <stringProp name="delimiter">,</stringProp>
   <stringProp name="fileEncoding"/>
   <stringProp name="filename"/>
@@ -25,7 +25,7 @@ module RubyJmeter
 </CSVDataSet>)
       EOS
       update params
-      update_at_xpath params if params[:update_at_xpath]
+      update_at_xpath params if params.is_a?(Hash) && params[:update_at_xpath]
     end
   end
 

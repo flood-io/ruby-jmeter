@@ -11,9 +11,9 @@ module RubyJmeter
     include Helper
 
     def initialize(params={})
-      params[:name] ||= 'MailReaderSampler'
+      testname = params.kind_of?(Array) ? 'MailReaderSampler' : (params[:name] || 'MailReaderSampler')
       @doc = Nokogiri::XML(<<-EOS.strip_heredoc)
-<MailReaderSampler guiclass="MailReaderSamplerGui" testclass="MailReaderSampler" testname="#{params[:name]}" enabled="true">
+<MailReaderSampler guiclass="MailReaderSamplerGui" testclass="MailReaderSampler" testname="#{testname}" enabled="true">
   <stringProp name="host_type">pop3</stringProp>
   <stringProp name="folder">INBOX</stringProp>
   <stringProp name="host"/>
@@ -30,7 +30,7 @@ module RubyJmeter
 </MailReaderSampler>)
       EOS
       update params
-      update_at_xpath params if params[:update_at_xpath]
+      update_at_xpath params if params.is_a?(Hash) && params[:update_at_xpath]
     end
   end
 

@@ -11,9 +11,9 @@ module RubyJmeter
     include Helper
 
     def initialize(params={})
-      params[:name] ||= 'ResponseAssertion'
+      testname = params.kind_of?(Array) ? 'ResponseAssertion' : (params[:name] || 'ResponseAssertion')
       @doc = Nokogiri::XML(<<-EOS.strip_heredoc)
-<ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="#{params[:name]}" enabled="true">
+<ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="#{testname}" enabled="true">
   <collectionProp name="Asserion.test_strings">
     <stringProp name="match"/>
   </collectionProp>
@@ -24,7 +24,7 @@ module RubyJmeter
 </ResponseAssertion>)
       EOS
       update params
-      update_at_xpath params if params[:update_at_xpath]
+      update_at_xpath params if params.is_a?(Hash) && params[:update_at_xpath]
     end
   end
 

@@ -11,9 +11,9 @@ module RubyJmeter
     include Helper
 
     def initialize(params={})
-      params[:name] ||= 'BeanshellSampler'
+      testname = params.kind_of?(Array) ? 'BeanshellSampler' : (params[:name] || 'BeanshellSampler')
       @doc = Nokogiri::XML(<<-EOS.strip_heredoc)
-<BeanShellSampler guiclass="BeanShellSamplerGui" testclass="BeanShellSampler" testname="#{params[:name]}" enabled="true">
+<BeanShellSampler guiclass="BeanShellSamplerGui" testclass="BeanShellSampler" testname="#{testname}" enabled="true">
   <stringProp name="BeanShellSampler.query"/>
   <stringProp name="BeanShellSampler.filename"/>
   <stringProp name="BeanShellSampler.parameters"/>
@@ -21,7 +21,7 @@ module RubyJmeter
 </BeanShellSampler>)
       EOS
       update params
-      update_at_xpath params if params[:update_at_xpath]
+      update_at_xpath params if params.is_a?(Hash) && params[:update_at_xpath]
     end
   end
 

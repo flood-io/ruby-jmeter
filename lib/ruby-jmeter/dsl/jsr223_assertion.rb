@@ -11,9 +11,9 @@ module RubyJmeter
     include Helper
 
     def initialize(params={})
-      params[:name] ||= 'Jsr223Assertion'
+      testname = params.kind_of?(Array) ? 'Jsr223Assertion' : (params[:name] || 'Jsr223Assertion')
       @doc = Nokogiri::XML(<<-EOS.strip_heredoc)
-<JSR223Assertion guiclass="TestBeanGUI" testclass="JSR223Assertion" testname="#{params[:name]}" enabled="true">
+<JSR223Assertion guiclass="TestBeanGUI" testclass="JSR223Assertion" testname="#{testname}" enabled="true">
   <stringProp name="scriptLanguage"/>
   <stringProp name="parameters"/>
   <stringProp name="filename"/>
@@ -22,7 +22,7 @@ module RubyJmeter
 </JSR223Assertion>)
       EOS
       update params
-      update_at_xpath params if params[:update_at_xpath]
+      update_at_xpath params if params.is_a?(Hash) && params[:update_at_xpath]
     end
   end
 

@@ -11,9 +11,9 @@ module RubyJmeter
     include Helper
 
     def initialize(params={})
-      params[:name] ||= 'Jsr223Postprocessor'
+      testname = params.kind_of?(Array) ? 'Jsr223Postprocessor' : (params[:name] || 'Jsr223Postprocessor')
       @doc = Nokogiri::XML(<<-EOS.strip_heredoc)
-<JSR223PostProcessor guiclass="TestBeanGUI" testclass="JSR223PostProcessor" testname="#{params[:name]}" enabled="true">
+<JSR223PostProcessor guiclass="TestBeanGUI" testclass="JSR223PostProcessor" testname="#{testname}" enabled="true">
   <stringProp name="cacheKey"/>
   <stringProp name="filename"/>
   <stringProp name="parameters"/>
@@ -22,7 +22,7 @@ module RubyJmeter
 </JSR223PostProcessor>)
       EOS
       update params
-      update_at_xpath params if params[:update_at_xpath]
+      update_at_xpath params if params.is_a?(Hash) && params[:update_at_xpath]
     end
   end
 

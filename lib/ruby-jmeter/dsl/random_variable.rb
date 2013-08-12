@@ -11,9 +11,9 @@ module RubyJmeter
     include Helper
 
     def initialize(params={})
-      params[:name] ||= 'RandomVariable'
+      testname = params.kind_of?(Array) ? 'RandomVariable' : (params[:name] || 'RandomVariable')
       @doc = Nokogiri::XML(<<-EOS.strip_heredoc)
-<RandomVariableConfig guiclass="TestBeanGUI" testclass="RandomVariableConfig" testname="#{params[:name]}" enabled="true">
+<RandomVariableConfig guiclass="TestBeanGUI" testclass="RandomVariableConfig" testname="#{testname}" enabled="true">
   <stringProp name="maximumValue"/>
   <stringProp name="minimumValue">1</stringProp>
   <stringProp name="outputFormat"/>
@@ -23,7 +23,7 @@ module RubyJmeter
 </RandomVariableConfig>)
       EOS
       update params
-      update_at_xpath params if params[:update_at_xpath]
+      update_at_xpath params if params.is_a?(Hash) && params[:update_at_xpath]
     end
   end
 

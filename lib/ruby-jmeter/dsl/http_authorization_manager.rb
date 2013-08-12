@@ -11,9 +11,9 @@ module RubyJmeter
     include Helper
 
     def initialize(params={})
-      params[:name] ||= 'HttpAuthorizationManager'
+      testname = params.kind_of?(Array) ? 'HttpAuthorizationManager' : (params[:name] || 'HttpAuthorizationManager')
       @doc = Nokogiri::XML(<<-EOS.strip_heredoc)
-<AuthManager guiclass="AuthPanel" testclass="AuthManager" testname="#{params[:name]}" enabled="true">
+<AuthManager guiclass="AuthPanel" testclass="AuthManager" testname="#{testname}" enabled="true">
   <collectionProp name="AuthManager.auth_list">
     <elementProp name="" elementType="Authorization">
       <stringProp name="Authorization.url"/>
@@ -26,7 +26,7 @@ module RubyJmeter
 </AuthManager>)
       EOS
       update params
-      update_at_xpath params if params[:update_at_xpath]
+      update_at_xpath params if params.is_a?(Hash) && params[:update_at_xpath]
     end
   end
 

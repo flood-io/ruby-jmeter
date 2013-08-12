@@ -11,9 +11,9 @@ module RubyJmeter
     include Helper
 
     def initialize(params={})
-      params[:name] ||= 'BsfPreprocessor'
+      testname = params.kind_of?(Array) ? 'BsfPreprocessor' : (params[:name] || 'BsfPreprocessor')
       @doc = Nokogiri::XML(<<-EOS.strip_heredoc)
-<BSFPreProcessor guiclass="TestBeanGUI" testclass="BSFPreProcessor" testname="#{params[:name]}" enabled="true">
+<BSFPreProcessor guiclass="TestBeanGUI" testclass="BSFPreProcessor" testname="#{testname}" enabled="true">
   <stringProp name="filename"/>
   <stringProp name="parameters"/>
   <stringProp name="script"/>
@@ -21,7 +21,7 @@ module RubyJmeter
 </BSFPreProcessor>)
       EOS
       update params
-      update_at_xpath params if params[:update_at_xpath]
+      update_at_xpath params if params.is_a?(Hash) && params[:update_at_xpath]
     end
   end
 

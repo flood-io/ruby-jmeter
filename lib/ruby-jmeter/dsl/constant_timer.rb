@@ -11,14 +11,14 @@ module RubyJmeter
     include Helper
 
     def initialize(params={})
-      params[:name] ||= 'ConstantTimer'
+      testname = params.kind_of?(Array) ? 'ConstantTimer' : (params[:name] || 'ConstantTimer')
       @doc = Nokogiri::XML(<<-EOS.strip_heredoc)
-<ConstantTimer guiclass="ConstantTimerGui" testclass="ConstantTimer" testname="#{params[:name]}" enabled="true">
+<ConstantTimer guiclass="ConstantTimerGui" testclass="ConstantTimer" testname="#{testname}" enabled="true">
   <stringProp name="ConstantTimer.delay">300</stringProp>
 </ConstantTimer>)
       EOS
       update params
-      update_at_xpath params if params[:update_at_xpath]
+      update_at_xpath params if params.is_a?(Hash) && params[:update_at_xpath]
     end
   end
 

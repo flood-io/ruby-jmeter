@@ -11,14 +11,14 @@ module RubyJmeter
     include Helper
 
     def initialize(params={})
-      params[:name] ||= 'RandomController'
+      testname = params.kind_of?(Array) ? 'RandomController' : (params[:name] || 'RandomController')
       @doc = Nokogiri::XML(<<-EOS.strip_heredoc)
-<RandomController guiclass="RandomControlGui" testclass="RandomController" testname="#{params[:name]}" enabled="true">
+<RandomController guiclass="RandomControlGui" testclass="RandomController" testname="#{testname}" enabled="true">
   <intProp name="InterleaveControl.style">1</intProp>
 </RandomController>)
       EOS
       update params
-      update_at_xpath params if params[:update_at_xpath]
+      update_at_xpath params if params.is_a?(Hash) && params[:update_at_xpath]
     end
   end
 
