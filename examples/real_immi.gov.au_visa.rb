@@ -70,9 +70,9 @@ test do
     log filename: '/var/log/flood/custom.log', error_logging: true 
 
   end
-# end.run(path: '/usr/share/jmeter/bin/', gui: true)
+end.run(path: '/usr/share/jmeter/bin/', gui: true)
 # end.jmx
-end.flood ENV['FLOOD_API_TOKEN'], {
-  region: 'ap-southeast-2',
-  name: 'Demo for Immi'
-}
+# end.flood ENV['FLOOD_API_TOKEN'], {
+#   region: 'ap-southeast-2',
+#   name: 'Demo for Immi'
+# }
