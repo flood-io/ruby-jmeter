@@ -120,7 +120,7 @@ describe "DSL" do
     end
 
     it 'should match on loops' do
-      fragment.search(".//stringProp[@name='LoopController.loops']").text.should == '-1'
+      fragment.search(".//intProp[@name='LoopController.loops']").text.should == '-1'
     end
 
     it 'should match on duration' do
@@ -147,7 +147,7 @@ describe "DSL" do
     end
 
     it 'should match on loops' do
-      fragment.search(".//stringProp[@name='LoopController.loops']").text.should == '-1'
+      fragment.search(".//intProp[@name='LoopController.loops']").text.should == '-1'
     end
 
     it 'should match on duration' do
@@ -372,7 +372,7 @@ describe "DSL" do
     let(:fragment) { doc.search("//LoopController").first }
 
     it 'should match on Loops' do
-      fragment.search(".//stringProp[@name='LoopController.loops']").text.should == '5'
+      fragment.search(".//intProp[@name='LoopController.loops']").text.should == '5'
     end
   end
 
