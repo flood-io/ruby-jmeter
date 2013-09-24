@@ -59,10 +59,18 @@ describe "DSL" do
             implementation: 'HttpClient3.1',
             concurrentDwn: true,
             concurrentPool: 4
+        threads do
+          visit url: "/"
+        end
       end.to_doc
     end
 
     let(:fragment) { doc.search("//ConfigTestElement").first }
+    let(:sampler_fragment) { doc.search("//HTTPSamplerProxy").first }
+
+    it 'should match on implementation' do
+      sampler_fragment.search(".//stringProp[@name='HTTPSampler.implementation']").text.should == ''
+    end
 
     it 'should match on defaults' do
       fragment.search(".//stringProp[@name='HTTPSampler.domain']").text.should == 'example.com'
