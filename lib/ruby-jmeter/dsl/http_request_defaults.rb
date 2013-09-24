@@ -34,6 +34,7 @@ module RubyJmeter
   <stringProp name="HTTPSampler.embedded_url_re"/>
   <boolProp name="HTTPSampler.concurrentDwn">false</boolProp>
   <stringProp name="HTTPSampler.concurrentPool">4</stringProp>
+  <stringProp name="HTTPSampler.implementation">HttpClient4</stringProp>
 </ConfigTestElement>)
       EOS
       update params

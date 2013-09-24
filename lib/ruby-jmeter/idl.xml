@@ -96,6 +96,7 @@
         <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
         <boolProp name="HTTPSampler.concurrentDwn">false</boolProp>
         <stringProp name="HTTPSampler.concurrentPool">4</stringProp>
+        <stringProp name="HTTPSampler.implementation">HttpClient4</stringProp>
       </ConfigTestElement>
       <hashTree/>
       <JavaConfig guiclass="JavaConfigGui" testclass="JavaConfig" testname="Java Request Defaults" enabled="true">

@@ -50,6 +50,28 @@ describe "DSL" do
   end
 
 
+  describe 'http request defaults' do
+    let(:doc) do
+      test do
+        defaults domain: 'example.com', 
+            protocol: 'https', 
+            image_parser: true,
+            implementation: 'HttpClient3.1',
+            concurrentDwn: true,
+            concurrentPool: 4
+      end.to_doc
+    end
+
+    let(:fragment) { doc.search("//ConfigTestElement").first }
+
+    it 'should match on defaults' do
+      fragment.search(".//stringProp[@name='HTTPSampler.domain']").text.should == 'example.com'
+      fragment.search(".//stringProp[@name='HTTPSampler.protocol']").text.should == 'https'
+      fragment.search(".//stringProp[@name='HTTPSampler.implementation']").text.should == 'HttpClient3.1'
+    end
+  end
+
+
   describe 'header manager' do
     let(:doc) do
       test do
