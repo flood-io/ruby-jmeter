@@ -31,6 +31,7 @@ module RubyJmeter
   <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
   <boolProp name="HTTPSampler.monitor">false</boolProp>
   <stringProp name="HTTPSampler.embedded_url_re"/>
+  <stringProp name="HTTPSampler.implementation">HttpClient4</stringProp>
 </HTTPSamplerProxy>)
       EOS
       update params
