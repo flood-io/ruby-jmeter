@@ -26,6 +26,7 @@ module RubyJmeter
   <boolProp name="ThreadGroup.scheduler">true</boolProp>
   <stringProp name="ThreadGroup.duration"/>
   <stringProp name="ThreadGroup.delay"/>
+  <boolProp name="ThreadGroup.delayedStart">true</boolProp>
 </ThreadGroup>)
       EOS
       update params
