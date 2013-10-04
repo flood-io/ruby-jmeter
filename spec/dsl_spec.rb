@@ -44,7 +44,7 @@ describe "DSL" do
 
     it 'should match on user_agent' do
       fragment.search(".//stringProp[@name='Header.name']").text.should == 'User-Agent'
-      fragment.search(".//stringProp[@name='Header.value']").text.should == 
+      fragment.search(".//stringProp[@name='Header.value']").text.should ==
         'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_7_4) AppleWebKit/536.5 (KHTML, like Gecko) Chrome/19.0.1084.46 Safari/536.5'
     end
   end
@@ -53,8 +53,8 @@ describe "DSL" do
   describe 'http request defaults' do
     let(:doc) do
       test do
-        defaults domain: 'example.com', 
-            protocol: 'https', 
+        defaults domain: 'example.com',
+            protocol: 'https',
             image_parser: true,
             implementation: 'HttpClient3.1',
             concurrentDwn: true,
@@ -269,6 +269,25 @@ describe "DSL" do
     it 'should match on path' do
       fragment.search(".//stringProp[@name='HTTPSampler.path']").text.should == '/home'
     end
+  end
+
+  describe 'visit raw_path' do
+    let(:doc) do
+      test do
+        threads do
+          transaction name: "TC_02" do
+            post url: "/home?location=melbourne", raw_path: true
+          end
+        end
+      end.to_doc
+    end
+
+    let(:fragment) { doc.search("//HTTPSamplerProxy").first }
+
+    it 'should match on path' do
+      fragment.search(".//stringProp[@name='HTTPSampler.path']").text.should == '/home?location=melbourne'
+    end
+
   end
 
 
