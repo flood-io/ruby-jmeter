@@ -147,7 +147,7 @@ You can use the `threads` method to define a group of users:
 threads count: 100
 threads count: 100, continue_forever: true
 threads count: 100, loops: 10
-threads count: 100, ramup: 30, duration: 60
+threads count: 100, rampup: 30, duration: 60
 threads count: 100, scheduler: true, 
   start_time: Time.now.to_i * 1000,
   end_time:   (Time.now.to_i * 1000) + (3600 * 1000)
