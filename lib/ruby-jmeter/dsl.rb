@@ -390,7 +390,7 @@ module RubyJmeter
           logger.fatal "Sorry there was an error: #{JSON.parse(response)["error_description"]}"
         end
       rescue => e
-        logger.fatal "Sorry there was a fatal error: #{e.message}"
+        logger.fatal "Sorry there was an error: #{JSON.parse(e.response)["error_description"]}"
       end
     end
 
