@@ -140,10 +140,15 @@ module RubyJmeter
       params[:name] ||= 'testdata'
       params[:regex] ||= '"(.+?)"'
       params[:match_num] ||= -1
+      params[:default] ||= ''
+      params[:url] = 'http://54.252.206.143:8080/' if params[:stub]
       get name: '__testdata', url: params[:url] do
-        extract name: params[:name], regex: params[:regex], match_num: params[:match_num]
-      end
-    end   
+        extract name: params[:name], 
+          regex: params[:regex], 
+          match_num: params[:match_num], 
+          default: params[:default]
+      end  
+    end
 
     ##
     # Other Samplers

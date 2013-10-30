@@ -20,6 +20,10 @@ test do
     test_data url: 'http://54.252.206.143:8080/SRANDMEMBER/postcodes?type=text',
               name: 'postcode_exact', regex: '^(\d+)', match_num: 1
 
+    # populate named ${postcode} with exact match from a stubbed data url
+    test_data url: 'http://54.252.206.143:8080/SRANDMEMBER/postcodes?type=text',
+              name: 'postcode_stub', regex: '^(\d+)', match_num: 1, default: '2010', stub: true
+
     debug_sampler
     view_results
   end
