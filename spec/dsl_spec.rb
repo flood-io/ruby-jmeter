@@ -514,6 +514,21 @@ describe "DSL" do
   end
 
 
+  describe 'testdata extract' do
+    let(:doc) do
+      test do
+        test_data 'http://54.252.206.143:8080/SRANDMEMBER/postcodes?type=text'
+      end.to_doc
+    end
+
+    let(:fragment) { doc.search("//RegexExtractor").first }
+
+    it 'should match on refname' do
+      fragment.search(".//stringProp[@name='RegexExtractor.refname']").text.should == 'testdata'
+    end
+  end
+
+
   describe 'assertions' do
 
     describe 'scope all' do

@@ -134,6 +134,17 @@ module RubyJmeter
                           value: 'gzip, deflate'
     end
 
+    def test_data(*args, &block)
+      params = args.shift || {}
+      params = { url: params }.merge(args.shift || {}) if params.class == String
+      params[:name] ||= 'testdata'
+      params[:regex] ||= '"(.+?)"'
+      params[:match_num] ||= -1
+      get name: '__testdata', url: params[:url] do
+        extract name: params[:name], regex: params[:regex], match_num: params[:match_num]
+      end
+    end   
+
     ##
     # Other Samplers
 
