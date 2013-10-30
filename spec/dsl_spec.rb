@@ -55,10 +55,10 @@ describe "DSL" do
       test do
         defaults domain: 'example.com',
             protocol: 'https',
-            image_parser: true,
             implementation: 'HttpClient3.1',
-            concurrentDwn: true,
-            concurrentPool: 4
+            download_resources: true,
+            use_concurrent_pool: 5,
+            urls_must_match: 'http.+?example.com'
         threads do
           visit url: "/"
         end
@@ -76,6 +76,10 @@ describe "DSL" do
       fragment.search(".//stringProp[@name='HTTPSampler.domain']").text.should == 'example.com'
       fragment.search(".//stringProp[@name='HTTPSampler.protocol']").text.should == 'https'
       fragment.search(".//stringProp[@name='HTTPSampler.implementation']").text.should == 'HttpClient3.1'
+      fragment.search(".//boolProp[@name='HTTPSampler.image_parser']").text.should == 'true'
+      fragment.search(".//boolProp[@name='HTTPSampler.concurrentDwn']").text.should == 'true'
+      fragment.search(".//stringProp[@name='HTTPSampler.concurrentPool']").text.should == '5'
+      fragment.search(".//stringProp[@name='HTTPSampler.embedded_url_re']").text.should == 'http.+?example.com'
     end
   end
 

@@ -3,9 +3,8 @@ require 'ruby-jmeter'
 
 test do
   defaults domain: 'example.com', 
-      protocol: 'https', 
-      image_parser: true,
-      implementation: 'HttpClient3.1',
-      concurrentDwn: true,
-      concurrentPool: 4
+      protocol: 'https',
+      download_resources: true,
+      use_concurrent_pool: 5,
+      urls_must_match: 'http.+?example.com'
 end.run(path: '/usr/share/jmeter/bin/', gui: true)

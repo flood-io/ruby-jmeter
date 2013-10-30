@@ -29,6 +29,14 @@ module RubyJmeter
 
     alias_method :variables, :user_defined_variables
 
+    def http_request_defaults(params={}, &block)
+      params[:image_parser] = true if params.keys.include? :download_resources
+      params[:concurrentDwn] = true if params.keys.include? :use_concurrent_pool
+      params[:concurrentPool] = params[:use_concurrent_pool] if params.keys.include? :use_concurrent_pool
+      params[:embedded_url_re] = params[:urls_must_match] if params.keys.include? :urls_must_match
+      super
+    end
+
     alias_method :defaults, :http_request_defaults      
 
     def http_cookie_manager(params={}, &block)
