@@ -4,7 +4,7 @@
 
 - HTTP Request Defaults now have more intuitive key names:
 
-```
+```ruby
 defaults domain: 'example.com', 
       protocol: 'https',
       download_resources: true,
@@ -14,7 +14,7 @@ defaults domain: 'example.com',
 
 - There's a new `with_gzip` header manager alias:
 
-```
+```ruby
 test do
   threads do
     transaction name: "TC_02", parent: true, include_timers: true do
@@ -26,9 +26,9 @@ test do
 end
 ```
 
-- There's a new test_data helper method to simplify getting test data from the flood.io shared data URL. Including ability to stub, set defaults, get all values or explicit values :
+- There's a new `test_data` helper method to simplify getting test data from the flood.io shared data URL. Including ability to stub, set defaults, get all values or explicit values :
 
-```
+```ruby
 test do
   threads 1 do
 
