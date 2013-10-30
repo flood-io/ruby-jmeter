@@ -129,6 +129,11 @@ module RubyJmeter
                           value: 'XMLHttpRequest'
     end
 
+    def with_gzip
+      http_header_manager name: 'Accept-Encoding', 
+                          value: 'gzip, deflate'
+    end
+
     ##
     # Other Samplers
 

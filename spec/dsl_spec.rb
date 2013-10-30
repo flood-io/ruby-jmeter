@@ -331,6 +331,27 @@ describe "DSL" do
   end
 
 
+  describe 'gzip' do
+    let(:doc) do
+      test do
+        threads do
+          transaction name: "TC_02", parent: true, include_timers: true do
+            visit url: "/" do
+              with_gzip
+            end
+          end
+        end
+      end.to_doc
+    end
+
+    let(:fragment) { doc.search("//HeaderManager").first }
+
+    it 'should match on Acept Encoding' do
+      fragment.search(".//stringProp[@name='Header.value']").text.should == 'gzip, deflate'
+    end
+  end
+
+
   describe 'submit' do
     let(:doc) do
       test do
