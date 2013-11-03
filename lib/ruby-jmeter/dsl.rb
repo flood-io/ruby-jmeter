@@ -144,12 +144,23 @@ module RubyJmeter
 
     def test_data(*args, &block)
       params = args.shift || {}
-      params = { url: params }.merge(args.shift || {}) if params.class == String
+      params = { key: params.to_s }.merge(args.shift || {}) if(params.class == String || params.class == Symbol)
+      params[:command] ||= 'SRANDMEMBER'
       params[:name] ||= 'testdata'
       params[:regex] ||= '"(.+?)"'
       params[:match_num] ||= -1
       params[:default] ||= ''
+
+      params[:host] ||= '54.252.206.143'
+
+      params[:url] = params[:key] if URI.parse(URI::encode(params[:key])).scheme
+
+      params[:url] = if params[:host]
+        "http://#{params[:host]}:8080/#{params[:command]}/#{params[:key]}?type=text"
+      end
+
       params[:url] = 'http://54.252.206.143:8080/' if params[:stub]
+
       get name: '__testdata', url: params[:url] do
         extract name: params[:name], 
           regex: params[:regex], 
