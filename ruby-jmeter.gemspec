@@ -10,7 +10,7 @@ Gem::Specification.new do |gem|
   gem.email         = ["support@flood.io"]
   gem.description   = %q{This is a Ruby based DSL for writing JMeter test plans}
   gem.summary       = %q{This is a Ruby based DSL for writing JMeter test plans}
-  gem.homepage      = "http://github.com/flood-io/ruby-jmeter"
+  gem.homepage      = "http://flood-io.github.io/ruby-jmeter/"
   gem.add_dependency("rest-client")
   gem.add_dependency("nokogiri")
   gem.add_runtime_dependency('json-jruby') if RUBY_PLATFORM == 'java'
