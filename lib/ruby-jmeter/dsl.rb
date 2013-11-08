@@ -21,7 +21,7 @@ module RubyJmeter
     # Config Elements
 
     def user_defined_variables(params, &block)
-      if params.is_a?(Hash) 
+      if params.is_a?(Hash)
         params['Argument.name'] = params[:name]
       end
       super
@@ -37,7 +37,7 @@ module RubyJmeter
       super
     end
 
-    alias_method :defaults, :http_request_defaults      
+    alias_method :defaults, :http_request_defaults
 
     def http_cookie_manager(params={}, &block)
       params[:clearEachIteration] = true if params.keys.include? 'clear_each_iteration'
@@ -54,12 +54,12 @@ module RubyJmeter
     alias_method :cache, :http_cache_manager
 
     def with_user_agent(device)
-      http_header_manager name: 'User-Agent', 
+      http_header_manager name: 'User-Agent',
                           value: RubyJmeter::UserAgent.new(device).string
     end
 
     def http_header_manager(params, &block)
-      if params.is_a?(Hash) 
+      if params.is_a?(Hash)
         params['Header.name'] = params[:name]
       end
       super
@@ -133,12 +133,12 @@ module RubyJmeter
     end
 
     def with_xhr
-      http_header_manager name: 'X-Requested-With', 
+      http_header_manager name: 'X-Requested-With',
                           value: 'XMLHttpRequest'
     end
 
     def with_gzip
-      http_header_manager name: 'Accept-Encoding', 
+      http_header_manager name: 'Accept-Encoding',
                           value: 'gzip, deflate'
     end
 
@@ -162,11 +162,11 @@ module RubyJmeter
       params[:url] = 'http://54.252.206.143:8080/' if params[:stub]
 
       get name: '__testdata', url: params[:url] do
-        extract name: params[:name], 
-          regex: params[:regex], 
-          match_num: params[:match_num], 
+        extract name: params[:name],
+          regex: params[:regex],
+          match_num: params[:match_num],
           default: params[:default]
-      end  
+      end
     end
 
     ##
@@ -222,7 +222,7 @@ module RubyJmeter
 
       node = RubyJmeter::ThroughputController.new(params)
       node.doc.xpath(".//FloatProperty/value").first.content = params[:maxThroughput].to_f
-     
+
       attach_node(node, &block)
     end
 
@@ -259,7 +259,7 @@ module RubyJmeter
     def extract(params, &block)
       node = if params[:regex]
         params[:refname] = params[:name]
-        params[:regex] = params[:regex] #CGI.escapeHTML 
+        params[:regex] = params[:regex] #CGI.escapeHTML
         params[:template] = params[:template] || "$1$"
         RubyJmeter::RegularExpressionExtractor.new(params)
       else
@@ -407,8 +407,6 @@ module RubyJmeter
           :flood => {
             :tool => 'jmeter-2.9',
             :url => params[:url],
-            :plan => File.new("#{file.path}", 'rb'),
-            :plan_cache => '',
             :name => params[:name],
             :notes => params[:notes],
             :tag_list => params[:tag_list],
@@ -419,10 +417,13 @@ module RubyJmeter
             :started => params[:started],
             :stopped => params[:stopped]
           },
+          :flood_files => {
+            :file => File.new("#{file.path}", 'rb')
+          },
           :results => (File.new("#{params[:jtl] ? params[:jtl] : 'jmeter.jtl'}", 'rb') if params[:region] == 'local'),
           :region => params[:region],
           :multipart => true,
-          :content_type => 'application/octet-stream'          
+          :content_type => 'application/octet-stream'
         }.merge(params)
         if response.code == 200
           logger.info "Flood results at: #{JSON.parse(response)["response"]["results"]["link"]}"
