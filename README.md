@@ -1,10 +1,11 @@
 # RubyJmeter
 
 [![Build Status](https://travis-ci.org/flood-io/ruby-jmeter.png)](https://travis-ci.org/flood-io/ruby-jmeter)
+[![Code Climate](https://codeclimate.com/github/flood-io/ruby-jmeter.png)](https://codeclimate.com/github/flood-io/ruby-jmeter)
 
 Tired of using the JMeter GUI or looking at hairy XML files?
 
-This gem lets you write test plans for JMeter in your favourite text editor, and optionally run them on [flood.io](http://flood.io). 
+This gem lets you write test plans for JMeter in your favourite text editor, and optionally run them on [flood.io](http://flood.io).
 
 ## Installation
 
@@ -34,7 +35,7 @@ test do
 end.jmx
 ```
 
-So in this example, we just created a test plan, with 10 threads, each of which visited the search page at Google. 
+So in this example, we just created a test plan, with 10 threads, each of which visited the search page at Google.
 
 ### Generating a JMeter Test Plan (JMX)
 Note also how we called the `jmx` method of the test. Calling this method will write the contents of the JMeter test plan to file like this.
@@ -91,9 +92,9 @@ test do
     visit name: 'Google Search', url: 'http://google.com'
   end
 end.run(
-  path: '/usr/share/jmeter/bin/', 
-  file: 'jmeter.jmx', 
-  log: 'jmeter.log', 
+  path: '/usr/share/jmeter/bin/',
+  file: 'jmeter.jmx',
+  log: 'jmeter.log',
   jtl: 'results.jtl')
 ```
 
@@ -104,16 +105,16 @@ You can also execute JMeter test plans on flood.io using our API. To do so, you 
 To execute the test on flood.io, call the `grid` method on the test and pass it the API token like this.
 
 ```ruby
-test do  
+test do
   threads count: 10 do
     visit name: 'Google Search', url: 'http://google.com'
-  end  
+  end
 end.grid('OxtZ-4v-v0koSz5Y0enEQQ')
 ```
 
 This will then provide you with a link to the live test results on flood.io like this.
 
-``` 
+```
 Results at: http://prod.flood.io/shared?testguid=73608030311611e2962f123141011033&run_id=339&tags=jmeter&domain=altentee.com&cluster=54.251.48.129&status=running&view=
 ```
 
@@ -150,7 +151,7 @@ threads count: 100
 threads count: 100, continue_forever: true
 threads count: 100, loops: 10
 threads count: 100, rampup: 30, duration: 60
-threads count: 100, scheduler: true, 
+threads count: 100, scheduler: true,
   start_time: Time.now.to_i * 1000,
   end_time:   (Time.now.to_i * 1000) + (3600 * 1000)
 ```
@@ -224,15 +225,15 @@ You can use the `visit` method to navigate to pages:
 ```ruby
 visit name: 'Google Search', url: 'http://google.com'
 visit name: 'Google Search', url: 'http://google.com'
-visit name: 'Google Search', url: 'http://google.com', 
-  method: 'POST', 
+visit name: 'Google Search', url: 'http://google.com',
+  method: 'POST',
   'DO_MULTIPART_POST': 'true'
 visit name: 'Google Search', url: 'http://google.com',
   use_keepalive: 'false'
-visit name: 'Google Search', url: 'http://google.com', 
+visit name: 'Google Search', url: 'http://google.com',
   connect_timeout: '1000',
   response_timeout: '60000'
-visit name: 'View Login', url: '/login', 
+visit name: 'View Login', url: '/login',
   protocol: "https",
   port: 443
 ```
@@ -289,10 +290,10 @@ visit name: "Altentee", url: "http://altentee.com" do
   extract regex: "content='(.+?)' name='csrf-token'", name: 'csrf-token'
   extract regex: 'value="(.+?)" name="JESSIONSID"', name: 'JSESSIONID'
   web_reg_save_param regex: 'value="(.+?)" name="VIEWSTATE"', name: 'VIEWSTATE'
-  extract name: 'username', regex: 'value="(.+?)", name="username"', 
+  extract name: 'username', regex: 'value="(.+?)", name="username"',
     default: 'Tim Koopmans',
     match_number: 1
-  extract name: 'shopping_item', regex: 'id="(.+?)" name="book"', 
+  extract name: 'shopping_item', regex: 'id="(.+?)" name="book"',
     match_number: 0 # random
 end
 ```
@@ -308,7 +309,7 @@ end
 ```
 
 
-This method takes 3 parameters: the matching rule, the test string, and an optional parameters hash. This is based on the [Response Assertion](http://jmeter.apache.org/usermanual/component_reference.html#Response_Assertion). 
+This method takes 3 parameters: the matching rule, the test string, and an optional parameters hash. This is based on the [Response Assertion](http://jmeter.apache.org/usermanual/component_reference.html#Response_Assertion).
 
 ```ruby
 visit "Altentee", "http://altentee.com" do
