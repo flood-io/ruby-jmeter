@@ -295,6 +295,29 @@ describe "DSL" do
   end
 
 
+  describe 'get_with_parameterized_domain' do
+    let(:doc) do
+      test do
+        threads do
+          transaction name: "TC_01", parent: true, include_timers: true do
+            visit url: "/home?location=melbourne", domain: "${custom_domain}"
+          end
+        end
+      end.to_doc
+    end
+
+    let(:fragment) { doc.search("//HTTPSamplerProxy").first }
+
+    it 'should match on path' do
+      fragment.search(".//stringProp[@name='HTTPSampler.path']").text.should == '/home'
+    end
+
+    it 'should match on domain' do
+      fragment.search(".//stringProp[@name='HTTPSampler.domain']").text.should == '${custom_domain}'
+    end
+  end
+
+
   describe 'https' do
     let(:doc) do
       test do
