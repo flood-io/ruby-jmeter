@@ -65,7 +65,7 @@ describe "DSL" do
       end.to_doc
     end
 
-    let(:fragment) { doc.search("//ConfigTestElement").first }
+    let(:config_fragment) { doc.search("//ConfigTestElement").first }
     let(:sampler_fragment) { doc.search("//HTTPSamplerProxy").first }
 
     it 'should match on implementation' do
@@ -73,13 +73,13 @@ describe "DSL" do
     end
 
     it 'should match on defaults' do
-      fragment.search(".//stringProp[@name='HTTPSampler.domain']").text.should == 'example.com'
-      fragment.search(".//stringProp[@name='HTTPSampler.protocol']").text.should == 'https'
-      fragment.search(".//stringProp[@name='HTTPSampler.implementation']").text.should == 'HttpClient3.1'
-      fragment.search(".//boolProp[@name='HTTPSampler.image_parser']").text.should == 'true'
-      fragment.search(".//boolProp[@name='HTTPSampler.concurrentDwn']").text.should == 'true'
-      fragment.search(".//stringProp[@name='HTTPSampler.concurrentPool']").text.should == '5'
-      fragment.search(".//stringProp[@name='HTTPSampler.embedded_url_re']").text.should == 'http.+?example.com'
+      config_fragment.search(".//stringProp[@name='HTTPSampler.domain']").text.should == 'example.com'
+      config_fragment.search(".//stringProp[@name='HTTPSampler.protocol']").text.should == 'https'
+      config_fragment.search(".//stringProp[@name='HTTPSampler.implementation']").text.should == 'HttpClient3.1'
+      config_fragment.search(".//boolProp[@name='HTTPSampler.image_parser']").text.should == 'true'
+      config_fragment.search(".//boolProp[@name='HTTPSampler.concurrentDwn']").text.should == 'true'
+      config_fragment.search(".//stringProp[@name='HTTPSampler.concurrentPool']").text.should == '5'
+      config_fragment.search(".//stringProp[@name='HTTPSampler.embedded_url_re']").text.should == 'http.+?example.com'
     end
   end
 
@@ -469,7 +469,7 @@ describe "DSL" do
     let(:fragment) { doc.search("//LoopController").first }
 
     it 'should match on Loops' do
-      fragment.search(".//intProp[@name='LoopController.loops']").text.should == '5'
+      fragment.search(".//stringProp[@name='LoopController.loops']").text.should == '5'
     end
   end
 

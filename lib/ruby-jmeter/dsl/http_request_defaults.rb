@@ -28,6 +28,7 @@ module RubyJmeter
   <boolProp name="HTTPSampler.image_parser">true</boolProp>
   <boolProp name="HTTPSampler.concurrentDwn">true</boolProp>
   <stringProp name="HTTPSampler.concurrentPool">4</stringProp>
+  <stringProp name="HTTPSampler.embedded_url_re"> </stringProp>
 </ConfigTestElement>)
       EOS
       update params
