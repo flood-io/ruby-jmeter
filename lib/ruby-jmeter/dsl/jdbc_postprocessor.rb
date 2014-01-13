@@ -21,6 +21,7 @@ module RubyJmeter
   <stringProp name="queryType">Select Statement</stringProp>
   <stringProp name="resultVariable"/>
   <stringProp name="variableNames"/>
+  <stringProp name="queryTimeout"/>
 </JDBCPostProcessor>)
       EOS
       update params

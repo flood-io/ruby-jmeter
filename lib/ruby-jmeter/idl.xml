@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jmeterTestPlan version="1.2" properties="2.4" jmeter="2.9 r1437961">
+<jmeterTestPlan version="1.2" properties="2.6" jmeter="2.11 r1554548">
   <hashTree>
     <TestPlan guiclass="TestPlanGui" testclass="TestPlan" testname="Test Plan" enabled="true">
       <stringProp name="TestPlan.comments"></stringProp>
@@ -27,7 +27,7 @@
         <stringProp name="filename"></stringProp>
         <boolProp name="quotedData">false</boolProp>
         <boolProp name="recycle">true</boolProp>
-        <stringProp name="shareMode">All threads</stringProp>
+        <stringProp name="shareMode">shareMode.all</stringProp>
         <boolProp name="stopThread">false</boolProp>
         <stringProp name="variableNames"></stringProp>
       </CSVDataSet>
@@ -86,17 +86,10 @@
         <stringProp name="HTTPSampler.protocol"></stringProp>
         <stringProp name="HTTPSampler.contentEncoding"></stringProp>
         <stringProp name="HTTPSampler.path">/</stringProp>
-        <stringProp name="HTTPSampler.method">GET</stringProp>
-        <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
-        <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
-        <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
-        <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
-        <boolProp name="HTTPSampler.monitor">false</boolProp>
-        <boolProp name="HTTPSampler.image_parser">false</boolProp>
-        <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
-        <boolProp name="HTTPSampler.concurrentDwn">false</boolProp>
-        <stringProp name="HTTPSampler.concurrentPool">4</stringProp>
         <stringProp name="HTTPSampler.implementation">HttpClient4</stringProp>
+        <boolProp name="HTTPSampler.image_parser">true</boolProp>
+        <boolProp name="HTTPSampler.concurrentDwn">true</boolProp>
+        <stringProp name="HTTPSampler.concurrentPool">4</stringProp>
       </ConfigTestElement>
       <hashTree/>
       <JavaConfig guiclass="JavaConfigGui" testclass="JavaConfig" testname="Java Request Defaults" enabled="true">
@@ -167,6 +160,7 @@
         <stringProp name="endIndex"></stringProp>
         <stringProp name="preload">True</stringProp>
         <stringProp name="startIndex"></stringProp>
+        <stringProp name="clientCertAliasVarName"></stringProp>
       </KeystoreConfig>
       <hashTree/>
       <ConfigTestElement guiclass="LdapExtConfigGui" testclass="ConfigTestElement" testname="LDAP Extended Request Defaults" enabled="true">
@@ -194,18 +188,17 @@
         <stringProp name="servername"></stringProp>
         <stringProp name="port"></stringProp>
         <stringProp name="rootdn"></stringProp>
-        <boolProp name="user_defined">false</boolProp>
+        <boolProp name="user_defined">true</boolProp>
         <stringProp name="test">add</stringProp>
         <stringProp name="base_entry_dn"></stringProp>
         <elementProp name="arguments" elementType="Arguments" guiclass="ArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
           <collectionProp name="Arguments.arguments">
-              <elementProp name="testguid" elementType="Argument">
-              <stringProp name="Argument.name"></stringProp>
-              <stringProp name="Argument.value"></stringProp>
+            <elementProp name=" " elementType="Argument">
+              <stringProp name="Argument.name"> </stringProp>
+              <stringProp name="Argument.value"> </stringProp>
               <stringProp name="Argument.metadata">=</stringProp>
             </elementProp>
           </collectionProp>
-          <stringProp name="TestPlan.comments"></stringProp>
         </elementProp>
       </ConfigTestElement>
       <hashTree/>
@@ -237,20 +230,21 @@
       <hashTree/>
       <Arguments guiclass="ArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
         <collectionProp name="Arguments.arguments">
-          <elementProp name="testguid" elementType="Argument">
-            <stringProp name="Argument.name"></stringProp>
-            <stringProp name="Argument.value"></stringProp>
+          <elementProp name=" " elementType="Argument">
+            <stringProp name="Argument.name"> </stringProp>
+            <stringProp name="Argument.value"> </stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
+            <stringProp name="Argument.desc"> </stringProp>
           </elementProp>
         </collectionProp>
-        <stringProp name="TestPlan.comments"></stringProp>
+        <stringProp name="TestPlan.comments"> </stringProp>
       </Arguments>
       <hashTree/>
       <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="Thread Group" enabled="true">
         <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
         <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="Loop Controller" enabled="true">
           <boolProp name="LoopController.continue_forever">false</boolProp>
-          <intProp name="LoopController.loops">1</intProp>
+          <stringProp name="LoopController.loops">1</stringProp>
         </elementProp>
         <stringProp name="ThreadGroup.num_threads">1</stringProp>
         <stringProp name="ThreadGroup.ramp_time">1</stringProp>
@@ -271,7 +265,7 @@
         <IfController guiclass="IfControllerPanel" testclass="IfController" testname="If Controller" enabled="true">
           <stringProp name="IfController.condition"></stringProp>
           <boolProp name="IfController.evaluateAll">false</boolProp>
-          <boolProp name="IfController.useExpression">false</boolProp>
+          <boolProp name="IfController.useExpression">true</boolProp>
         </IfController>
         <hashTree/>
         <IncludeController guiclass="IncludeControllerGui" testclass="IncludeController" testname="Include Controller" enabled="true">
@@ -280,7 +274,7 @@
         <hashTree/>
         <LoopController guiclass="LoopControlPanel" testclass="LoopController" testname="Loop Controller" enabled="true">
           <boolProp name="LoopController.continue_forever">true</boolProp>
-          <intProp name="LoopController.loops">1</intProp>
+          <stringProp name="LoopController.loops">1</stringProp>
         </LoopController>
         <hashTree/>
         <ModuleController guiclass="ModuleControllerGui" testclass="ModuleController" testname="Module Controller" enabled="true"/>
@@ -340,7 +334,7 @@
         </BSFTimer>
         <hashTree/>
         <ConstantThroughputTimer guiclass="TestBeanGUI" testclass="ConstantThroughputTimer" testname="Constant Throughput Timer" enabled="true">
-          <stringProp name="calcMode">this thread only</stringProp>
+          <intProp name="calcMode">0</intProp>
           <doubleProp>
             <name>throughput</name>
             <value>0.0</value>
@@ -422,6 +416,7 @@
           <stringProp name="queryType">Select Statement</stringProp>
           <stringProp name="resultVariable"></stringProp>
           <stringProp name="variableNames"></stringProp>
+          <stringProp name="queryTimeout"></stringProp>
         </JDBCPreProcessor>
         <hashTree/>
         <JSR223PreProcessor guiclass="TestBeanGUI" testclass="JSR223PreProcessor" testname="JSR223 PreProcessor" enabled="true">
@@ -439,9 +434,13 @@
         </RegExUserParameters>
         <hashTree/>
         <UserParameters guiclass="UserParametersGui" testclass="UserParameters" testname="User Parameters" enabled="true">
-          <collectionProp name="UserParameters.names"/>
+          <collectionProp name="UserParameters.names">
+            <stringProp name="0"></stringProp>
+          </collectionProp>
           <collectionProp name="UserParameters.thread_values">
-            <collectionProp name="1"/>
+            <collectionProp name="25080">
+              <stringProp name="0"></stringProp>
+            </collectionProp>
           </collectionProp>
           <boolProp name="UserParameters.per_iteration">false</boolProp>
         </UserParameters>
@@ -526,9 +525,9 @@
           <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
           <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
           <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+          <stringProp name="HTTPSampler.implementation">HttpClient4</stringProp>
           <boolProp name="HTTPSampler.monitor">false</boolProp>
           <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
-          <stringProp name="HTTPSampler.implementation"></stringProp>
         </HTTPSamplerProxy>
         <hashTree/>
         <JavaSampler guiclass="JavaTestSamplerGui" testclass="JavaSampler" testname="Java Request" enabled="true">
@@ -587,6 +586,7 @@
           <stringProp name="queryType">Select Statement</stringProp>
           <stringProp name="resultVariable"></stringProp>
           <stringProp name="variableNames"></stringProp>
+          <stringProp name="queryTimeout"></stringProp>
         </JDBCSampler>
         <hashTree/>
         <JMSSampler guiclass="JMSSamplerGui" testclass="JMSSampler" testname="JMS Point-to-Point" enabled="true">
@@ -603,8 +603,14 @@
           <elementProp name="JMSSampler.jndiProperties" elementType="Arguments" guiclass="ArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
             <collectionProp name="Arguments.arguments"/>
           </elementProp>
-          <elementProp name="arguments" elementType="Arguments" guiclass="ArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
-            <collectionProp name="Arguments.arguments"/>
+          <elementProp name="arguments" elementType="JMSProperties">
+            <collectionProp name="JMSProperties.properties">
+              <elementProp name="" elementType="JMSProperty">
+                <stringProp name="JMSProperty.name"> </stringProp>
+                <stringProp name="JMSProperty.value"></stringProp>
+                <stringProp name="JMSProperty.type">java.lang.String</stringProp>
+              </elementProp>
+            </collectionProp>
           </elementProp>
         </JMSSampler>
         <hashTree/>
@@ -623,8 +629,14 @@
           <stringProp name="jms.config_msg_type">jms_text_message</stringProp>
           <stringProp name="jms.iterations">1</stringProp>
           <boolProp name="jms.authenticate">false</boolProp>
-          <elementProp name="jms.jmsProperties" elementType="Arguments" guiclass="ArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
-            <collectionProp name="Arguments.arguments"/>
+          <elementProp name="jms.jmsProperties" elementType="JMSProperties">
+            <collectionProp name="JMSProperties.properties">
+              <elementProp name="" elementType="JMSProperty">
+                <stringProp name="JMSProperty.name"> </stringProp>
+                <stringProp name="JMSProperty.value"></stringProp>
+                <stringProp name="JMSProperty.type">java.lang.String</stringProp>
+              </elementProp>
+            </collectionProp>
           </elementProp>
         </PublisherSampler>
         <hashTree/>
@@ -828,6 +840,7 @@
           <stringProp name="queryType">Select Statement</stringProp>
           <stringProp name="resultVariable"></stringProp>
           <stringProp name="variableNames"></stringProp>
+          <stringProp name="queryTimeout"></stringProp>
         </JDBCPostProcessor>
         <hashTree/>
         <JSR223PostProcessor guiclass="TestBeanGUI" testclass="JSR223PostProcessor" testname="JSR223 PostProcessor" enabled="true">
@@ -920,12 +933,12 @@
         <hashTree/>
         <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Response Assertion" enabled="true">
           <collectionProp name="Asserion.test_strings">
-              <stringProp name="match"></stringProp>
-            </collectionProp>
-            <stringProp name="Assertion.test_field">Assertion.response_data</stringProp>
-            <boolProp name="Assertion.assume_success">false</boolProp>
-            <intProp name="Assertion.test_type">2</intProp>
-            <stringProp name="Assertion.scope">all</stringProp>
+            <stringProp name="0"></stringProp>
+          </collectionProp>
+          <stringProp name="Assertion.test_field">Assertion.response_data</stringProp>
+          <boolProp name="Assertion.assume_success">false</boolProp>
+          <intProp name="Assertion.test_type">16</intProp>
+          <stringProp name="Assertion.scope">all</stringProp>
         </ResponseAssertion>
         <hashTree/>
         <SMIMEAssertion guiclass="SMIMEAssertionGui" testclass="SMIMEAssertion" testname="SMIME Assertion" enabled="true">

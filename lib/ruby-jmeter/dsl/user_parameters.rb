@@ -14,9 +14,13 @@ module RubyJmeter
       testname = params.kind_of?(Array) ? 'UserParameters' : (params[:name] || 'UserParameters')
       @doc = Nokogiri::XML(<<-EOS.strip_heredoc)
 <UserParameters guiclass="UserParametersGui" testclass="UserParameters" testname="#{testname}" enabled="true">
-  <collectionProp name="UserParameters.names"/>
+  <collectionProp name="UserParameters.names">
+    <stringProp name="0"/>
+  </collectionProp>
   <collectionProp name="UserParameters.thread_values">
-    <collectionProp name="1"/>
+    <collectionProp name="25080">
+      <stringProp name="0"/>
+    </collectionProp>
   </collectionProp>
   <boolProp name="UserParameters.per_iteration">false</boolProp>
 </UserParameters>)

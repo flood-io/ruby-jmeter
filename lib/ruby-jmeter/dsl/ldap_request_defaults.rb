@@ -17,18 +17,17 @@ module RubyJmeter
   <stringProp name="servername"/>
   <stringProp name="port"/>
   <stringProp name="rootdn"/>
-  <boolProp name="user_defined">false</boolProp>
+  <boolProp name="user_defined">true</boolProp>
   <stringProp name="test">add</stringProp>
   <stringProp name="base_entry_dn"/>
   <elementProp name="arguments" elementType="Arguments" guiclass="ArgumentsPanel" testclass="Arguments" testname="#{testname}" enabled="true">
     <collectionProp name="Arguments.arguments">
-      <elementProp name="testguid" elementType="Argument">
-        <stringProp name="Argument.name"/>
-        <stringProp name="Argument.value"/>
+      <elementProp name=" " elementType="Argument">
+        <stringProp name="Argument.name"> </stringProp>
+        <stringProp name="Argument.value"> </stringProp>
         <stringProp name="Argument.metadata">=</stringProp>
       </elementProp>
     </collectionProp>
-    <stringProp name="TestPlan.comments"/>
   </elementProp>
 </ConfigTestElement>)
       EOS

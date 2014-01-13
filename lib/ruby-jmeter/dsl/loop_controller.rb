@@ -15,7 +15,7 @@ module RubyJmeter
       @doc = Nokogiri::XML(<<-EOS.strip_heredoc)
 <LoopController guiclass="LoopControlPanel" testclass="LoopController" testname="#{testname}" enabled="true">
   <boolProp name="LoopController.continue_forever">true</boolProp>
-  <intProp name="LoopController.loops">1</intProp>
+  <stringProp name="LoopController.loops">1</stringProp>
 </LoopController>)
       EOS
       update params

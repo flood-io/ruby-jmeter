@@ -252,6 +252,13 @@ module RubyJmeter
     ##
     # Other Elements
 
+    def user_parameters(params, &block)
+      if params.is_a?(Hash)
+        params['Argument.name'] = params[:name]
+      end
+      super
+    end
+
     alias_method :bsh_pre, :beanshell_preprocessor
 
     alias_method :bsh_post, :beanshell_postprocessor
