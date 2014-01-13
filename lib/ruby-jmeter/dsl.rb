@@ -156,10 +156,10 @@ module RubyJmeter
       params[:url] = params[:key] if URI.parse(URI::encode(params[:key])).scheme
 
       params[:url] = if params[:host]
-        "http://#{params[:host]}/#{params[:command]}/#{params[:key]}?type=text"
+        "http://#{params[:host]}/data/#{params[:command]}/#{params[:key]}?type=text"
       end
 
-      params[:url] = 'http://54.252.206.143/' if params[:stub]
+      params[:url] = 'http://54.252.206.143/data/' if params[:stub]
 
       get name: '__testdata', url: params[:url] do
         extract name: params[:name],
