@@ -405,7 +405,7 @@ module RubyJmeter
         response = RestClient.post "#{params[:endpoint] ? params[:endpoint] : 'https://api.flood.io'}/floods?auth_token=#{token}",
         {
           :flood => {
-            :tool => 'jmeter-2.9',
+            :tool => 'jmeter-2.11',
             :url => params[:url],
             :name => params[:name],
             :notes => params[:notes],
