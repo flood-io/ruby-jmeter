@@ -65,7 +65,7 @@ describe "DSL" do
       end.to_doc
     end
 
-    let(:fragment) { doc.search("//ConfigTestElement").first }
+    let(:config_fragment) { doc.search("//ConfigTestElement").first }
     let(:sampler_fragment) { doc.search("//HTTPSamplerProxy").first }
 
     it 'should match on implementation' do
@@ -73,13 +73,13 @@ describe "DSL" do
     end
 
     it 'should match on defaults' do
-      fragment.search(".//stringProp[@name='HTTPSampler.domain']").text.should == 'example.com'
-      fragment.search(".//stringProp[@name='HTTPSampler.protocol']").text.should == 'https'
-      fragment.search(".//stringProp[@name='HTTPSampler.implementation']").text.should == 'HttpClient3.1'
-      fragment.search(".//boolProp[@name='HTTPSampler.image_parser']").text.should == 'true'
-      fragment.search(".//boolProp[@name='HTTPSampler.concurrentDwn']").text.should == 'true'
-      fragment.search(".//stringProp[@name='HTTPSampler.concurrentPool']").text.should == '5'
-      fragment.search(".//stringProp[@name='HTTPSampler.embedded_url_re']").text.should == 'http.+?example.com'
+      config_fragment.search(".//stringProp[@name='HTTPSampler.domain']").text.should == 'example.com'
+      config_fragment.search(".//stringProp[@name='HTTPSampler.protocol']").text.should == 'https'
+      config_fragment.search(".//stringProp[@name='HTTPSampler.implementation']").text.should == 'HttpClient3.1'
+      config_fragment.search(".//boolProp[@name='HTTPSampler.image_parser']").text.should == 'true'
+      config_fragment.search(".//boolProp[@name='HTTPSampler.concurrentDwn']").text.should == 'true'
+      config_fragment.search(".//stringProp[@name='HTTPSampler.concurrentPool']").text.should == '5'
+      config_fragment.search(".//stringProp[@name='HTTPSampler.embedded_url_re']").text.should == 'http.+?example.com'
     end
   end
 
@@ -337,6 +337,45 @@ describe "DSL" do
   end
 
 
+  describe 'user_parameters' do
+    let(:doc) do
+      test do
+        threads do
+          transaction name: "TC_02", parent: true, include_timers: true do
+            visit url: "/" do
+              user_parameters names: ['name1', 'name2'],
+                thread_values: {
+                  user_1: [
+                    'value1',
+                    'value2'
+                  ],
+
+                  user_2: [
+                    'value1',
+                    'value2'
+                  ]
+                }
+            end
+          end
+        end
+      end.to_doc
+    end
+
+    let(:names) { doc.search("//collectionProp[@name='UserParameters.names']").first }
+    let(:thread_values) { doc.search("//collectionProp[@name='UserParameters.thread_values']").first }
+
+    it 'should match on names' do
+      names.search(".//stringProp[@name='name1']").text.should == 'name1'
+      names.search(".//stringProp[@name='name2']").text.should == 'name2'
+    end
+
+    it 'should match on thread values' do
+      thread_values.search(".//stringProp[@name='0']").first.text.should == 'value1'
+      thread_values.search(".//stringProp[@name='1']").first.text.should == 'value2'
+    end
+  end
+
+
   describe 'xhr' do
     let(:doc) do
       test do
@@ -469,7 +508,7 @@ describe "DSL" do
     let(:fragment) { doc.search("//LoopController").first }
 
     it 'should match on Loops' do
-      fragment.search(".//intProp[@name='LoopController.loops']").text.should == '5'
+      fragment.search(".//stringProp[@name='LoopController.loops']").text.should == '5'
     end
   end
 
@@ -570,7 +609,7 @@ describe "DSL" do
       let(:fragment) { doc.search("//ResponseAssertion").first }
 
       it 'should match on match' do
-        fragment.search(".//stringProp[@name='match']").text.should == 'Welcome'
+        fragment.search(".//stringProp[@name='0']").text.should == 'Welcome'
       end
 
       it 'should match on scope' do

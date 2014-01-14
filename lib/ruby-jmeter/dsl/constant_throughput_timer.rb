@@ -14,7 +14,7 @@ module RubyJmeter
       testname = params.kind_of?(Array) ? 'ConstantThroughputTimer' : (params[:name] || 'ConstantThroughputTimer')
       @doc = Nokogiri::XML(<<-EOS.strip_heredoc)
 <ConstantThroughputTimer guiclass="TestBeanGUI" testclass="ConstantThroughputTimer" testname="#{testname}" enabled="true">
-  <stringProp name="calcMode">this thread only</stringProp>
+  <intProp name="calcMode">0</intProp>
   <doubleProp>
     <name>throughput</name>
     <value>0.0</value>

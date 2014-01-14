@@ -15,11 +15,11 @@ module RubyJmeter
       @doc = Nokogiri::XML(<<-EOS.strip_heredoc)
 <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="#{testname}" enabled="true">
   <collectionProp name="Asserion.test_strings">
-    <stringProp name="match"/>
+    <stringProp name="0"/>
   </collectionProp>
   <stringProp name="Assertion.test_field">Assertion.response_data</stringProp>
   <boolProp name="Assertion.assume_success">false</boolProp>
-  <intProp name="Assertion.test_type">2</intProp>
+  <intProp name="Assertion.test_type">16</intProp>
   <stringProp name="Assertion.scope">all</stringProp>
 </ResponseAssertion>)
       EOS

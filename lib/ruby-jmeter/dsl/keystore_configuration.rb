@@ -17,6 +17,7 @@ module RubyJmeter
   <stringProp name="endIndex"/>
   <stringProp name="preload">True</stringProp>
   <stringProp name="startIndex"/>
+  <stringProp name="clientCertAliasVarName"/>
 </KeystoreConfig>)
       EOS
       update params

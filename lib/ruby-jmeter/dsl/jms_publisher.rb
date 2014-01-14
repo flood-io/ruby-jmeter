@@ -28,8 +28,14 @@ module RubyJmeter
   <stringProp name="jms.config_msg_type">jms_text_message</stringProp>
   <stringProp name="jms.iterations">1</stringProp>
   <boolProp name="jms.authenticate">false</boolProp>
-  <elementProp name="jms.jmsProperties" elementType="Arguments" guiclass="ArgumentsPanel" testclass="Arguments" testname="#{testname}" enabled="true">
-    <collectionProp name="Arguments.arguments"/>
+  <elementProp name="jms.jmsProperties" elementType="JMSProperties">
+    <collectionProp name="JMSProperties.properties">
+      <elementProp name="" elementType="JMSProperty">
+        <stringProp name="JMSProperty.name"> </stringProp>
+        <stringProp name="JMSProperty.value"/>
+        <stringProp name="JMSProperty.type">java.lang.String</stringProp>
+      </elementProp>
+    </collectionProp>
   </elementProp>
 </PublisherSampler>)
       EOS
