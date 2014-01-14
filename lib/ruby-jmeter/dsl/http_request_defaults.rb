@@ -24,17 +24,11 @@ module RubyJmeter
   <stringProp name="HTTPSampler.protocol"/>
   <stringProp name="HTTPSampler.contentEncoding"/>
   <stringProp name="HTTPSampler.path">/</stringProp>
-  <stringProp name="HTTPSampler.method">GET</stringProp>
-  <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
-  <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
-  <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
-  <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
-  <boolProp name="HTTPSampler.monitor">false</boolProp>
-  <boolProp name="HTTPSampler.image_parser">false</boolProp>
-  <stringProp name="HTTPSampler.embedded_url_re"/>
-  <boolProp name="HTTPSampler.concurrentDwn">false</boolProp>
-  <stringProp name="HTTPSampler.concurrentPool">4</stringProp>
   <stringProp name="HTTPSampler.implementation">HttpClient4</stringProp>
+  <boolProp name="HTTPSampler.image_parser">true</boolProp>
+  <boolProp name="HTTPSampler.concurrentDwn">true</boolProp>
+  <stringProp name="HTTPSampler.concurrentPool">4</stringProp>
+  <stringProp name="HTTPSampler.embedded_url_re"> </stringProp>
 </ConfigTestElement>)
       EOS
       update params

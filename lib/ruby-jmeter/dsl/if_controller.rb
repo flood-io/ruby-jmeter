@@ -16,7 +16,7 @@ module RubyJmeter
 <IfController guiclass="IfControllerPanel" testclass="IfController" testname="#{testname}" enabled="true">
   <stringProp name="IfController.condition"/>
   <boolProp name="IfController.evaluateAll">false</boolProp>
-  <boolProp name="IfController.useExpression">false</boolProp>
+  <boolProp name="IfController.useExpression">true</boolProp>
 </IfController>)
       EOS
       update params

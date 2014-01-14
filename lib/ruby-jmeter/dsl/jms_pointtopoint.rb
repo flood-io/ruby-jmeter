@@ -27,8 +27,14 @@ module RubyJmeter
   <elementProp name="JMSSampler.jndiProperties" elementType="Arguments" guiclass="ArgumentsPanel" testclass="Arguments" testname="#{testname}" enabled="true">
     <collectionProp name="Arguments.arguments"/>
   </elementProp>
-  <elementProp name="arguments" elementType="Arguments" guiclass="ArgumentsPanel" testclass="Arguments" testname="#{testname}" enabled="true">
-    <collectionProp name="Arguments.arguments"/>
+  <elementProp name="arguments" elementType="JMSProperties">
+    <collectionProp name="JMSProperties.properties">
+      <elementProp name="" elementType="JMSProperty">
+        <stringProp name="JMSProperty.name"> </stringProp>
+        <stringProp name="JMSProperty.value"/>
+        <stringProp name="JMSProperty.type">java.lang.String</stringProp>
+      </elementProp>
+    </collectionProp>
   </elementProp>
 </JMSSampler>)
       EOS

@@ -19,7 +19,7 @@ module RubyJmeter
   <stringProp name="filename"/>
   <boolProp name="quotedData">false</boolProp>
   <boolProp name="recycle">true</boolProp>
-  <stringProp name="shareMode">All threads</stringProp>
+  <stringProp name="shareMode">shareMode.all</stringProp>
   <boolProp name="stopThread">false</boolProp>
   <stringProp name="variableNames"/>
 </CSVDataSet>)

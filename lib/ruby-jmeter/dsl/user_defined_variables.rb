@@ -15,13 +15,14 @@ module RubyJmeter
       @doc = Nokogiri::XML(<<-EOS.strip_heredoc)
 <Arguments guiclass="ArgumentsPanel" testclass="Arguments" testname="#{testname}" enabled="true">
   <collectionProp name="Arguments.arguments">
-    <elementProp name="testguid" elementType="Argument">
-      <stringProp name="Argument.name"/>
-      <stringProp name="Argument.value"/>
+    <elementProp name=" " elementType="Argument">
+      <stringProp name="Argument.name"> </stringProp>
+      <stringProp name="Argument.value"> </stringProp>
       <stringProp name="Argument.metadata">=</stringProp>
+      <stringProp name="Argument.desc"> </stringProp>
     </elementProp>
   </collectionProp>
-  <stringProp name="TestPlan.comments"/>
+  <stringProp name="TestPlan.comments"> </stringProp>
 </Arguments>)
       EOS
       update params

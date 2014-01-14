@@ -156,10 +156,10 @@ module RubyJmeter
       params[:url] = params[:key] if URI.parse(URI::encode(params[:key])).scheme
 
       params[:url] = if params[:host]
-        "http://#{params[:host]}:8080/#{params[:command]}/#{params[:key]}?type=text"
+        "http://#{params[:host]}/data/#{params[:command]}/#{params[:key]}?type=text"
       end
 
-      params[:url] = 'http://54.252.206.143:8080/' if params[:stub]
+      params[:url] = 'http://54.252.206.143/data/' if params[:stub]
 
       get name: '__testdata', url: params[:url] do
         extract name: params[:name],
@@ -252,6 +252,34 @@ module RubyJmeter
     ##
     # Other Elements
 
+    def user_parameters(params, &block)
+      if params.is_a?(Hash)
+        params['Argument.name'] = params[:name]
+      end
+
+      params[:names] = Nokogiri::XML::Builder.new do |b|
+        b.builder do
+          params[:names].each do |name|
+            b.stringProp name, name: name
+          end
+        end
+      end
+
+      params[:thread_values] = Nokogiri::XML::Builder.new do |b|
+        b.builder do
+          params[:thread_values].map do |user, values|
+            b.collectionProp name: user do
+              values.each_with_index.map do |value, index|
+                b.stringProp value, name: index
+              end
+            end
+          end
+        end
+      end
+
+      super
+    end
+
     alias_method :bsh_pre, :beanshell_preprocessor
 
     alias_method :bsh_post, :beanshell_postprocessor
@@ -284,7 +312,7 @@ module RubyJmeter
 
     def response_assertion(params={}, &block)
       params[:test_type] = parse_test_type(params)
-      params[:match] = params.values.first
+      params["0"] = params.values.first
       node = RubyJmeter::ResponseAssertion.new(params)
       node.doc.xpath("//stringProp[@name='Assertion.scope']").remove if
         params[:scope] == 'main' || params['scope'] == 'main'
