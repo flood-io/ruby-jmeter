@@ -291,7 +291,7 @@ module RubyJmeter
 
     def response_assertion(params={}, &block)
       params[:test_type] = parse_test_type(params)
-      params[:match] = params.values.first
+      params["0"] = params.values.first
       node = RubyJmeter::ResponseAssertion.new(params)
       node.doc.xpath("//stringProp[@name='Assertion.scope']").remove if
         params[:scope] == 'main' || params['scope'] == 'main'

@@ -570,7 +570,7 @@ describe "DSL" do
       let(:fragment) { doc.search("//ResponseAssertion").first }
 
       it 'should match on match' do
-        fragment.search(".//stringProp[@name='match']").text.should == 'Welcome'
+        fragment.search(".//stringProp[@name='0']").text.should == 'Welcome'
       end
 
       it 'should match on scope' do
