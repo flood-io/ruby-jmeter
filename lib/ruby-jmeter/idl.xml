@@ -435,13 +435,10 @@
         </RegExUserParameters>
         <hashTree/>
         <UserParameters guiclass="UserParametersGui" testclass="UserParameters" testname="User Parameters" enabled="true">
-          <collectionProp name="UserParameters.names">
-            <stringProp name="0"></stringProp>
-          </collectionProp>
+          <collectionProp name="UserParameters.names"/>
           <collectionProp name="UserParameters.thread_values">
-            <collectionProp name="25080">
-              <stringProp name="0"></stringProp>
-            </collectionProp>
+            <collectionProp name="1"/>
+            <collectionProp name="1"/>
           </collectionProp>
           <boolProp name="UserParameters.per_iteration">false</boolProp>
         </UserParameters>
@@ -526,7 +523,6 @@
           <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
           <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
           <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
-          <stringProp name="HTTPSampler.implementation"></stringProp>
           <boolProp name="HTTPSampler.monitor">false</boolProp>
           <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
         </HTTPSamplerProxy>

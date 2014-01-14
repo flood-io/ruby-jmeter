@@ -256,6 +256,27 @@ module RubyJmeter
       if params.is_a?(Hash)
         params['Argument.name'] = params[:name]
       end
+
+      params[:names] = Nokogiri::XML::Builder.new do |b|
+        b.builder do
+          params[:names].each do |name|
+            b.stringProp name, name: name
+          end
+        end
+      end
+
+      params[:thread_values] = Nokogiri::XML::Builder.new do |b|
+        b.builder do
+          params[:thread_values].map do |user, values|
+            b.collectionProp name: user do
+              values.each_with_index.map do |value, index|
+                b.stringProp value, name: index
+              end
+            end
+          end
+        end
+      end
+
       super
     end
 

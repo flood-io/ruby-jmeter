@@ -22,7 +22,12 @@ module RubyJmeter
       else
         params.each do |name, value|
           node = @doc.children.xpath("//*[contains(@name,\"#{name.to_s}\")]")
-          node.first.content = value unless node.empty?
+          if value.class == Nokogiri::XML::Builder
+            node.first << value.doc.at_xpath('//builder').children
+          else
+            node.first.content = value unless node.empty?
+          end
+
         end
       end
     end
@@ -37,10 +42,11 @@ module RubyJmeter
       elements = @doc.at_xpath("//collectionProp/elementProp")
       params.each_with_index do |param, index|
         param.each do |name, value|
+          next unless elements && elements.element_children
           element = elements.element_children.xpath("//*[contains(@name,\"#{name}\")]")
           element.last.content = value
         end
-        if index != params.size - 1
+        if index != params.size - 1 && elements
            @doc.at_xpath("//collectionProp") << elements.dup
         end
       end
