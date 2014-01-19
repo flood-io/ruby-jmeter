@@ -681,4 +681,21 @@ describe "DSL" do
     end
 
   end
+
+  describe 'constant_throughput_timer' do
+    let(:doc) do
+      test do
+        threads do
+          constant_throughput_timer throughput: 60.0
+        end
+      end.to_doc
+    end
+
+    let(:fragment) { doc.search("//ConstantThroughputTimer").first }
+
+    it 'should match on throughput' do
+      fragment.search("//doubleProp/value").text.should == '60.0'
+    end
+  end
+
 end
