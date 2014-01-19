@@ -72,7 +72,7 @@ module RubyJmeter
         :value => Nokogiri::XML(<<-EOF.strip_heredoc).children
           <elementProp name="" elementType="HTTPArgument">
             <boolProp name="HTTPArgument.always_encode">false</boolProp>
-            <stringProp name="Argument.value">#{params[:raw_body]}</stringProp>
+            <stringProp name="Argument.value">#{params[:raw_body].encode(:xml => :text)}</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
           EOF
