@@ -682,7 +682,7 @@ describe "DSL" do
 
   end
 
-  describe 'post' do
+  describe 'raw body containing xml entities' do
     let(:doc) do
       test do
         threads do
@@ -695,6 +695,27 @@ describe "DSL" do
 
     it 'escape raw_body' do
       fragment.search(".//stringProp[@name='Argument.value']").text.should == 'username=my_name&password=my_password&email="my name <test@example.com>"'
+    end
+  end
+
+  describe 'constant_throughput_timer' do
+    let(:doc) do
+      test do
+        threads do
+          constant_throughput_timer value: 60.0
+          constant_throughput_timer throughput: 70.0
+        end
+      end.to_doc
+    end
+
+    let(:fragment) { doc.search("//ConstantThroughputTimer").first }
+
+    it 'should match on throughput using value' do
+      fragment.search("//doubleProp/value").first.text.should == '60.0'
+    end
+
+    it 'should match on throughput using throughput' do
+      fragment.search("//doubleProp/value").last.text.should == '70.0'
     end
   end
 

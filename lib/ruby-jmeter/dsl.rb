@@ -310,6 +310,17 @@ module RubyJmeter
 
     alias_method :think_time, :random_timer
 
+    def constant_throughput_timer(params, &block)
+      params[:value] ||= params[:throughput] || 0.0
+
+      node = RubyJmeter::ConstantThroughputTimer.new(params)
+      node.doc.xpath(".//value").first.content = params[:value].to_f
+
+      attach_node(node, &block)
+    end
+
+    alias_method :ConstantThroughputTimer, :constant_throughput_timer
+
     def response_assertion(params={}, &block)
       params[:test_type] = parse_test_type(params)
       params["0"] = params.values.first
