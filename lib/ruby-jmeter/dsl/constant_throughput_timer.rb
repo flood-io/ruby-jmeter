@@ -17,7 +17,7 @@ module RubyJmeter
   <intProp name="calcMode">0</intProp>
   <doubleProp>
     <name>throughput</name>
-    <value>0.0</value>
+    <value>#{params[:throughput] || 0.0}</value>
     <savedValue>0.0</savedValue>
   </doubleProp>
 </ConstantThroughputTimer>)
