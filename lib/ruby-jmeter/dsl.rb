@@ -399,8 +399,9 @@ module RubyJmeter
     def run(params={})
       file(params)
       logger.warn "Test executing locally ..."
-      properties = params[:properties] || "#{File.dirname(__FILE__)}/helpers/jmeter.properties"
-      cmd = "#{params[:path]}jmeter #{"-n" unless params[:gui] } -t #{params[:file]} -j #{params[:log] ? params[:log] : 'jmeter.log' } -l #{params[:jtl] ? params[:jtl] : 'jmeter.jtl' } -q #{properties}"
+      properties = params.has_key?(:properties) ? params[:properties] : "#{File.dirname(__FILE__)}/helpers/jmeter.properties"
+      properties = "-q #{properties}" if properties
+      cmd = "#{params[:path]}jmeter #{"-n" unless params[:gui] } -t #{params[:file]} -j #{params[:log] ? params[:log] : 'jmeter.log' } -l #{params[:jtl] ? params[:jtl] : 'jmeter.jtl' } #{properties}"
       logger.debug cmd if params[:debug]
       Open3.popen2e("#{cmd}") do |stdin, stdout_err, wait_thr|
         while line = stdout_err.gets
