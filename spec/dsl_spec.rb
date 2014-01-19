@@ -681,4 +681,36 @@ describe "DSL" do
     end
 
   end
+
+  describe 'run' do
+    let(:deflate_properties) {
+      File.expand_path('../../lib/ruby-jmeter/helpers/jmeter.properties', __FILE__)
+    }
+
+    it 'pass a properties file' do
+      Open3.should_receive(:popen2e)
+           .with('jmeter -n -t jmeter.jmx -j jmeter.log -l jmeter.jtl -q my-jmeter.properties')
+
+      test do
+      end.run(properties: 'my-jmeter.properties')
+    end
+
+    it 'do not pass a properties file' do
+      Open3.should_receive(:popen2e)
+           .with("jmeter -n -t jmeter.jmx -j jmeter.log -l jmeter.jtl -q #{deflate_properties}")
+
+      test do
+      end.run
+    end
+
+    it 'pass a nil properties file' do
+      Open3.should_receive(:popen2e)
+           .with('jmeter -n -t jmeter.jmx -j jmeter.log -l jmeter.jtl ')
+
+      test do
+      end.run(properties: nil)
+    end
+
+  end
+
 end
