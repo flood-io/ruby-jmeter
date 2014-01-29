@@ -726,7 +726,7 @@ describe "DSL" do
 
     it 'pass a properties file' do
       Open3.should_receive(:popen2e)
-           .with('jmeter -n -t jmeter.jmx -j jmeter.log -l jmeter.jtl -q my-jmeter.properties')
+           .with('jmeter -n -t jmeter.jmx -j jmeter.log -l jmeter.jtl -q my-jmeter.properties ')
 
       test do
       end.run(properties: 'my-jmeter.properties')
@@ -734,7 +734,7 @@ describe "DSL" do
 
     it 'do not pass a properties file' do
       Open3.should_receive(:popen2e)
-           .with("jmeter -n -t jmeter.jmx -j jmeter.log -l jmeter.jtl -q #{deflate_properties}")
+           .with("jmeter -n -t jmeter.jmx -j jmeter.log -l jmeter.jtl -q #{deflate_properties} ")
 
       test do
       end.run
@@ -742,11 +742,28 @@ describe "DSL" do
 
     it 'pass a nil properties file' do
       Open3.should_receive(:popen2e)
-           .with('jmeter -n -t jmeter.jmx -j jmeter.log -l jmeter.jtl ')
+           .with('jmeter -n -t jmeter.jmx -j jmeter.log -l jmeter.jtl  ')
 
       test do
       end.run(properties: nil)
     end
+
+    it 'pass remote hosts' do
+      Open3.should_receive(:popen2e)
+           .with("jmeter -n -t jmeter.jmx -j jmeter.log -l jmeter.jtl  -R 192.168.1.1,192.168.1.2")
+
+      test do
+      end.run(properties: nil, remote_hosts: '192.168.1.1,192.168.1.2')
+    end
+
+    it 'pass remote hosts (Array)' do
+      Open3.should_receive(:popen2e)
+           .with('jmeter -n -t jmeter.jmx -j jmeter.log -l jmeter.jtl  -R 192.168.1.1,192.168.1.2')
+
+      test do
+      end.run(properties: nil, remote_hosts: ['192.168.1.1', '192.168.1.2'])
+    end
+
   end
 
 end
