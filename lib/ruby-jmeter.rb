@@ -13,6 +13,10 @@ require 'ruby-jmeter/helpers/strip-heredoc'
 require 'ruby-jmeter/helpers/user-agents'
 
 lib = File.dirname(File.absolute_path(__FILE__))
-Dir.glob(lib + '/ruby-jmeter/dsl/*', &method(:require))
-Dir.glob(lib + '/ruby-jmeter/plugins/*', &method(:require))
+Dir.glob(lib + '/ruby-jmeter/dsl/*').each do |file|
+  require file
+end
+Dir.glob(lib + '/ruby-jmeter/plugins/*').each do |file|
+  require file
+end
 require 'ruby-jmeter/dsl'
