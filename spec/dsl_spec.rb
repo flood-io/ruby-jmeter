@@ -121,7 +121,7 @@ describe "DSL" do
     end
   end
 
-  describe 'the clear_each_iteration for cache option should be respected' do
+  describe 'the clear_each_iteration option should be respected' do
     let(:doc) do
       test do
         cache clear_each_iteration: true
