@@ -136,8 +136,6 @@ describe "DSL" do
       cache_fragment.search(".//boolProp[@name='clearEachIteration']").first.text.should == 'true'
       cookies_fragment.search(".//boolProp[@name='CookieManager.clearEachIteration']").first.text.should == 'true'
     end
-
-
   end
 
   describe 'test plan' do
