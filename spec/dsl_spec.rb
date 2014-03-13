@@ -121,6 +121,23 @@ describe "DSL" do
     end
   end
 
+  describe 'the clear_each_iteration option should be respected' do
+    let(:doc) do
+      test do
+        cache clear_each_iteration: true
+        cookies clear_each_iteration: true
+      end.to_doc
+    end
+
+    let(:cache_fragment) { doc.search("//CacheManager") }
+    let(:cookies_fragment) { doc.search("//CookieManager") }
+
+    it 'should match on clearEachIteration' do
+      cache_fragment.search(".//boolProp[@name='clearEachIteration']").first.text.should == 'true'
+      cookies_fragment.search(".//boolProp[@name='CookieManager.clearEachIteration']").first.text.should == 'true'
+    end
+  end
+
   describe 'test plan' do
     it 'should allow to take params' do
       test_plan = test({"TestPlan.serialize_threadgroups" => "false"}) {}

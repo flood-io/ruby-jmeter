@@ -40,14 +40,14 @@ module RubyJmeter
     alias_method :defaults, :http_request_defaults
 
     def http_cookie_manager(params={}, &block)
-      params[:clearEachIteration] = true if params.keys.include? 'clear_each_iteration'
+      params[:clearEachIteration] = true if params.keys.include? :clear_each_iteration
       super
     end
 
     alias_method :cookies, :http_cookie_manager
 
     def http_cache_manager(params={}, &block)
-      params[:clearEachIteration] = true if params.keys.include? 'clear_each_iteration'
+      params[:clearEachIteration] = true if params.keys.include? :clear_each_iteration
       super
     end
 
