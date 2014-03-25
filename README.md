@@ -297,6 +297,17 @@ visit name: "Altentee", url: "http://altentee.com" do
     match_number: 0 # random
 end
 ```
+You can later use the extracted values with subsequent requests:
+
+```ruby
+post name: 'Authenticate', url: 'http://example.com/api/authentication/facebook', raw_body: '{"auth_token": "FB_TOKEN"}' do
+  extract name: 'auth_token', regex: %q{.*"token":"([^"]+)".*}
+  extract name: 'user_id', regex: %q{.*"user_id":([^,]+),.*}
+end
+
+header({name: 'X-Auth-Token', value: '${auth_token}'})
+visit name: 'User profile', url: 'http://example.com/api/users/${user_id}'
+```
 
 ### Response Assertion
 
