@@ -253,6 +253,22 @@ submit name: 'Submit Form', url: 'http://altentee.com/',
 
 This method makes a single request. The fill_in parameter lets you specify key/value pairs for form field parameters. You can also use the built in JMeter `${expression}` language to access run time variables extracted from previous responses.
 
+### POST JSON
+
+```ruby
+  header [ 
+    { name: 'Content-Type', value: 'application/json' }
+  ] 
+  
+  person = { name: "Tom" }
+  
+  post name: 'Create Person',
+        url: "https://example.com/people.json",
+        raw_body: person.to_json do
+        with_xhr
+      end
+```
+
 ### Think Time
 
 You can use the `think_time` method to insert pauses into the simulation. This method is aliased as `random_timer`.
