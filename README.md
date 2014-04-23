@@ -253,6 +253,22 @@ submit name: 'Submit Form', url: 'http://altentee.com/',
 
 This method makes a single request. The fill_in parameter lets you specify key/value pairs for form field parameters. You can also use the built in JMeter `${expression}` language to access run time variables extracted from previous responses.
 
+### POST JSON
+
+```ruby
+  header [ 
+    { name: 'Content-Type', value: 'application/json' }
+  ] 
+  
+  person = { name: "Tom" }
+  
+  post name: 'Create Person',
+        url: "https://example.com/people.json",
+        raw_body: person.to_json do
+        with_xhr
+      end
+```
+
 ### Think Time
 
 You can use the `think_time` method to insert pauses into the simulation. This method is aliased as `random_timer`.
@@ -296,6 +312,17 @@ visit name: "Altentee", url: "http://altentee.com" do
   extract name: 'shopping_item', regex: 'id="(.+?)" name="book"',
     match_number: 0 # random
 end
+```
+You can later use the extracted values with subsequent requests:
+
+```ruby
+post name: 'Authenticate', url: 'http://example.com/api/authentication/facebook', raw_body: '{"auth_token": "FB_TOKEN"}' do
+  extract name: 'auth_token', regex: %q{.*"token":"([^"]+)".*}
+  extract name: 'user_id', regex: %q{.*"user_id":([^,]+),.*}
+end
+
+header({name: 'X-Auth-Token', value: '${auth_token}'})
+visit name: 'User profile', url: 'http://example.com/api/users/${user_id}'
 ```
 
 ### Response Assertion
