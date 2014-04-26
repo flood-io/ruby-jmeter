@@ -451,6 +451,36 @@ describe "DSL" do
     it 'should match on POST' do
       fragment.search(".//stringProp[@name='HTTPSampler.method']").text.should == 'POST'
     end
+
+    it 'should have no files' do
+      fragment.search(".//elementProp[@name='HTTPsampler.Files']").length.should == 0
+    end
+
+  end
+
+
+  describe 'submit_with_files' do
+    let(:doc) do
+      test do
+        threads do
+          transaction name: "TC_03", parent: true, include_timers: true do
+            submit url: "/", fill_in: { username: 'tim', password: 'password' },
+                   files: [{path: '/tmp/foo', paramname: 'fileup', mimetype: 'text/plain'},
+                           {path: '/tmp/bar', paramname: 'otherfileup'}]
+          end
+        end
+      end.to_doc
+    end
+
+    let(:fragment) { doc.search("//HTTPSamplerProxy/elementProp[@name='HTTPsampler.Files']").first }
+
+    it 'should have two files' do
+      fragment.search("./collectionProp/elementProp[@elementType='HTTPFileArg']").length.should == 2
+    end
+
+    it 'should have one empty mimetype' do
+      fragment.search("./collectionProp/elementProp[@elementType='HTTPFileArg']/stringProp[@name='File.mimetype' and normalize-space(.) = '']").length.should == 1
+    end
   end
 
 

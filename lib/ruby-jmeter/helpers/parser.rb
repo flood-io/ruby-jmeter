@@ -16,6 +16,7 @@ module RubyJmeter
 
       fill_in(params) if params.has_key?(:fill_in)
       raw_body(params) if params.has_key?(:raw_body)
+      files(params) if params.has_key?(:files)
     end
 
     def parse_url(params)
@@ -78,6 +79,29 @@ module RubyJmeter
           EOF
       }
       params.delete(:raw_body)
+    end
+
+    def files(params)
+      files = params.delete(:files)
+      return if files.empty?
+      x = Nokogiri::XML::Builder.new do |b|
+        b.elementProp(name: "HTTPsampler.Files", elementType: "HTTPFileArgs") {
+          b.collectionProp(name: "HTTPFileArgs.files") {
+            files.each do |f|
+              b.elementProp(name: f[:path], elementType: "HTTPFileArg") {
+                b.stringProp f[:path] || '' , name: "File.path"
+                b.stringProp f[:paramname] || '' , name: "File.paramname"
+                b.stringProp f[:mimetype] || '' , name: "File.mimetype"
+              }
+            end
+          }
+        }
+      end
+      params[:update_at_xpath] ||= []
+      params[:update_at_xpath] << {
+        :xpath => '//HTTPSamplerProxy',
+        :value => x.doc.root
+      }
     end
 
     def parse_test_type(params)
