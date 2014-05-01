@@ -261,6 +261,7 @@
           <stringProp name="ForeachController.inputVal"></stringProp>
           <stringProp name="ForeachController.returnVal"></stringProp>
           <boolProp name="ForeachController.useSeparator">true</boolProp>
+          <stringProp name="ForeachController.endIndex"/>
         </ForeachController>
         <hashTree/>
         <IfController guiclass="IfControllerPanel" testclass="IfController" testname="If Controller" enabled="true">
