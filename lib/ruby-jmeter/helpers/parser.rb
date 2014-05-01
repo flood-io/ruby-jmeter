@@ -105,7 +105,7 @@ module RubyJmeter
     end
 
     def parse_test_type(params)
-      case params.keys.first
+      case params.keys.first.to_s
       when 'contains'
         2
       when 'not-contains'
