@@ -202,7 +202,9 @@ module RubyJmeter
 
     def exists(variable, &block)
       params ||= {}
-      params[:condition] = "'${#{variable}}'.length > 0"
+      params[:condition] = "\"${#{variable}}\" != \"\\${#{variable}}\""
+      params[:useExpression] = false
+      params[:name] = "if ${#{variable}}"
       node = RubyJmeter::IfController.new(params)
       attach_node(node, &block)
     end
@@ -460,6 +462,8 @@ module RubyJmeter
             :threads => params[:threads],
             :rampup => params[:ramup],
             :duration => params[:duration],
+            :override_hosts => params[:override_hosts],
+            :override_parameters => params[:override_parameters],
             # specials for API
             :started => params[:started],
             :stopped => params[:stopped]
