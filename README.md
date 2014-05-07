@@ -2,6 +2,7 @@
 
 [![Build Status](https://travis-ci.org/flood-io/ruby-jmeter.png)](https://travis-ci.org/flood-io/ruby-jmeter)
 [![Code Climate](https://codeclimate.com/github/flood-io/ruby-jmeter.png)](https://codeclimate.com/github/flood-io/ruby-jmeter)
+[![Gem Version](https://badge.fury.io/rb/ruby-jmeter.svg)](http://badge.fury.io/rb/ruby-jmeter)
 
 Tired of using the JMeter GUI or looking at hairy XML files?
 
@@ -256,12 +257,12 @@ This method makes a single request. The fill_in parameter lets you specify key/v
 ### POST JSON
 
 ```ruby
-  header [ 
+  header [
     { name: 'Content-Type', value: 'application/json' }
-  ] 
-  
+  ]
+
   person = { name: "Tom" }
-  
+
   post name: 'Create Person',
         url: "https://example.com/people.json",
         raw_body: person.to_json do
