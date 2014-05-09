@@ -517,7 +517,7 @@ describe "DSL" do
     let(:fragment) { doc.search("//IfController").first }
 
     it 'should match on exists' do
-      fragment.search(".//stringProp[@name='IfController.condition']").text.should == "'${apple}'.length > 0"
+      fragment.search(".//stringProp[@name='IfController.condition']").text.should == '"${apple}" != "\${apple}"'
     end
   end
 
