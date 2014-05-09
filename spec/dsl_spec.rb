@@ -813,4 +813,35 @@ describe "DSL" do
 
   end
 
+  describe 'module controllers' do
+    let(:doc) do
+      test name: 'tests' do
+        threads 1, name: 'threads' do
+          Simple name: 'controller_to_call'
+        end
+        threads 1 do
+          module_controller name: 'modules', node_path: [
+            'WorkBench',
+            'tests',
+            'threads',
+            'controller_to_call'
+          ]
+        end
+      end.to_doc
+    end
+
+    let(:simple_controller) { doc.search("//GenericController").first }
+    let(:test_module) { doc.search("//ModuleController").first }
+    let(:nodes) { test_module.search(".//stringProp") }
+
+
+    it 'should have a node path' do
+      nodes.length.should == 4
+      nodes[0].text.should == 'WorkBench'
+      nodes[1].text.should == 'tests'
+      nodes[2].text.should == 'threads'
+      nodes[3].text.should == 'controller_to_call'
+    end
+  end
+
 end
