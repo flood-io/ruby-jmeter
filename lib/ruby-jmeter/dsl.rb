@@ -254,6 +254,20 @@ module RubyJmeter
     ##
     # Other Elements
 
+    def module_controller(params, &block)
+      node = RubyJmeter::ModuleController.new(params)
+
+      node_path = params.kind_of?(Array) ? [] : (params[:node_path] || [])
+      node_path.each_with_index do |node_name, index|
+        node.doc.at_xpath('//collectionProp') <<
+          Nokogiri::XML(<<-EOS.strip_heredoc).children
+            <stringProp name="node_#{index}">#{node_name}</stringProp>
+          EOS
+      end
+
+      attach_node(node, &block)
+    end
+
     def user_parameters(params, &block)
       if params.is_a?(Hash)
         params['Argument.name'] = params[:name]
