@@ -1,12 +1,12 @@
 module RubyJmeter
   class DSL
-    def test_fragment(params={}, &block)
-      node = RubyJmeter::TestFragment.new(params)
+    def test_fragment_controller(params={}, &block)
+      node = RubyJmeter::TestFragmentController.new(params)
       attach_node(node, &block)
     end
   end
 
-  class TestFragment
+  class TestFragmentController
     attr_accessor :doc
     include Helper
 
