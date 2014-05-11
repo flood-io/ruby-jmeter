@@ -242,6 +242,8 @@ module RubyJmeter
 
     alias_method :Once, :once_only_controller
 
+    alias_method :fragment, :test_fragment_controller
+
     ##
     # Listeners
 

@@ -847,7 +847,7 @@ describe "DSL" do
   describe 'test fragments' do
     let(:doc) do
       test do
-        test_fragment name: 'fred' do
+        fragment name: 'fred' do
           Simple name: 'joe'
         end
       end.to_doc
