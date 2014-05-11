@@ -2,7 +2,7 @@ $LOAD_PATH.unshift(File.join(File.dirname(__FILE__), '..', 'lib'))
 require 'ruby-jmeter'
 
 test do
-  test_fragment name: 'Fragment - Google' do
+  fragment name: 'Fragment - Google' do
     visit name: 'Home Page', url: 'http://google.com/'
   end
   threads count: 1 do

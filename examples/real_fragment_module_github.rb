@@ -5,15 +5,15 @@ require 'ruby-jmeter'
 
 test do
 
-  test_fragment name: 'Fragment: Home Page' do
+  fragment name: 'Fragment: Home Page' do
     visit name: 'home page', url: 'https://github.com'
   end
 
-  test_fragment name: 'Fragment: Project Search' do
+  fragment name: 'Fragment: Project Search' do
     visit name: 'search for project', url: 'https://github.com/search?q=ruby-jmeter&ref=cmdform'
   end
 
-  test_fragment name: 'Fragment: Project Page' do
+  fragment name: 'Fragment: Project Page' do
     visit name: 'project page', url: 'https://github.com/flood-io/ruby-jmeter'
   end
 
