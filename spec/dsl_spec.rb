@@ -844,4 +844,26 @@ describe "DSL" do
     end
   end
 
+  describe 'test fragments' do
+    let(:doc) do
+      test do
+        fragment name: 'fred' do
+          Simple name: 'joe'
+        end
+      end.to_doc
+    end
+
+    let(:fragment) { doc.search("//TestFragmentController").first }
+
+    it 'should have a name' do
+      fragment['testname'].should == 'fred'
+    end
+
+    it 'should have a child controller' do
+      fragment.search("//GenericController").first['testname'].should == 'joe'
+    end
+
+  end
+  
+
 end
