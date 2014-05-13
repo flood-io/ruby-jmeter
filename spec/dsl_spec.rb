@@ -211,19 +211,28 @@ describe "DSL" do
     let(:doc) do
       test do
         threads do
-          transaction name: "TC_01", parent: true, include_timers: true
+          transaction name: "TC_01", parent: false, include_timers: true
+          transaction name: "TC_02", parent: true, include_timers: false
         end
       end.to_doc
     end
 
-    let(:fragment) { doc.search("//TransactionController").first }
+    let(:fragment) { doc.search("//TransactionController") }
 
-    it 'should match on parent' do
-      fragment.search(".//boolProp[@name='TransactionController.parent']").text.should == 'true'
+    it 'should match on parent when false' do
+      fragment.first.search(".//boolProp[@name='TransactionController.parent']").text.should == 'false'
     end
 
-    it 'should match on includeTimers' do
-      fragment.search(".//boolProp[@name='TransactionController.includeTimers']").text.should == 'true'
+    it 'should match on includeTimers when true' do
+      fragment.first.search(".//boolProp[@name='TransactionController.includeTimers']").text.should == 'true'
+    end
+
+    it 'should match on parent when true' do
+      fragment.last.search(".//boolProp[@name='TransactionController.parent']").text.should == 'true'
+    end
+
+    it 'should match on includeTimers when false' do
+      fragment.last.search(".//boolProp[@name='TransactionController.includeTimers']").text.should == 'false'
     end
   end
 
