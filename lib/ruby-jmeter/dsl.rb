@@ -142,6 +142,11 @@ module RubyJmeter
                           value: 'gzip, deflate'
     end
 
+    def with_json
+      http_header_manager name: 'Accept',
+                          value: 'text/html, application/xhtml+xml, application/xml;q=0.9, */*;q=0.8, application/json'
+    end
+
     def test_data(*args, &block)
       params = args.shift || {}
       params = { key: params.to_s }.merge(args.shift || {}) if(params.class == String || params.class == Symbol)
