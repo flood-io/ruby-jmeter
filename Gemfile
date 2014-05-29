@@ -23,5 +23,4 @@ group :test do
   gem 'rspec'
   gem 'sinatra'
   gem 'haml'
-  gem 'pry-debugger', :require => 'pry-debugger'
 end

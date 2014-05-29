@@ -359,51 +359,51 @@ module RubyJmeter
     # JMeter Plugins
 
     def response_codes_per_second(name="jp@gc - Response Codes per Second", params={}, &block)
-      node = RubyJmeter::GCResponseCodesPerSecond.new(name, params)
+      node = RubyJmeter::Plugins::ResponseCodesPerSecond.new(name, params)
       attach_node(node, &block)
     end
 
     def response_times_distribution(name="jp@gc - Response Times Distribution", params={}, &block)
-      node = RubyJmeter::GCResponseTimesDistribution.new(name, params)
+      node = RubyJmeter::Plugins::ResponseTimesDistribution.new(name, params)
       attach_node(node, &block)
     end
 
     def response_times_over_time(name="jp@gc - Response Times Over Time", params={}, &block)
-      node = RubyJmeter::GCResponseTimesOverTime.new(name, params)
+      node = RubyJmeter::Plugins::ResponseTimesOverTime.new(name, params)
       attach_node(node, &block)
     end
 
     def response_times_percentiles(name="jp@gc - Response Times Percentiles", params={}, &block)
-      node = RubyJmeter::GCResponseTimesPercentiles.new(name, params)
+      node = RubyJmeter::Plugins::ResponseTimesPercentiles.new(name, params)
       attach_node(node, &block)
     end
 
     def transactions_per_second(name="jp@gc - Transactions per Second", params={}, &block)
-      node = RubyJmeter::GCTransactionsPerSecond.new(name, params)
+      node = RubyJmeter::Plugins::TransactionsPerSecond.new(name, params)
       attach_node(node, &block)
     end
 
     def latencies_over_time(name="jp@gc - Response Latencies Over Time", params={}, &block)
-      node = RubyJmeter::GCLatenciesOverTime.new(name, params)
+      node = RubyJmeter::Plugins::LatenciesOverTime.new(name, params)
       attach_node(node, &block)
     end
 
     def console_status_logger(name="jp@gc - Console Status Logger", params={}, &block)
-      node = RubyJmeter::GCConsoleStatusLogger.new(name, params)
+      node = RubyJmeter::Plugins::ConsoleStatusLogger.new(name, params)
       attach_node(node, &block)
     end
 
     alias_method :console, :console_status_logger
 
     def throughput_shaper(name="jp@gc - Throughput Shaping Timer", steps=[], params={}, &block)
-      node = RubyJmeter::GCThroughputShapingTimer.new(name, steps)
+      node = RubyJmeter::Plugins::ThroughputShapingTimer.new(name, steps)
       attach_node(node, &block)
     end
 
     alias_method :shaper, :throughput_shaper
 
     def dummy_sampler(name="jp@gc - Dummy Sampler", params={}, &block)
-      node = RubyJmeter::GCDummySampler.new(name, params)
+      node = RubyJmeter::Plugins::DummySampler.new(name, params)
       attach_node(node, &block)
     end
 
