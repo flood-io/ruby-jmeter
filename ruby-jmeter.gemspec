@@ -8,8 +8,8 @@ Gem::Specification.new do |gem|
   gem.version       = RubyJmeter::VERSION
   gem.authors       = ["Tim Koopmans"]
   gem.email         = ["support@flood.io"]
-  gem.description   = %q{This is a Ruby based DSL for writing JMeter test plans}
-  gem.summary       = %q{This is a Ruby based DSL for writing JMeter test plans}
+  gem.description   = %q{Ruby based DSL for writing JMeter test plans}
+  gem.summary       = %q{Ruby based DSL for writing JMeter test plans}
   gem.homepage      = "http://flood-io.github.io/ruby-jmeter/"
   gem.add_dependency("rest-client")
   gem.add_dependency("nokogiri")
