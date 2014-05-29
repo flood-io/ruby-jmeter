@@ -311,10 +311,14 @@ module RubyJmeter
         params[:regex] = params[:regex] #CGI.escapeHTML
         params[:template] = params[:template] || "$1$"
         RubyJmeter::RegularExpressionExtractor.new(params)
-      else
+      elsif params[:xpath]
         params[:refname] = params[:name]
         params[:xpathQuery] = params[:xpath]
         RubyJmeter::XpathExtractor.new(params)
+      elsif params[:json]
+        params[:VAR] = params[:name]
+        params[:JSONPATH] = params[:json]
+        RubyJmeter::Plugins::JsonPathExtractor.new(params)
       end
       attach_node(node, &block)
     end
@@ -358,51 +362,51 @@ module RubyJmeter
     ##
     # JMeter Plugins
 
-    def response_codes_per_second(name="jp@gc - Response Codes per Second", params={}, &block)
+    def response_codes_per_second(name="Response Codes per Second", params={}, &block)
       node = RubyJmeter::Plugins::ResponseCodesPerSecond.new(name, params)
       attach_node(node, &block)
     end
 
-    def response_times_distribution(name="jp@gc - Response Times Distribution", params={}, &block)
+    def response_times_distribution(name="Response Times Distribution", params={}, &block)
       node = RubyJmeter::Plugins::ResponseTimesDistribution.new(name, params)
       attach_node(node, &block)
     end
 
-    def response_times_over_time(name="jp@gc - Response Times Over Time", params={}, &block)
+    def response_times_over_time(name="Response Times Over Time", params={}, &block)
       node = RubyJmeter::Plugins::ResponseTimesOverTime.new(name, params)
       attach_node(node, &block)
     end
 
-    def response_times_percentiles(name="jp@gc - Response Times Percentiles", params={}, &block)
+    def response_times_percentiles(name="Response Times Percentiles", params={}, &block)
       node = RubyJmeter::Plugins::ResponseTimesPercentiles.new(name, params)
       attach_node(node, &block)
     end
 
-    def transactions_per_second(name="jp@gc - Transactions per Second", params={}, &block)
+    def transactions_per_second(name="Transactions per Second", params={}, &block)
       node = RubyJmeter::Plugins::TransactionsPerSecond.new(name, params)
       attach_node(node, &block)
     end
 
-    def latencies_over_time(name="jp@gc - Response Latencies Over Time", params={}, &block)
+    def latencies_over_time(name="Response Latencies Over Time", params={}, &block)
       node = RubyJmeter::Plugins::LatenciesOverTime.new(name, params)
       attach_node(node, &block)
     end
 
-    def console_status_logger(name="jp@gc - Console Status Logger", params={}, &block)
+    def console_status_logger(name="Console Status Logger", params={}, &block)
       node = RubyJmeter::Plugins::ConsoleStatusLogger.new(name, params)
       attach_node(node, &block)
     end
 
     alias_method :console, :console_status_logger
 
-    def throughput_shaper(name="jp@gc - Throughput Shaping Timer", steps=[], params={}, &block)
+    def throughput_shaper(name="Throughput Shaping Timer", steps=[], params={}, &block)
       node = RubyJmeter::Plugins::ThroughputShapingTimer.new(name, steps)
       attach_node(node, &block)
     end
 
     alias_method :shaper, :throughput_shaper
 
-    def dummy_sampler(name="jp@gc - Dummy Sampler", params={}, &block)
+    def dummy_sampler(name="Dummy Sampler", params={}, &block)
       node = RubyJmeter::Plugins::DummySampler.new(name, params)
       attach_node(node, &block)
     end

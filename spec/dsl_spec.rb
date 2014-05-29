@@ -636,6 +636,22 @@ describe "DSL" do
   end
 
 
+  describe 'json extract' do
+    let(:doc) do
+      test do
+        extract json: '.test.path', name: 'my_json'
+      end.to_doc
+    end
+
+    let(:fragment) { doc.search("//com.atlantbh.jmeter.plugins.jsonutils.jsonpathextractor.JSONPathExtractor").first }
+
+    it 'should match on json path and var' do
+      fragment.search(".//stringProp[@name='JSONPATH']").text.should == '.test.path'
+      fragment.search(".//stringProp[@name='VAR']").text.should == 'my_json'
+    end
+  end
+
+
   describe 'testdata extract' do
     let(:doc) do
       test do
