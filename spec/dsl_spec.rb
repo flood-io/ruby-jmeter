@@ -84,6 +84,21 @@ describe "DSL" do
   end
 
 
+  describe 'disabled elements' do
+    let(:doc) do
+      test do
+        header name: 'Accept', value: '*', enabled: false
+      end.to_doc
+    end
+
+    let(:fragment) {  doc.search("//HeaderManager") }
+
+    it 'should be disabled' do
+      fragment.first.attributes['enabled'].value.should == 'false'
+    end
+  end
+
+
   describe 'header manager' do
     let(:doc) do
       test do
@@ -121,6 +136,7 @@ describe "DSL" do
     end
   end
 
+
   describe 'the clear_each_iteration option should be respected' do
     let(:doc) do
       test do
@@ -137,6 +153,7 @@ describe "DSL" do
       cookies_fragment.search(".//boolProp[@name='CookieManager.clearEachIteration']").first.text.should == 'true'
     end
   end
+
 
   describe 'test plan' do
     it 'should allow to take params' do
@@ -300,6 +317,7 @@ describe "DSL" do
       fragment.search(".//stringProp[@name='HTTPSampler.path']").text.should == '/home'
     end
   end
+
 
   describe 'visit raw_path' do
     let(:doc) do
@@ -606,6 +624,7 @@ describe "DSL" do
     end
   end
 
+
   describe 'regex extract' do
     let(:doc) do
       test do
@@ -754,6 +773,7 @@ describe "DSL" do
 
   end
 
+
   describe 'raw body containing xml entities' do
     let(:doc) do
       test do
@@ -769,6 +789,7 @@ describe "DSL" do
       fragment.search(".//stringProp[@name='Argument.value']").text.should == 'username=my_name&password=my_password&email="my name <test@example.com>"'
     end
   end
+
 
   describe 'constant_throughput_timer' do
     let(:doc) do
@@ -790,6 +811,7 @@ describe "DSL" do
       fragment.search("//doubleProp/value").last.text.should == '70.0'
     end
   end
+
 
   describe 'run' do
     let(:deflate_properties) {
@@ -838,6 +860,7 @@ describe "DSL" do
 
   end
 
+
   describe 'module controllers' do
     let(:doc) do
       test name: 'tests' do
@@ -859,7 +882,6 @@ describe "DSL" do
     let(:test_module) { doc.search("//ModuleController").first }
     let(:nodes) { test_module.search(".//stringProp") }
 
-
     it 'should have a node path' do
       nodes.length.should == 4
       nodes[0].text.should == 'WorkBench'
@@ -869,4 +891,29 @@ describe "DSL" do
     end
   end
 
+
+  describe 'module controllers with test fragment' do
+    let(:doc) do
+      test do
+        test_fragment name: 'some_test_fragment', enabled: 'false' do
+          get name: 'Home Page', url: 'http://google.com'
+        end
+
+        threads count: 1 do
+          module_controller test_fragment: 'WorkBench/TestPlan/some_test_fragment'
+        end
+      end.to_doc
+    end
+
+    let(:simple_controller) { doc.search("//GenericController").first }
+    let(:test_module) { doc.search("//ModuleController").first }
+    let(:nodes) { test_module.search(".//stringProp") }
+
+    it 'should have a node path specified by test fragment' do
+      nodes.length.should == 3
+      nodes[0].text.should == 'WorkBench'
+      nodes[1].text.should == 'TestPlan'
+      nodes[2].text.should == 'some_test_fragment'
+    end
+  end
 end

@@ -17,6 +17,7 @@ module RubyJmeter
   module Helper
     def update(params)
       params.delete(:name)
+      enabled_disabled(params)
       if params.class == Array
         update_collection params
       else
@@ -30,6 +31,11 @@ module RubyJmeter
 
         end
       end
+    end
+
+    def enabled_disabled(params)
+      return unless params.is_a?(Hash)
+      @doc.children.first.attributes['enabled'].value = params[:enabled].to_s.empty? ? 'true' : 'false'
     end
 
     def update_at_xpath(params)
