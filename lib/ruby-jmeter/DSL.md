@@ -37,6 +37,8 @@
   `tcp_sampler_config`
 - User Defined Variables
   `user_defined_variables`
+- Test Fragment
+  `test_fragment`
 - Thread Group
   `thread_group`
 - ForEach Controller
