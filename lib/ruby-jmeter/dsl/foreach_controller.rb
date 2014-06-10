@@ -17,7 +17,8 @@ module RubyJmeter
   <stringProp name="ForeachController.inputVal"/>
   <stringProp name="ForeachController.returnVal"/>
   <boolProp name="ForeachController.useSeparator">true</boolProp>
-  <stringProp name="ForeachController.endIndex"/>
+  #{'<stringProp name="ForeachController.startIndex"/>' if params[:startIndex]}
+  #{'<stringProp name="ForeachController.endIndex"/>' if params[:endIndex]}
 </ForeachController>)
       EOS
       update params

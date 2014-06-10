@@ -6,7 +6,7 @@ module RubyJmeter
     def initialize(params = {})
       @root = Nokogiri::XML(<<-EOF.strip_heredoc)
         <?xml version="1.0" encoding="UTF-8"?>
-        <jmeterTestPlan version="1.2" properties="2.4" jmeter="2.9 r1437961">
+        <jmeterTestPlan version="1.2" properties="2.6" jmeter="2.11 r1554548">
         <hashTree>
         </hashTree>
         </jmeterTestPlan>
