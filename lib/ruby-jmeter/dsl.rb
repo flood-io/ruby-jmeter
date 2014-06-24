@@ -489,7 +489,7 @@ module RubyJmeter
             :notes => params[:notes],
             :tag_list => params[:tag_list],
             :threads => params[:threads],
-            :rampup => params[:ramup],
+            :rampup => params[:rampup],
             :duration => params[:duration],
             :override_hosts => params[:override_hosts],
             :override_parameters => params[:override_parameters],
