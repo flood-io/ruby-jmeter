@@ -419,6 +419,13 @@ module RubyJmeter
 
     alias_method :dummy, :dummy_sampler
 
+    def stepping_thread_group(params={}, &block)
+      node = RubyJmeter::Plugins::SteppingThreadGroup.new(params)
+      attach_node(node, &block)
+    end
+
+    alias_method :step, :stepping_thread_group
+
     # API Methods
 
     def out(params={})
