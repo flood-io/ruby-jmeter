@@ -1,14 +1,28 @@
 $LOAD_PATH.unshift(File.join(File.dirname(__FILE__), '..', 'lib'))
 require 'ruby-jmeter'
 
+module RubyJmeter
+  class ExtendedDSL < DSL
+    def test_method_here
+      puts "here be dragons"
+    end
+  end
+end
+
 # Define your page objects
 class HomePage
   def initialize(dsl)
     @dsl = dsl
   end
 
+  def test_method_unreachable
+    puts "I can never be reached from ExtendedDSL"
+  end
+
   def visit
-    get name: 'home', url: '/'
+    get name: 'home', url: '/' do
+      test_method_here
+    end
   end
 
   private

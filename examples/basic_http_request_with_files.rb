@@ -6,7 +6,8 @@ test do
     transaction name: "TC_03", parent: true, include_timers: true do
       submit url: "/", fill_in: { username: 'tim', password: 'password' },
              files: [{path: '/tmp/foo', paramname: 'fileup', mimetype: 'text/plain'},
-                     {path: '/tmp/bar', paramname: 'otherfileup'}]
+                     {path: '/tmp/bar', paramname: 'otherfileup'}],
+             'DO_MULTIPART_POST' => true
     end
   end
-end
+end.run(path: '/usr/share/jmeter-2.11/bin/', gui: true)
