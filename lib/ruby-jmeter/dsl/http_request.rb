@@ -32,6 +32,7 @@ module RubyJmeter
   <stringProp name="HTTPSampler.implementation"/>
   <boolProp name="HTTPSampler.monitor">false</boolProp>
   <stringProp name="HTTPSampler.embedded_url_re"/>
+  <stringProp name="TestPlan.comments"/>
 </HTTPSamplerProxy>)
       EOS
       update params
