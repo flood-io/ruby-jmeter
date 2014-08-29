@@ -1,3 +1,3 @@
 module RubyJmeter
-  VERSION = "2.11.15"
+  VERSION = "2.11.16"
 end
