@@ -640,6 +640,21 @@ describe "DSL" do
   end
 
 
+  describe 'regex extract with variable' do
+    let(:doc) do
+      test do
+        extract regex: 'pattern', name: 'my_regex', variable: 'test'
+      end.to_doc
+    end
+
+    let(:fragment) { doc.search("//RegexExtractor").first }
+
+    it 'should match on refname' do
+      fragment.search(".//stringProp[@name='Scope.variable']").text.should == 'test'
+    end
+  end
+
+
   describe 'xpath extract' do
     let(:doc) do
       test do
