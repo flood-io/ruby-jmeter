@@ -145,7 +145,7 @@ module RubyJmeter
     def head(*args, &block)
       params = args.shift || {}
       params = { url: params }.merge(args.shift || {}) if params.class == String
-      params[:method] ||= 'PATCH'
+      params[:method] ||= 'HEAD'
       params[:name] ||= params[:url]
       parse_http_request(params)
       node = RubyJmeter::HttpRequest.new(params)
