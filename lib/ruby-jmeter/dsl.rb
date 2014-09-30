@@ -142,6 +142,16 @@ module RubyJmeter
       attach_node(node, &block)
     end
 
+    def head(*args, &block)
+      params = args.shift || {}
+      params = { url: params }.merge(args.shift || {}) if params.class == String
+      params[:method] ||= 'PATCH'
+      params[:name] ||= params[:url]
+      parse_http_request(params)
+      node = RubyJmeter::HttpRequest.new(params)
+      attach_node(node, &block)
+    end
+
     def with_xhr
       http_header_manager name: 'X-Requested-With',
                           value: 'XMLHttpRequest'
