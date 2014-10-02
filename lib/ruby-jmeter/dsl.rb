@@ -58,6 +58,15 @@ module RubyJmeter
                           value: RubyJmeter::UserAgent.new(device).string
     end
 
+    def with_browser(device)
+      http_header_manager name: 'User-Agent',
+                          value: RubyJmeter::UserAgent.new(device).string
+      http_header_manager [
+        { name: 'Accept-Encoding', value: 'gzip,deflate,sdch' },
+        { name: 'Accept', value: 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8' }
+      ]
+    end
+
     def http_header_manager(params, &block)
       if params.is_a?(Hash)
         params['Header.name'] = params[:name]
