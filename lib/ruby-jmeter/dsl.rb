@@ -507,6 +507,11 @@ module RubyJmeter
         file.write(doc.to_xml(:indent => 2))
         file.rewind
 
+        flood_files = {
+          file: File.new("#{file.path}", 'rb')
+          }.merge(Hash[params[:files].map.with_index { |value, index| [index, File.new(value, 'rb')] }])
+        params.delete(:files)
+
         response = RestClient.post "#{params[:endpoint] ? params[:endpoint] : 'https://api.flood.io'}/floods?auth_token=#{token}",
         {
           :flood => {
@@ -524,9 +529,7 @@ module RubyJmeter
             :started => params[:started],
             :stopped => params[:stopped]
           },
-          :flood_files => {
-            :file => File.new("#{file.path}", 'rb')
-          },
+          :flood_files => flood_files,
           :results => (File.new("#{params[:jtl] ? params[:jtl] : 'jmeter.jtl'}", 'rb') if params[:region] == 'local'),
           :region => params[:region],
           :multipart => true,
