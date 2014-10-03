@@ -518,8 +518,12 @@ module RubyJmeter
 
         flood_files = {
           file: File.new("#{file.path}", 'rb')
-          }.merge(Hash[params[:files].map.with_index { |value, index| [index, File.new(value, 'rb')] }])
-        params.delete(:files)
+        }
+
+        if params[:files]
+          flood_files.merge!(Hash[params[:files].map.with_index { |value, index| [index, File.new(value, 'rb')] }])
+          params.delete(:files)
+        end
 
         response = RestClient.post "#{params[:endpoint] ? params[:endpoint] : 'https://api.flood.io'}/floods?auth_token=#{token}",
         {
