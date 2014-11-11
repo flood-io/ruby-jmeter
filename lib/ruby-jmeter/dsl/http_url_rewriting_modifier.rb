@@ -19,6 +19,7 @@ module RubyJmeter
   <boolProp name="path_extension_no_equals">false</boolProp>
   <boolProp name="path_extension_no_questionmark">false</boolProp>
   <boolProp name="cache_value">false</boolProp>
+  <boolProp name="encode">false</boolProp>
 </URLRewritingModifier>)
       EOS
       update params

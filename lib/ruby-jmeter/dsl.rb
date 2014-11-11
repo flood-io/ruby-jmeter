@@ -6,7 +6,7 @@ module RubyJmeter
     def initialize(params = {})
       @root = Nokogiri::XML(<<-EOF.strip_heredoc)
         <?xml version="1.0" encoding="UTF-8"?>
-        <jmeterTestPlan version="1.2" properties="2.6" jmeter="2.11 r1554548">
+        <jmeterTestPlan version="1.2" properties="2.7" jmeter="2.12 r1636949">
         <hashTree>
         </hashTree>
         </jmeterTestPlan>
@@ -528,7 +528,7 @@ module RubyJmeter
         response = RestClient.post "#{params[:endpoint] ? params[:endpoint] : 'https://api.flood.io'}/floods?auth_token=#{token}",
         {
           :flood => {
-            :tool => 'jmeter-2.11',
+            :tool => 'jmeter-2.12',
             :url => params[:url],
             :name => params[:name],
             :notes => params[:notes],
