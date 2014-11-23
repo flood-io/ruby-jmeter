@@ -455,6 +455,27 @@ module RubyJmeter
 
     alias_method :step, :stepping_thread_group
 
+    def composite_graph(name, params={}, &block)
+      node = RubyJmeter::Plugins::CompositeGraph.new(name, params)
+      attach_node(node, &block)
+    end
+
+    alias_method :composite, :composite_graph
+
+    def active_threads_over_time(params={}, &block)
+      node = RubyJmeter::Plugins::ActiveThreadsOverTime.new(params)
+      attach_node(node, &block)
+    end
+
+    alias_method :active_threads, :active_threads_over_time
+
+    def perfmon_collector(name, params={}, &block)
+      node = RubyJmeter::Plugins::PerfmonCollector.new(name, params)
+      attach_node(node, &block)
+    end
+
+    alias_method :perfmon, :perfmon_collector
+
     # API Methods
 
     def out(params={})
