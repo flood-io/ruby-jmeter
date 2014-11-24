@@ -23,7 +23,7 @@ describe "DSL" do
     end
 
     it "should output a test plan to jmx file" do
-      file = mock('file')
+      file = double('file')
       File.should_receive(:open).with("jmeter.jmx", "w").and_yield(file)
       file.should_receive(:write).with(/jmeterTestPlan/i)
       test do
