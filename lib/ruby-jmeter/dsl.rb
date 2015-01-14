@@ -570,12 +570,12 @@ module RubyJmeter
           :content_type => 'application/octet-stream'
         }.merge(params)
         if response.code == 201
-          logger.info "Flood results at: #{JSON.parse(response)["response"]["results"]["link"]}"
+          logger.info "Flood results at: #{JSON.parse(response)["response"]["permalink"]}"
         else
-          logger.fatal "Sorry there was an error: #{JSON.parse(response)["error_description"]}"
+          logger.fatal "Sorry there was an error: #{JSON.parse(response)["error"]}"
         end
       rescue => e
-        logger.fatal "Sorry there was an error: #{JSON.parse(e.response)["error_description"]}"
+        logger.fatal "Sorry there was an error: #{JSON.parse(e.response)["error"]}"
       end
     end
 
