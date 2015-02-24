@@ -2,9 +2,9 @@ $LOAD_PATH.unshift(File.join(File.dirname(__FILE__), '..', 'lib'))
 require 'ruby-jmeter'
 
 test do
-  
-  defaults  domain: 'www.immi.gov.au', 
-            protocol: 'http', 
+
+  defaults  domain: 'www.immi.gov.au',
+            protocol: 'http',
             image_parser: true,
             concurrentDwn: true,
             concurrentPool: 4
@@ -15,15 +15,15 @@ test do
 
   with_user_agent :iphone
 
-  header [ 
+  header [
     { name: 'Accept-Encoding', value: 'gzip,deflate,sdch' },
     { name: 'Accept', value: 'text/javascript, text/html, application/xml, text/xml, */*' }
   ]
-  
+
   threads 1, {
-    rampup: 1, 
+    rampup: 1,
     scheduler: true,
-    duration: 300, 
+    duration: 300,
     continue_forever: true
     } do
 
@@ -34,7 +34,7 @@ test do
         extract xpath: "//select[@id='Q1']/option/@value", name: 'q1', tolerant: true
       end
     end
-    # ${__Random(1,${q1_matchNr},n)} 
+    # ${__Random(1,${q1_matchNr},n)}
     # $__V{q1_${n}}
     # $__V{q1_${${__Random(1,${q1_matchNr},)}}}
 
@@ -67,12 +67,12 @@ test do
 
     view_results
 
-    log filename: '/var/log/flood/custom.log', error_logging: true 
+    log filename: '/var/log/flood/custom.log', error_logging: true
 
   end
-end.run(path: '/usr/share/jmeter/bin/', gui: true)
-# end.jmx
-# end.flood ENV['FLOOD_API_TOKEN'], {
-#   region: 'ap-southeast-2',
-#   name: 'Demo for Immi'
-# }
+end.flood(
+  ENV['FLOOD_API_TOKEN'],
+  name: 'Demo',
+  privacy_flag: 'public',
+  region: 'us-west-2' # Region of the target grid
+)

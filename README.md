@@ -99,25 +99,41 @@ end.run(
   jtl: 'results.jtl')
 ```
 
-### Running a JMeter Test Plan on flood.io
+### Running a JMeter Test Plan on Flood IO
 
-You can also execute JMeter test plans on flood.io using our API. To do so, you require an account and API token. If you don't know your token, sign in to [flood.io](https://flood.io/api) and check your account settings.
+You can also execute JMeter test plans on Flood IO using our API. To do so, you require an account and API token. If you don't know your token, sign in to [flood.io](https://flood.io/api) and check your account settings.
 
-To execute the test on flood.io, call the `grid` method on the test and pass it the API token like this.
+To execute the test on Flood IO, call the `flood` method on the test and pass it the API token like this.
 
 ```ruby
 test do
   threads count: 10 do
     visit name: 'Google Search', url: 'http://google.com'
   end
-end.grid('OxtZ-4v-v0koSz5Y0enEQQ')
+end.flood(
+  ENV['FLOOD_API_TOKEN'],
+  name: 'Demo',
+  privacy_flag: 'public',
+  grid: 'a3Hf9pIs30DX0pYfitU4AA' # UUID of the target grid
+)
 ```
 
-This will then provide you with a link to the live test results on flood.io like this.
+This will then provide you with a link to the live test results on Flood IO like this.
 
 ```
-Results at: http://prod.flood.io/shared?testguid=73608030311611e2962f123141011033&run_id=339&tags=jmeter&domain=altentee.com&cluster=54.251.48.129&status=running&view=
+I, [2015-02-24T11:15:25.669029 #14010]  INFO -- : Flood results at: https://flood.io/AbRWkFl7VODYCkQuy3ffvA
 ```
+
+Note you will need to provide a `grid` or `region` parameter to the `.flood` method to describe which grid to distribute the flood test to. You can find the Grid ID from the URL of the target grid in your [grids](https://flood.io/dashboard/grids) dashboard e.g.:
+
+![](https://s3.amazonaws.com/flood-io-support/Flood_IO_2015-02-24_11-43-21.jpg)
+
+Flood IO provides a shared grid for free, suitable for 5 minute tests, check your dashboard for the latest grid:
+
+![](https://s3.amazonaws.com/flood-io-support/Flood_IO_2015-02-24_11-44-29.jpg)
+
+Alternatively upgrade to a paid subscription on Flood IO and start your own grids on demand.
+
 
 ## Advanced Usage
 
