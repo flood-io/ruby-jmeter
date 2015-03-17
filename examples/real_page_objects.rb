@@ -38,4 +38,4 @@ test do
     home = HomePage.new(self)
     home.visit
   end
-end.run(path: '/usr/share/jmeter-2.11/bin/', gui: true)
+end.run(path: '/usr/share/jmeter-2.13/bin/', gui: true)

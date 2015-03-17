@@ -7,4 +7,4 @@ test do
       visit name: 'Home Page', url: 'http://google.com/'
     end
   end
-end.run(path: '/usr/share/jmeter-2.11/bin/', gui: true)
+end.run(path: '/usr/share/jmeter-2.13/bin/', gui: true)

@@ -4,4 +4,4 @@ require 'ruby-jmeter'
 test do
   threads count: 100, rampup: 3600, loops: 10, scheduler: false do
   end
-end.run(path: '/usr/share/jmeter-2.11/bin/', gui: true)
+end.run(path: '/usr/share/jmeter-2.13/bin/', gui: true)

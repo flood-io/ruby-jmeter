@@ -11,4 +11,4 @@ test do
     module_controller test_fragment: 'WorkBench/TestPlan/anonymous_user'
   end
 
-end.run(path: '/usr/share/jmeter-2.11/bin/', gui: true)
+end.run(path: '/usr/share/jmeter-2.13/bin/', gui: true)

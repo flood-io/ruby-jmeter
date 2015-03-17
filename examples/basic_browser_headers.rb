@@ -4,4 +4,4 @@ require 'ruby-jmeter'
 test do
   # Simulate user agent, accept and accept-encodings of typical browsers
   with_browser :ie9
-end.run(path: '/usr/share/jmeter-2.11/bin/', gui: true)
+end.run(path: '/usr/share/jmeter-2.13/bin/', gui: true)

@@ -42,7 +42,7 @@ class VirtualUser
     pause
   end
 
-  # Searches for a repository. 
+  # Searches for a repository.
   # @param repo [String] the repository to search for
   def search_for_repository(repo)
     visit name: 'Search for project', url: '/search',
@@ -108,5 +108,5 @@ test do
     user.view_branch '/flood-io/ruby-jmeter/tree/v2.11.8'
 
   end
-end.run(path: '/usr/share/jmeter-2.11/bin/', gui: true)
+end.run(path: '/usr/share/jmeter-2.13/bin/', gui: true)
 
