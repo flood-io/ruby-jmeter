@@ -13,7 +13,7 @@ module RubyJmeter
       EOF
       node = RubyJmeter::TestPlan.new(params)
 
-      @current_node = @root.at_xpath("//jmeterTestPlan/hashTree")
+      @current_node = @root.at_xpath('//jmeterTestPlan/hashTree')
       @current_node = attach_to_last(node)
     end
 
@@ -29,7 +29,7 @@ module RubyJmeter
 
     alias_method :variables, :user_defined_variables
 
-    def http_request_defaults(params={}, &block)
+    def http_request_defaults(params = {}, &block)
       params[:image_parser] = true if params.keys.include? :download_resources
       params[:concurrentDwn] = true if params.keys.include? :use_concurrent_pool
       params[:concurrentPool] = params[:use_concurrent_pool] if params.keys.include? :use_concurrent_pool
@@ -39,14 +39,14 @@ module RubyJmeter
 
     alias_method :defaults, :http_request_defaults
 
-    def http_cookie_manager(params={}, &block)
+    def http_cookie_manager(params = {}, &block)
       params[:clearEachIteration] = true if params.keys.include? :clear_each_iteration
       super
     end
 
     alias_method :cookies, :http_cookie_manager
 
-    def http_cache_manager(params={}, &block)
+    def http_cache_manager(params = {}, &block)
       params[:clearEachIteration] = true if params.keys.include? :clear_each_iteration
       super
     end
@@ -81,13 +81,13 @@ module RubyJmeter
     def thread_group(*args, &block)
       params = args.shift || {}
       params = { count: params }.merge(args.shift || {}) if params.class == Fixnum
-      params[:num_threads]        = params[:count] || 1
-      params[:ramp_time]          = params[:rampup] || (params[:num_threads]/2.0).ceil
-      params[:start_time]         = params[:start_time] || Time.now.to_i * 1000
-      params[:end_time]           = params[:end_time] || Time.now.to_i * 1000
-      params[:duration]         ||= 60
+      params[:num_threads] = params[:count] || 1
+      params[:ramp_time] = params[:rampup] || (params[:num_threads]/2.0).ceil
+      params[:start_time] = params[:start_time] || Time.now.to_i * 1000
+      params[:end_time] = params[:end_time] || Time.now.to_i * 1000
+      params[:duration] ||= 60
       params[:continue_forever] ||= false
-      params[:loops]              = -1 if params[:continue_forever]
+      params[:loops] = -1 if params[:continue_forever]
       node = RubyJmeter::ThreadGroup.new(params)
       attach_node(node, &block)
     end
@@ -218,7 +218,6 @@ module RubyJmeter
     alias_method :ldap_ext, :ldap_extended_request
 
     alias_method :ldap_extended, :ldap_extended_request
-
 
     ##
     # Controllers
@@ -361,7 +360,7 @@ module RubyJmeter
     alias_method :web_reg_save_param, :extract
 
     def random_timer(delay=0, range=0, &block)
-      params={}
+      params = {}
       params[:delay] = delay
       params[:range] = range
       node = RubyJmeter::GaussianRandomTimer.new(params)
@@ -374,16 +373,16 @@ module RubyJmeter
       params[:value] ||= params[:throughput] || 0.0
 
       node = RubyJmeter::ConstantThroughputTimer.new(params)
-      node.doc.xpath(".//value").first.content = params[:value].to_f
+      node.doc.xpath('.//value').first.content = params[:value].to_f
 
       attach_node(node, &block)
     end
 
     alias_method :ConstantThroughputTimer, :constant_throughput_timer
 
-    def response_assertion(params={}, &block)
+    def response_assertion(params = {}, &block)
       params[:test_type] = parse_test_type(params)
-      params["0"] = params.values.first
+      params['0'] = params.values.first
       node = RubyJmeter::ResponseAssertion.new(params)
       node.doc.xpath("//stringProp[@name='Assertion.scope']").remove if
         params[:scope] == 'main' || params['scope'] == 'main'
@@ -397,79 +396,79 @@ module RubyJmeter
     ##
     # JMeter Plugins
 
-    def response_codes_per_second(name="Response Codes per Second", params={}, &block)
+    def response_codes_per_second(name = 'Response Codes per Second', params = {}, &block)
       node = RubyJmeter::Plugins::ResponseCodesPerSecond.new(name, params)
       attach_node(node, &block)
     end
 
-    def response_times_distribution(name="Response Times Distribution", params={}, &block)
+    def response_times_distribution(name = 'Response Times Distribution', params = {}, &block)
       node = RubyJmeter::Plugins::ResponseTimesDistribution.new(name, params)
       attach_node(node, &block)
     end
 
-    def response_times_over_time(name="Response Times Over Time", params={}, &block)
+    def response_times_over_time(name = 'Response Times Over Time', params = {}, &block)
       node = RubyJmeter::Plugins::ResponseTimesOverTime.new(name, params)
       attach_node(node, &block)
     end
 
-    def response_times_percentiles(name="Response Times Percentiles", params={}, &block)
+    def response_times_percentiles(name = 'Response Times Percentiles', params = {}, &block)
       node = RubyJmeter::Plugins::ResponseTimesPercentiles.new(name, params)
       attach_node(node, &block)
     end
 
-    def transactions_per_second(name="Transactions per Second", params={}, &block)
+    def transactions_per_second(name = 'Transactions per Second', params = {}, &block)
       node = RubyJmeter::Plugins::TransactionsPerSecond.new(name, params)
       attach_node(node, &block)
     end
 
-    def latencies_over_time(name="Response Latencies Over Time", params={}, &block)
+    def latencies_over_time(name = 'Response Latencies Over Time', params = {}, &block)
       node = RubyJmeter::Plugins::LatenciesOverTime.new(name, params)
       attach_node(node, &block)
     end
 
-    def console_status_logger(name="Console Status Logger", params={}, &block)
+    def console_status_logger(name = 'Console Status Logger', params = {}, &block)
       node = RubyJmeter::Plugins::ConsoleStatusLogger.new(name, params)
       attach_node(node, &block)
     end
 
     alias_method :console, :console_status_logger
 
-    def throughput_shaper(name="Throughput Shaping Timer", steps=[], params={}, &block)
+    def throughput_shaper(name = 'Throughput Shaping Timer', steps=[], params = {}, &block)
       node = RubyJmeter::Plugins::ThroughputShapingTimer.new(name, steps)
       attach_node(node, &block)
     end
 
     alias_method :shaper, :throughput_shaper
 
-    def dummy_sampler(name="Dummy Sampler", params={}, &block)
+    def dummy_sampler(name = 'Dummy Sampler', params = {}, &block)
       node = RubyJmeter::Plugins::DummySampler.new(name, params)
       attach_node(node, &block)
     end
 
     alias_method :dummy, :dummy_sampler
 
-    def stepping_thread_group(params={}, &block)
+    def stepping_thread_group(params = {}, &block)
       node = RubyJmeter::Plugins::SteppingThreadGroup.new(params)
       attach_node(node, &block)
     end
 
     alias_method :step, :stepping_thread_group
 
-    def composite_graph(name, params={}, &block)
+    def composite_graph(name, params = {}, &block)
       node = RubyJmeter::Plugins::CompositeGraph.new(name, params)
       attach_node(node, &block)
     end
 
     alias_method :composite, :composite_graph
 
-    def active_threads_over_time(params={}, &block)
+    def active_threads_over_time(params = {}, &block)
       node = RubyJmeter::Plugins::ActiveThreadsOverTime.new(params)
       attach_node(node, &block)
     end
 
     alias_method :active_threads, :active_threads_over_time
 
-    def perfmon_collector(name, params={}, &block)
+    def perfmon_collector(name, params = {}, &block)
       node = RubyJmeter::Plugins::PerfmonCollector.new(name, params)
       attach_node(node, &block)
     end
@@ -478,11 +477,11 @@ module RubyJmeter
 
     # API Methods
 
-    def out(params={})
+    def out(params = {})
       puts doc.to_xml(:indent => 2)
     end
 
-    def jmx(params={})
+    def jmx(params = {})
       file(params)
       logger.info "Test plan saved to: #{params[:file]}"
     end
@@ -495,7 +494,7 @@ module RubyJmeter
       doc.clone
     end
 
-    def run(params={})
+    def run(params = {})
       file(params)
       logger.warn "Test executing locally ..."
       properties = params.has_key?(:properties) ? params[:properties] : "#{File.dirname(__FILE__)}/helpers/jmeter.properties"
@@ -515,21 +514,19 @@ module RubyJmeter
         end
 
         exit_status = wait_thr.value
-        unless exit_status.success?
-          abort "FAILED !!! #{cmd}"
-        end
+        abort "FAILED !!! #{cmd}" unless exit_status.success?
       end
       logger.info "Local Results at: #{params[:jtl] ? params[:jtl] : 'jmeter.jtl'}"
     end
 
-    def flood(token, params={})
+    def flood(token, params = {})
       if params[:region] == 'local'
-        logger.info "Starting test ..."
+        logger.info 'Starting test ...'
         params[:started] = Time.now
         run params
         params[:stopped] = Time.now
-        logger.info "Completed test ..."
-        logger.debug "Uploading results ..." if params[:debug]
+        logger.info 'Completed test ...'
+        logger.debug 'Uploading results ...' if params[:debug]
       end
       RestClient.proxy = params[:proxy] if params[:proxy]
       begin
@@ -549,7 +546,7 @@ module RubyJmeter
         response = RestClient.post "#{params[:endpoint] ? params[:endpoint] : 'https://api.flood.io'}/floods?auth_token=#{token}",
         {
           :flood => {
-            :tool => 'jmeter-2.12',
+            :tool => 'jmeter',
             :url => params[:url],
             :name => params[:name],
             :notes => params[:notes],
@@ -598,11 +595,11 @@ module RubyJmeter
       ht            = attach_to_last(node)
       previous      = @current_node
       @current_node = ht
-      self.instance_exec(&block) if block
+      instance_exec(&block) if block
       @current_node = previous
     end
 
-    def file(params={})
+    def file(params = {})
       params[:file] ||= 'jmeter.jmx'
       File.open(params[:file], 'w') { |file| file.write(doc.to_xml(:indent => 2)) }
     end
@@ -616,7 +613,6 @@ module RubyJmeter
       @log.level = Logger::DEBUG
       @log
     end
-
   end
 end
 
