@@ -114,7 +114,7 @@ end.flood(
   ENV['FLOOD_API_TOKEN'],
   name: 'Demo',
   privacy_flag: 'public',
-  grid: 'a3Hf9pIs30DX0pYfitU4AA' # UUID of the target grid
+  region: 'ap-southeast-2'
 )
 ```
 

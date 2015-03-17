@@ -1,8 +1,7 @@
-require "spec_helper"
-require "pry-debugger"
+require 'spec_helper'
+require 'pry'
 
-describe "DSL" do
-
+describe 'DSL' do
   describe 'aliased DSL methods' do
     it "test plan should respond to aliased methods" do
       test {}.should respond_to :variables
@@ -14,7 +13,6 @@ describe "DSL" do
     end
   end
 
-
   describe 'write to stdout and file' do
     it "should output a test plan to stdout" do
       $stdout.should_receive(:puts).with(/jmeterTestPlan/i)
@@ -22,15 +20,14 @@ describe "DSL" do
       end.out
     end
 
-    it "should output a test plan to jmx file" do
+    it 'should output a test plan to jmx file' do
       file = double('file')
-      File.should_receive(:open).with("jmeter.jmx", "w").and_yield(file)
+      File.should_receive(:open).with('jmeter.jmx', 'w').and_yield(file)
       file.should_receive(:write).with(/jmeterTestPlan/i)
       test do
       end.jmx
     end
   end
-
 
   describe 'user agent' do
     let(:doc) do
@@ -40,7 +37,7 @@ describe "DSL" do
       end.to_doc
     end
 
-    let(:fragment) { doc.search("//HeaderManager").first }
+    let(:fragment) { doc.search('//HeaderManager').first }
 
     it 'should match on user_agent' do
       fragment.search(".//stringProp[@name='Header.name']").text.should == 'User-Agent'
@@ -48,7 +45,6 @@ describe "DSL" do
         'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_7_4) AppleWebKit/536.5 (KHTML, like Gecko) Chrome/19.0.1084.46 Safari/536.5'
     end
   end
-
 
   describe 'http request defaults' do
     let(:doc) do
@@ -65,8 +61,8 @@ describe "DSL" do
       end.to_doc
     end
 
-    let(:config_fragment) { doc.search("//ConfigTestElement").first }
-    let(:sampler_fragment) { doc.search("//HTTPSamplerProxy").first }
+    let(:config_fragment) { doc.search('//ConfigTestElement').first }
+    let(:sampler_fragment) { doc.search('//HTTPSamplerProxy').first }
 
     it 'should match on implementation' do
       sampler_fragment.search(".//stringProp[@name='HTTPSampler.implementation']").text.should == ''
@@ -83,7 +79,6 @@ describe "DSL" do
     end
   end
 
-
   describe 'disabled elements' do
     let(:doc) do
       test do
@@ -91,13 +86,12 @@ describe "DSL" do
       end.to_doc
     end
 
-    let(:fragment) {  doc.search("//HeaderManager") }
+    let(:fragment) {  doc.search('//HeaderManager') }
 
     it 'should be disabled' do
       fragment.first.attributes['enabled'].value.should == 'false'
     end
   end
-
 
   describe 'header manager' do
     let(:doc) do
@@ -106,14 +100,13 @@ describe "DSL" do
       end.to_doc
     end
 
-    let(:fragment) { doc.search("//HeaderManager").first }
+    let(:fragment) { doc.search('//HeaderManager').first }
 
     it 'should match on accept' do
       fragment.search(".//stringProp[@name='Header.name']").text.should == 'Accept'
       fragment.search(".//stringProp[@name='Header.value']").text.should == '*'
     end
   end
-
 
   describe 'header manager multiple values' do
     let(:doc) do
@@ -122,7 +115,7 @@ describe "DSL" do
       end.to_doc
     end
 
-    let(:fragment) { doc.search("//HeaderManager") }
+    let(:fragment) { doc.search('//HeaderManager') }
 
 
     it 'should match on accept for fragment_first' do
@@ -135,7 +128,6 @@ describe "DSL" do
       fragment.search(".//stringProp[@name='Header.value']").last.text.should == '2'
     end
   end
-
 
   describe 'the clear_each_iteration option should be respected' do
     let(:doc) do
@@ -154,7 +146,6 @@ describe "DSL" do
     end
   end
 
-
   describe 'test plan' do
     it 'should allow to take params' do
       test_plan = test({"TestPlan.serialize_threadgroups" => "false"}) {}
@@ -164,7 +155,6 @@ describe "DSL" do
       test_plan.to_doc.search("boolProp[@name='TestPlan.serialize_threadgroups']").text.should == "true"
     end
   end
-
 
   describe 'thread groups' do
     let(:doc) do
@@ -196,7 +186,6 @@ describe "DSL" do
     end
   end
 
-
   describe 'thread groups old syntax' do
     let(:doc) do
       test do
@@ -222,7 +211,6 @@ describe "DSL" do
       fragment.search(".//stringProp[@name='ThreadGroup.duration']").text.should == '69'
     end
   end
-
 
   describe 'transaction controller' do
     let(:doc) do
@@ -253,7 +241,6 @@ describe "DSL" do
     end
   end
 
-
   describe 'throughput controller' do
     let(:doc) do
       test do
@@ -278,7 +265,6 @@ describe "DSL" do
     end
   end
 
-
   describe 'visit' do
     let(:doc) do
       test do
@@ -290,7 +276,7 @@ describe "DSL" do
       end.to_doc
     end
 
-    let(:fragment) { doc.search("//HTTPSamplerProxy").first }
+    let(:fragment) { doc.search('//HTTPSamplerProxy').first }
 
     it 'should match on path' do
       fragment.search(".//stringProp[@name='HTTPSampler.path']").text.should == '/home'
@@ -301,7 +287,6 @@ describe "DSL" do
     end
   end
 
-
   describe 'visit old syntax' do
     let(:doc) do
       test do
@@ -311,13 +296,12 @@ describe "DSL" do
       end.to_doc
     end
 
-    let(:fragment) { doc.search("//HTTPSamplerProxy").first }
+    let(:fragment) { doc.search('//HTTPSamplerProxy').first }
 
     it 'should match on path' do
       fragment.search(".//stringProp[@name='HTTPSampler.path']").text.should == '/home'
     end
   end
-
 
   describe 'visit raw_path' do
     let(:doc) do
@@ -330,14 +314,12 @@ describe "DSL" do
       end.to_doc
     end
 
-    let(:fragment) { doc.search("//HTTPSamplerProxy").first }
+    let(:fragment) { doc.search('//HTTPSamplerProxy').first }
 
     it 'should match on path' do
       fragment.search(".//stringProp[@name='HTTPSampler.path']").text.should == '/home?location=melbourne'
     end
-
   end
-
 
   describe 'get_with_parameterized_domain' do
     let(:doc) do
@@ -350,7 +332,7 @@ describe "DSL" do
       end.to_doc
     end
 
-    let(:fragment) { doc.search("//HTTPSamplerProxy").first }
+    let(:fragment) { doc.search('//HTTPSamplerProxy').first }
 
     it 'should match on path' do
       fragment.search(".//stringProp[@name='HTTPSampler.path']").text.should == '/home'
@@ -360,7 +342,6 @@ describe "DSL" do
       fragment.search(".//stringProp[@name='HTTPSampler.domain']").text.should == '${custom_domain}'
     end
   end
-
 
   describe 'https' do
     let(:doc) do
@@ -373,13 +354,12 @@ describe "DSL" do
       end.to_doc
     end
 
-    let(:fragment) { doc.search("//HTTPSamplerProxy").first }
+    let(:fragment) { doc.search('//HTTPSamplerProxy').first }
 
     it 'should match on protocol' do
       fragment.search(".//stringProp[@name='HTTPSampler.protocol']").text.should == 'https'
     end
   end
-
 
   describe 'user_parameters' do
     let(:doc) do
@@ -419,7 +399,6 @@ describe "DSL" do
     end
   end
 
-
   describe 'xhr' do
     let(:doc) do
       test do
@@ -433,20 +412,19 @@ describe "DSL" do
       end.to_doc
     end
 
-    let(:fragment) { doc.search("//HeaderManager").first }
+    let(:fragment) { doc.search('//HeaderManager').first }
 
     it 'should match on XHR' do
       fragment.search(".//stringProp[@name='Header.value']").text.should == 'XMLHttpRequest'
     end
   end
 
-
   describe 'gzip' do
     let(:doc) do
       test do
         threads do
-          transaction name: "TC_02", parent: true, include_timers: true do
-            visit url: "/" do
+          transaction name: 'TC_02', parent: true, include_timers: true do
+            visit url: '/' do
               with_gzip
             end
           end
@@ -454,26 +432,25 @@ describe "DSL" do
       end.to_doc
     end
 
-    let(:fragment) { doc.search("//HeaderManager").first }
+    let(:fragment) { doc.search('//HeaderManager').first }
 
     it 'should match on Acept Encoding' do
       fragment.search(".//stringProp[@name='Header.value']").text.should == 'gzip, deflate'
     end
   end
 
-
   describe 'submit' do
     let(:doc) do
       test do
         threads do
-          transaction name: "TC_03", parent: true, include_timers: true do
+          transaction name: 'TC_03', parent: true, include_timers: true do
             submit url: "/", fill_in: { username: 'tim', password: 'password' }
           end
         end
       end.to_doc
     end
 
-    let(:fragment) { doc.search("//HTTPSamplerProxy").first }
+    let(:fragment) { doc.search('//HTTPSamplerProxy').first }
 
     it 'should match on POST' do
       fragment.search(".//stringProp[@name='HTTPSampler.method']").text.should == 'POST'
@@ -482,9 +459,7 @@ describe "DSL" do
     it 'should have no files' do
       fragment.search(".//elementProp[@name='HTTPsampler.Files']").length.should == 0
     end
-
   end
-
 
   describe 'submit_with_files' do
     let(:doc) do
@@ -510,7 +485,6 @@ describe "DSL" do
     end
   end
 
-
   describe 'If' do
     let(:doc) do
       test do
@@ -528,7 +502,6 @@ describe "DSL" do
       fragment.search(".//stringProp[@name='IfController.condition']").text.should == '2>1'
     end
   end
-
 
   describe 'exists' do
     let(:doc) do
@@ -548,7 +521,6 @@ describe "DSL" do
     end
   end
 
-
   describe 'While' do
     let(:doc) do
       test do
@@ -560,13 +532,12 @@ describe "DSL" do
       end.to_doc
     end
 
-    let(:fragment) { doc.search("//WhileController").first }
+    let(:fragment) { doc.search('//WhileController').first }
 
     it 'should match on While' do
       fragment.search(".//stringProp[@name='WhileController.condition']").text.should == 'true'
     end
   end
-
 
   describe 'Loop' do
     let(:doc) do
@@ -579,13 +550,12 @@ describe "DSL" do
       end.to_doc
     end
 
-    let(:fragment) { doc.search("//LoopController").first }
+    let(:fragment) { doc.search('//LoopController').first }
 
     it 'should match on Loops' do
       fragment.search(".//stringProp[@name='LoopController.loops']").text.should == '5'
     end
   end
-
 
   describe 'Counter' do
     let(:doc) do
@@ -598,13 +568,12 @@ describe "DSL" do
       end.to_doc
     end
 
-    let(:fragment) { doc.search("//CounterConfig").first }
+    let(:fragment) { doc.search('//CounterConfig').first }
 
     it 'should match on 5 Loops' do
       fragment.search(".//boolProp[@name='CounterConfig.per_user']").text.should == 'true'
     end
   end
-
 
   describe 'Switch' do
     let(:doc) do
@@ -617,13 +586,12 @@ describe "DSL" do
       end.to_doc
     end
 
-    let(:fragment) { doc.search("//SwitchController").first }
+    let(:fragment) { doc.search('//SwitchController').first }
 
     it 'should match on Switch' do
       fragment.search(".//stringProp[@name='SwitchController.value']").text.should == 'cat'
     end
   end
-
 
   describe 'regex extract' do
     let(:doc) do
@@ -632,13 +600,12 @@ describe "DSL" do
       end.to_doc
     end
 
-    let(:fragment) { doc.search("//RegexExtractor").first }
+    let(:fragment) { doc.search('//RegexExtractor').first }
 
     it 'should match on refname' do
       fragment.search(".//stringProp[@name='RegexExtractor.refname']").text.should == 'my_regex'
     end
   end
-
 
   describe 'regex extract with variable' do
     let(:doc) do
@@ -647,7 +614,7 @@ describe "DSL" do
       end.to_doc
     end
 
-    let(:fragment) { doc.search("//RegexExtractor").first }
+    let(:fragment) { doc.search('//RegexExtractor').first }
 
     it 'should match on refname' do
       fragment.search(".//stringProp[@name='Scope.variable']").text.should == 'test'
@@ -662,13 +629,12 @@ describe "DSL" do
       end.to_doc
     end
 
-    let(:fragment) { doc.search("//XPathExtractor").first }
+    let(:fragment) { doc.search('//XPathExtractor').first }
 
     it 'should match on refname' do
       fragment.search(".//stringProp[@name='XPathExtractor.refname']").text.should == 'my_xpath'
     end
   end
-
 
   describe 'json extract' do
     let(:doc) do
@@ -685,7 +651,6 @@ describe "DSL" do
     end
   end
 
-
   describe 'testdata extract' do
     let(:doc) do
       test do
@@ -693,16 +658,14 @@ describe "DSL" do
       end.to_doc
     end
 
-    let(:fragment) { doc.search("//RegexExtractor").first }
+    let(:fragment) { doc.search('//RegexExtractor').first }
 
     it 'should match on refname' do
       fragment.search(".//stringProp[@name='RegexExtractor.refname']").text.should == 'testdata'
     end
   end
 
-
   describe 'assertions' do
-
     describe 'scope all' do
       let(:doc) do
         test do
@@ -736,14 +699,13 @@ describe "DSL" do
         end.to_doc
       end
 
-      let(:fragment) { doc.search("//ResponseAssertion").first }
+      let(:fragment) { doc.search('//ResponseAssertion').first }
 
       it 'should match on scope' do
         fragment.search(".//stringProp[@name='Assertion.scope']").text.should == ""
       end
     end
   end
-
 
   describe 'Nested controllers' do
     let(:doc) do
@@ -785,9 +747,7 @@ describe "DSL" do
         node1_2.previous.previous.should == node1_1
       end
     end
-
   end
-
 
   describe 'raw body containing xml entities' do
     let(:doc) do
@@ -798,13 +758,12 @@ describe "DSL" do
       end.to_doc
     end
 
-    let(:fragment) { doc.search("//HTTPSamplerProxy").first }
+    let(:fragment) { doc.search('//HTTPSamplerProxy').first }
 
     it 'escape raw_body' do
       fragment.search(".//stringProp[@name='Argument.value']").text.should == 'username=my_name&password=my_password&email="my name <test@example.com>"'
     end
   end
-
 
   describe 'constant_throughput_timer' do
     let(:doc) do
@@ -826,7 +785,6 @@ describe "DSL" do
       fragment.search("//doubleProp/value").last.text.should == '70.0'
     end
   end
-
 
   describe 'run' do
     let(:deflate_properties) {
@@ -872,9 +830,7 @@ describe "DSL" do
       test do
       end.run(properties: nil, remote_hosts: ['192.168.1.1', '192.168.1.2'])
     end
-
   end
-
 
   describe 'module controllers' do
     let(:doc) do
@@ -905,7 +861,6 @@ describe "DSL" do
       nodes[3].text.should == 'controller_to_call'
     end
   end
-
 
   describe 'module controllers with test fragment' do
     let(:doc) do

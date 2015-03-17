@@ -1,5 +1,9 @@
 # Changes
 
+## v2.13.0
+
+- Update to JMeter 2.13
+
 ## v2.11.11
 
 - Support for `test_fragment` for use with the `module_controller`. [See example here](https://github.com/flood-io/ruby-jmeter/blob/master/examples/basic_test_fragment.rb).

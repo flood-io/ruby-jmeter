@@ -13,9 +13,6 @@ end
 
 group :development do
   gem 'pry', :require => 'pry'
-  gem 'pry-nav', :require => 'pry-nav'
-  gem 'pry-debugger', :require => 'pry-debugger'
-  gem 'awesome_print', :require => 'ap'
 end
 
 group :test do
