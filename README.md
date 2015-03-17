@@ -8,6 +8,8 @@ Tired of using the JMeter GUI or looking at hairy XML files?
 
 This gem lets you write test plans for JMeter in your favourite text editor, and optionally run them on [flood.io](http://flood.io).
 
+![](https://flood.io/images/logo-flood-medium.png)
+
 ## Installation
 
 Install it yourself as:
@@ -101,7 +103,7 @@ end.run(
 
 ### Running a JMeter Test Plan on Flood IO
 
-You can also execute JMeter test plans on Flood IO using our API. To do so, you require an account and API token. If you don't know your token, sign in to [flood.io](https://flood.io/api) and check your account settings.
+You can also execute JMeter test plans on Flood IO using our API. To do so, you require an account and API token. If you don't know your token, sign in to [flood.io](https://flood.io/) and check your account settings.
 
 To execute the test on Flood IO, call the `flood` method on the test and pass it the API token like this.
 
@@ -133,7 +135,6 @@ Flood IO provides a shared grid for free, suitable for 5 minute tests, check you
 ![](https://s3.amazonaws.com/flood-io-support/Flood_IO_2015-02-24_11-44-29.jpg)
 
 Alternatively upgrade to a paid subscription on Flood IO and start your own grids on demand.
-
 
 ## Advanced Usage
 
@@ -368,7 +369,7 @@ end
 
 ## Roadmap
 
-This work is being sponsored by flood.io. Get in touch with us if you'd like to be involved.
+This work is being sponsored by Flood IO. Get in touch with us if you'd like to be involved.
 
 ## Contributing
 
