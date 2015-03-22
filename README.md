@@ -115,8 +115,7 @@ test do
 end.flood(
   ENV['FLOOD_API_TOKEN'],
   name: 'Demo',
-  privacy_flag: 'public',
-  region: 'ap-southeast-2'
+  privacy_flag: 'public'
 )
 ```
 
@@ -126,7 +125,7 @@ This will then provide you with a link to the live test results on Flood IO like
 I, [2015-02-24T11:15:25.669029 #14010]  INFO -- : Flood results at: https://flood.io/AbRWkFl7VODYCkQuy3ffvA
 ```
 
-Note you will need to provide a `grid` or `region` parameter to the `.flood` method to describe which grid to distribute the flood test to. You can find the Grid ID from the URL of the target grid in your [grids](https://flood.io/dashboard/grids) dashboard e.g.:
+Note you will need to provide a `grid` or `region` parameter to the `.flood` method to describe which grid to distribute the flood test to. Otherwise it will default to the shared grid. You can find the Grid ID from the URL of the target grid in your [grids](https://flood.io/dashboard/grids) dashboard e.g.:
 
 ![](https://s3.amazonaws.com/flood-io-support/Flood_IO_2015-02-24_11-43-21.jpg)
 
