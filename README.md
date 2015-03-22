@@ -115,7 +115,10 @@ test do
 end.flood(
   ENV['FLOOD_API_TOKEN'],
   name: 'Demo',
-  privacy_flag: 'public'
+  privacy_flag: 'public',
+  ## Select a grid or region to distribute this flood to
+  # grid: 'pmmi24XaSMnKjGVEtutroQ',
+  # region: 'ap-southeast-2'
 )
 ```
 
