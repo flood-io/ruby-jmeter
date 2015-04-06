@@ -40,7 +40,13 @@ module RubyJmeter
 
     def update_at_xpath(params)
       params[:update_at_xpath].each do |fragment|
-        @doc.at_xpath(fragment[:xpath]) << fragment[:value]
+        if fragment[:xpath]
+          @doc.at_xpath(fragment[:xpath]) << fragment[:value]
+        else
+          fragment.each do |xpath, value|
+            @doc.at_xpath(xpath).content = value
+          end
+        end
       end
     end
 
