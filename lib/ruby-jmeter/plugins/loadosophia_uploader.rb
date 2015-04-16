@@ -3,7 +3,7 @@ module RubyJmeter
     class LoadosophiaUploader
       attr_accessor :doc
       include Helper
-      def initialize(name, params={})
+      def initialize(name="Loadosophia.org Uploader", params={})
 	  params[:error_logging] ||= false;
 	  params[:filename] ||= "";
 	  params[:project] ||= "DEFAULT";
@@ -14,7 +14,7 @@ module RubyJmeter
 	  params[:useOnline] ||= false;
 
           @doc = Nokogiri::XML(<<-XML.strip_heredoc)
-      <kg.apc.jmeter.reporters.LoadosophiaUploader guiclass="kg.apc.jmeter.reporters.LoadosophiaUploaderGui" testclass="kg.apc.jmeter.reporters.LoadosophiaUploader" testname="#{name}" enabled="true">
+      <kg.apc.jmeter.reporters.LoadosophiaUploader guiclass="kg.apc.jmeter.reporters.LoadosophiaUploaderGui" testclass="kg.apc.jmeter.reporters.LoadosophiaUploader" testname="#{name}" enabled="#{enabled(params)}">
         <boolProp name="ResultCollector.error_logging">#{params[:error_logging].to_s}</boolProp>
         <objProp>
           <name>saveConfig</name>
@@ -55,7 +55,7 @@ module RubyJmeter
       </kg.apc.jmeter.reporters.LoadosophiaUploader>
       XML
 
-        update params
+        #update params
       end
     end
   end
