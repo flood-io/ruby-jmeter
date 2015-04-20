@@ -1,5 +1,9 @@
 # Changes
 
+## v2.13.2
+
+- Support for Loadosophia plugin
+
 ## v2.13.0
 
 - Update to JMeter 2.13
