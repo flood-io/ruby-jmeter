@@ -475,6 +475,15 @@ module RubyJmeter
 
     alias_method :perfmon, :perfmon_collector
 
+    def loadosophia_uploader(name = "Loadosophia.org Uploader", params = {}, &block)
+      node = RubyJmeter::Plugins::LoadosophiaUploader.new(name, params)
+      attach_node(node, &block)
+    end
+
+    alias_method :loadosophia, :loadosophia_uploader
+
+
+
     # API Methods
 
     def out(params = {})
