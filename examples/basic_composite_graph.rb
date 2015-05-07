@@ -26,4 +26,4 @@ test do
         metric: 'Overall Active Threads'
     }
   ]
-end.run(path: '/usr/share/jmeter/bin/', gui: true)
+end.run(path: '/usr/share/jmeter-2.13/bin/', gui: true)

@@ -8,7 +8,7 @@ test do
       visit name: 'Home Page', url: 'http://google.com/'
     end
   end
-  
+
   #
   # You need jmeter-plugins at Google code
   #   http://code.google.com/p/jmeter-plugins
@@ -20,4 +20,4 @@ test do
   response_times_percentiles 'Response Times Percentiles'
   transactions_per_second 'Transactions per Second'
 
-end.run(path: '/usr/share/jmeter/bin/', gui: true)
+end.run(path: '/usr/share/jmeter-2.13/bin/', gui: true)

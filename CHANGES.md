@@ -67,5 +67,5 @@ test do
     debug_sampler
     view_results
   end
-end.run(path: '/usr/share/jmeter/bin/', gui: true)
+end.run(path: '/usr/share/jmeter-2.13/bin/', gui: true)
 ```

@@ -3,9 +3,9 @@ require 'ruby-jmeter'
 
 test do
   threads 1, {
-                rampup: 1, 
+                rampup: 1,
                 scheduler: true,
-                duration: 60, 
+                duration: 60,
                 continue_forever: true
               } do
 
@@ -28,5 +28,5 @@ test do
 
 # end.jmx
 # end.flood(ENV['FLOOD_API_TOKEN'])
-# end.run(path: '/usr/share/jmeter/bin/', gui: true)
-end.run(path: '/usr/share/jmeter/bin/')
+# end.run(path: '/usr/share/jmeter-2.13/bin/', gui: true)
+end.run(path: '/usr/share/jmeter-2.13/bin/')

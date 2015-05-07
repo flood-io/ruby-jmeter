@@ -8,7 +8,7 @@ test do
   cache :clear_each_iteration => true
 
   cookies
-  
+
   threads :count => 1, :loops => 10 do
 
     random_timer 1000, 3000
@@ -35,7 +35,7 @@ test do
             extract :regex => 'a href="(/browse.+?)"', :name => 'random_category'
         end
       end
-    end   
+    end
 
     exists 'random_category' do
 
@@ -61,4 +61,4 @@ test do
 
 # end.grid ARGV[1]
 # end.jmx
-end.run(path: '/usr/share/jmeter/bin/', gui: true)
+end.run(path: '/usr/share/jmeter-2.13/bin/', gui: true)

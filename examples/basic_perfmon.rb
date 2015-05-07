@@ -42,4 +42,4 @@ test do
         metric: 'localhost Memory memory-node'
     }
   ]
-end.run(path: '/usr/share/jmeter/bin/', gui: true)
+end.run(path: '/usr/share/jmeter-2.13/bin/', gui: true)

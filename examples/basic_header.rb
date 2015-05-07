@@ -3,10 +3,10 @@ require 'ruby-jmeter'
 
 test do
   # header with multiple values
-  header [ 
+  header [
     { name: 'Accept', value: '*' },
     { name: 'User-Agent', value: 'Test' }
-  ] 
+  ]
 
   with_user_agent :iphone
 
@@ -19,5 +19,5 @@ test do
       with_xhr
     end
   end
-  
-end.run(path: '/usr/share/jmeter/bin/', gui: true)
+
+end.run(path: '/usr/share/jmeter-2.13/bin/', gui: true)

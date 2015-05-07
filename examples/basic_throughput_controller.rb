@@ -9,6 +9,6 @@ test do
     throughput_controller percent: 99 do
       transaction name: "TC_01", parent: true, include_timers: true
     end
-        
+
   end
-end.run(path: '/usr/share/jmeter/bin/', gui: true)
+end.run(path: '/usr/share/jmeter-2.13/bin/', gui: true)
