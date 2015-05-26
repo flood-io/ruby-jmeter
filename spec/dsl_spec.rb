@@ -285,6 +285,14 @@ describe 'DSL' do
     it 'should match on always_encode' do
       fragment.search(".//boolProp[@name='HTTPArgument.always_encode']").text.should == 'true'
     end
+
+    it 'should match on query param name: location' do
+      fragment.search(".//stringProp[@name='Argument.name']").text.should == 'location'
+    end
+
+    it 'should match on query param value: melbourne' do
+      fragment.search(".//stringProp[@name='Argument.value']").text.should == 'melbourne'
+    end
   end
 
   describe 'visit old syntax' do
