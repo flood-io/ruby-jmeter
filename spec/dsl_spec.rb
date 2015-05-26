@@ -270,7 +270,7 @@ describe 'DSL' do
       test do
         threads do
           transaction name: "TC_01", parent: true, include_timers: true do
-            visit url: "/home?location=melbourne", always_encode: true
+            visit url: "/home?location=melbourne&location=sydney", always_encode: true
           end
         end
       end.to_doc
@@ -282,8 +282,32 @@ describe 'DSL' do
       fragment.search(".//stringProp[@name='HTTPSampler.path']").text.should == '/home'
     end
 
-    it 'should match on always_encode' do
-      fragment.search(".//boolProp[@name='HTTPArgument.always_encode']").text.should == 'true'
+    context "first argument" do
+      it 'should match on always_encode' do
+        fragment.search(".//boolProp[@name='HTTPArgument.always_encode']")[0].text.should == 'true'
+      end
+
+      it 'should match on query param name: location' do
+        fragment.search(".//stringProp[@name='Argument.name']")[0].text.should == 'location'
+      end
+
+      it 'should match on query param value: melbourne' do
+        fragment.search(".//stringProp[@name='Argument.value']")[0].text.should == 'melbourne'
+      end
+    end
+
+    context "second argument" do
+      it 'should match on always_encode' do
+        fragment.search(".//boolProp[@name='HTTPArgument.always_encode']")[1].text.should == 'true'
+      end
+
+      it 'should match on query param name: location' do
+        fragment.search(".//stringProp[@name='Argument.name']")[1].text.should == 'location'
+      end
+
+      it 'should match on query param value: sydney' do
+        fragment.search(".//stringProp[@name='Argument.value']")[1].text.should == 'sydney'
+      end
     end
   end
 

@@ -10,7 +10,8 @@ module RubyJmeter
         params[:fill_in] ||= {}
         params[:params] && params[:params].split('&').each do |param|
           name,value = param.split('=')
-          params[:fill_in][name] = value
+          params[:fill_in][name] ||= []
+          params[:fill_in][name] << value
         end
       end
 
@@ -42,20 +43,23 @@ module RubyJmeter
 
     def fill_in(params)
       params[:update_at_xpath] ||= []
-      params[:update_at_xpath] += params[:fill_in].collect do |name, value|
-        {
-          :xpath => '//collectionProp',
-          :value => Nokogiri::XML(<<-EOF.strip_heredoc).children
-            <elementProp name="#{name}" elementType="HTTPArgument">
-              <boolProp name="HTTPArgument.always_encode">#{params[:always_encode] ? 'true' : false}</boolProp>
-              <stringProp name="Argument.value">#{value}</stringProp>
-              <stringProp name="Argument.metadata">=</stringProp>
-              <boolProp name="HTTPArgument.use_equals">true</boolProp>
-              <stringProp name="Argument.name">#{name}</stringProp>
-            </elementProp>
-            EOF
-        }
-      end
+      params[:update_at_xpath] = params[:fill_in].
+        each_with_object(params[:update_at_xpath]) do |(name, values), memo|
+           Array(values).each do |value|
+            memo << {
+              :xpath => '//collectionProp',
+              :value => Nokogiri::XML(<<-EOF.strip_heredoc).children
+                <elementProp name="#{name}" elementType="HTTPArgument">
+                  <boolProp name="HTTPArgument.always_encode">#{params[:always_encode] ? 'true' : false}</boolProp>
+                  <stringProp name="Argument.value">#{value}</stringProp>
+                  <stringProp name="Argument.metadata">=</stringProp>
+                  <boolProp name="HTTPArgument.use_equals">true</boolProp>
+                  <stringProp name="Argument.name">#{name}</stringProp>
+                </elementProp>
+                EOF
+            }
+          end
+        end
       params.delete(:fill_in)
     end
 
