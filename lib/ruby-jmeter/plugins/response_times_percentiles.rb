@@ -42,6 +42,7 @@ module RubyJmeter
           </kg.apc.jmeter.vizualizers.CorrectedResultCollector>
         EOF
         update params
+        update_at_xpath params if params.is_a?(Hash) && params[:update_at_xpath]
       end
     end
   end
