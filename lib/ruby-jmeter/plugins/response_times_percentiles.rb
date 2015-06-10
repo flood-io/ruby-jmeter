@@ -1,9 +1,10 @@
 module RubyJmeter
   module Plugins
-    class ResponseTimesPercentiles
+    class ResponseTimesPercentiles < BasePlugin
       attr_accessor :doc
       include Helper
       def initialize(name, params={})
+        super params
         @doc = Nokogiri::XML(<<-EOF.strip_heredoc)
           <kg.apc.jmeter.vizualizers.CorrectedResultCollector guiclass="kg.apc.jmeter.vizualizers.ResponseTimesPercentilesGui" testclass="kg.apc.jmeter.vizualizers.CorrectedResultCollector" testname="#{name}" enabled="#{enabled(params)}">
             <boolProp name="ResultCollector.error_logging">false</boolProp>
@@ -24,7 +25,7 @@ module RubyJmeter
                 <subresults>true</subresults>
                 <responseData>false</responseData>
                 <samplerData>false</samplerData>
-                <xml>true</xml>
+                <xml>#{@filename.empty?}</xml>
                 <fieldNames>false</fieldNames>
                 <responseHeaders>false</responseHeaders>
                 <requestHeaders>false</requestHeaders>
@@ -34,7 +35,7 @@ module RubyJmeter
                 <bytes>true</bytes>
               </value>
             </objProp>
-            <stringProp name="filename"></stringProp>
+            <stringProp name="filename">#{@filename}</stringProp>
             <longProp name="interval_grouping">500</longProp>
             <boolProp name="graph_aggregated">false</boolProp>
             <stringProp name="include_sample_labels"></stringProp>
