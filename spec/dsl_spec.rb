@@ -823,6 +823,22 @@ describe 'DSL' do
       end.run(properties: 'my-jmeter.properties')
     end
 
+    it 'pass an inline property' do
+      Open3.should_receive(:popen2e)
+           .with('jmeter -n -t jmeter.jmx -j jmeter.log -l jmeter.jtl -Jjmeter.save.saveservice.output_format=xml ')
+
+      test do
+      end.run(properties: {"jmeter.save.saveservice.output_format" => "xml"})
+    end
+
+    it 'pass multiple inline properties' do
+      Open3.should_receive(:popen2e)
+           .with('jmeter -n -t jmeter.jmx -j jmeter.log -l jmeter.jtl -Jtlon=uqbar -Jorbis=tertius ')
+
+      test do
+      end.run(properties: {tlon: "uqbar", orbis: "tertius"})
+    end
+
     it 'do not pass a properties file' do
       Open3.should_receive(:popen2e)
            .with("jmeter -n -t jmeter.jmx -j jmeter.log -l jmeter.jtl -q #{deflate_properties} ")
