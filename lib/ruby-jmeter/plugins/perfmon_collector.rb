@@ -3,7 +3,7 @@ module RubyJmeter
     class PerfmonCollector
       attr_accessor :doc
       include Helper
-      def initialize(name, params={})
+      def initialize(name, params={}, filename="perfMon.jtl")
         metricNodes = params.collect do |m|
           "
             <collectionProp name=\"\">
@@ -53,7 +53,7 @@ module RubyJmeter
                 <sampleCount>true</sampleCount>
               </value>
             </objProp>
-            <stringProp name="filename"></stringProp>
+            <stringProp name="filename">#{filename}</stringProp>
             <longProp name="interval_grouping">1000</longProp>
             <boolProp name="graph_aggregated">false</boolProp>
             <stringProp name="include_sample_labels"></stringProp>
