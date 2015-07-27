@@ -41,7 +41,7 @@ module RubyJmeter
                 <subresults>false</subresults>
                 <responseData>false</responseData>
                 <samplerData>false</samplerData>
-                <xml>false</xml>
+                <xml>true</xml>
                 <fieldNames>false</fieldNames>
                 <responseHeaders>false</responseHeaders>
                 <requestHeaders>false</requestHeaders>
