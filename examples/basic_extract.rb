@@ -6,6 +6,7 @@ test do
     visit name: 'Home', url: 'http://altentee.com' do
       extract regex: "content='(.+?)' name='csrf-token'", name: 'csrf-token'
       extract regex: 'pattern', name: 'jmeter_variable_regex', variable: 'test'
+      extract css: 'span#blog', name: 'blog'
     end
   end
 end.run(path: '/usr/share/jmeter-2.13/bin/', gui: true)

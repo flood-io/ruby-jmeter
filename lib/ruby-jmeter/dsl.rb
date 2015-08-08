@@ -353,6 +353,10 @@ module RubyJmeter
         params[:VAR] = params[:name]
         params[:JSONPATH] = params[:json]
         RubyJmeter::Plugins::JsonPathExtractor.new(params)
+      elsif params[:css]
+        params[:refname] = params[:name]
+        params[:expr] = params[:css]
+        RubyJmeter::CssjqueryExtractor.new(params)
       end
       attach_node(node, &block)
     end
