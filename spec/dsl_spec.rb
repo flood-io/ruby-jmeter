@@ -186,6 +186,36 @@ describe 'DSL' do
     end
   end
 
+  describe 'setup thread groups' do
+    let(:doc) do
+      test do
+        setup_thread_group count: 101, continue_forever: true, duration: 69
+      end.to_doc
+    end
+
+    let(:fragment) { doc.search("//SetupThreadGroup").first }
+
+    it 'should match on num_threads' do
+      fragment.search(".//stringProp[@name='ThreadGroup.num_threads']").text.should == '101'
+    end
+
+    it 'should match on scheduler' do
+      fragment.search(".//boolProp[@name='ThreadGroup.scheduler']").text.should == 'true'
+    end
+
+    it 'should match on continue_forever' do
+      fragment.search(".//boolProp[@name='LoopController.continue_forever']").text.should == 'true'
+    end
+
+    it 'should match on loops' do
+      fragment.search(".//stringProp[@name='LoopController.loops']").text.should == '-1'
+    end
+
+    it 'should match on duration' do
+      fragment.search(".//stringProp[@name='ThreadGroup.duration']").text.should == '69'
+    end
+  end
+
   describe 'thread groups old syntax' do
     let(:doc) do
       test do
