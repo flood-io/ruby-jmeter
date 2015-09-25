@@ -940,4 +940,25 @@ describe 'DSL' do
       nodes[2].text.should == 'some_test_fragment'
     end
   end
+
+  describe 'dummy sampler' do
+    let(:doc) do
+      test do
+        threads do
+          dummy_sampler 'dummy sampler name', { RESPONSE_DATA: "Some response data" }
+        end
+      end.to_doc
+    end
+
+    let(:fragment) { doc.search("//kg.apc.jmeter.samplers.DummySampler").first }
+
+    it 'should match on name' do
+      fragment.attributes['testname'].value.should == 'dummy sampler name'
+    end
+
+    it 'should match on response data' do
+      fragment.search("//stringProp[@name='RESPONSE_DATA']").text.should == 'Some response data'
+    end
+
+  end
 end
