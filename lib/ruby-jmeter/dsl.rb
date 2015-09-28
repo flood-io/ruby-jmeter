@@ -528,8 +528,7 @@ module RubyJmeter
     def run(params = {})
       file(params)
       logger.warn "Test executing locally ..."
-      properties = params.has_key?(:properties) ? params[:properties] : "#{File.dirname(__FILE__)}/helpers/jmeter.properties"
-      properties = "-q #{properties}" if properties
+      properties = params.has_key?(:properties) ? build_properties(params[:properties]) : "-q #{File.dirname(__FILE__)}/helpers/jmeter.properties"
 
       if params[:remote_hosts]
         remote_hosts = params[:remote_hosts]
@@ -637,6 +636,14 @@ module RubyJmeter
 
     def doc
       Nokogiri::XML(@root.to_s, &:noblanks)
+    end
+
+    def build_properties(properties)
+      if properties.kind_of?(String)
+        "-q #{properties}"
+      elsif properties.kind_of?(Hash)
+        properties.map{ |k,v| "-J#{k}=#{v}" }.join(" ")
+      end
     end
 
     def logger
