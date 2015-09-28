@@ -402,6 +402,10 @@ module RubyJmeter
       params[:test_type] = parse_test_type(params)
       params['0'] = params.values.first
       node = RubyJmeter::ResponseAssertion.new(params)
+      if params[:variable] then
+        params['Scope.variable'] = params[:variable]
+        node.doc.xpath("//stringProp[@name='Assertion.scope']").first.content = 'variable'
+      end
       node.doc.xpath("//stringProp[@name='Assertion.scope']").remove if
         params[:scope] == 'main' || params['scope'] == 'main'
       attach_node(node, &block)

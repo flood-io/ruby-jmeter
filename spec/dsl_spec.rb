@@ -759,6 +759,26 @@ describe 'DSL' do
         fragment.search(".//stringProp[@name='Assertion.scope']").text.should == ""
       end
     end
+
+    describe 'scope variable' do
+      let(:doc) do
+        test do
+          visit '/' do
+            assert contains: 'someting', variable: 'some_jmeter_variable'
+          end
+        end.to_doc
+      end
+
+      let(:fragment) { doc.search("//ResponseAssertion").first }
+
+      it 'should match on scope' do
+        fragment.search(".//stringProp[@name='Assertion.scope']").text.should == "variable"
+      end
+
+      it 'should match on variable' do
+        fragment.search(".//stringProp[@name='Scope.variable']").text.should == "some_jmeter_variable"
+      end
+    end
   end
 
   describe 'Nested controllers' do

@@ -21,6 +21,7 @@ module RubyJmeter
   <boolProp name="Assertion.assume_success">false</boolProp>
   <intProp name="Assertion.test_type">16</intProp>
   <stringProp name="Assertion.scope">all</stringProp>
+  <stringProp name="Scope.variable"></stringProp>
 </ResponseAssertion>)
       EOS
       update params
