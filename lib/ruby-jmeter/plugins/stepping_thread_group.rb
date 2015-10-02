@@ -23,7 +23,7 @@ module RubyJmeter
             </elementProp>
           </kg.apc.jmeter.threads.SteppingThreadGroup>
         EOF
-        # update params
+        update params
       end
     end
   end
