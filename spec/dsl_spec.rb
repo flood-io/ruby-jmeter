@@ -216,6 +216,56 @@ describe 'DSL' do
     end
   end
 
+  describe 'stepping thread group' do
+    let(:doc) do
+      test do
+        stepping_thread_group on_sample_error: 'startnextloop', total_threads: 100, initial_delay: 1, start_threads: 2, add_threads: 3, start_every: 4, stop_threads: 5, stop_every: 6, flight_time: 7, rampup: 8
+      end.to_doc
+    end
+
+    let(:fragment) { doc.search("//kg.apc.jmeter.threads.SteppingThreadGroup").first }
+    it 'should match on on_sample_error' do
+      puts fragment
+      fragment.search(".//stringProp[@name='ThreadGroup.on_sample_error']").text.should == 'startnextloop'
+    end
+
+    it 'should match on total_threads' do
+      fragment.search(".//stringProp[@name='ThreadGroup.num_threads']").text.should == '100'
+    end
+
+    it 'should match on initial_delay' do
+      fragment.search(".//stringProp[@name='Threads initial delay']").text.should == '1'
+    end
+
+    it 'should match on start_threads' do
+      fragment.search(".//stringProp[@name='Start users count']").text.should == '2'
+    end
+
+    it 'should match on add_threads' do
+      fragment.search(".//stringProp[@name='Start users count burst']").text.should == '3'
+    end
+
+    it 'should match on start_every' do
+      fragment.search(".//stringProp[@name='Start users period']").text.should == '4'
+    end
+
+    it 'should match on stop_threads' do
+      fragment.search(".//stringProp[@name='Stop users count']").text.should == '5'
+    end
+
+    it 'should match on stop_every' do
+      fragment.search(".//stringProp[@name='Stop users period']").text.should == '6'
+    end
+
+    it 'should match on flight_time' do
+      fragment.search(".//stringProp[@name='flighttime']").text.should == '7'
+    end
+
+    it 'should match on rampup' do
+      fragment.search(".//stringProp[@name='rampUp']").text.should == '8'
+    end
+  end
+
   describe 'thread groups old syntax' do
     let(:doc) do
       test do
