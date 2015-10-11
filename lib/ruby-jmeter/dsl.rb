@@ -476,6 +476,27 @@ module RubyJmeter
 
     alias_method :step, :stepping_thread_group
 
+    def ultimate_thread_group(params = {}, &block)
+      node = RubyJmeter::Plugins::UltimateThreadGroup.new(params)
+
+      params.each_with_index do |group, index|
+        node.doc.at_xpath('//collectionProp') <<
+          Nokogiri::XML(<<-EOS.strip_heredoc).children
+            <collectionProp name="index">
+              <stringProp name="#{group[:start_threads]}">#{group[:start_threads]}</stringProp>
+              <stringProp name="#{group[:initial_delay]}">#{group[:initial_delay]}</stringProp>
+              <stringProp name="#{group[:start_time]}">#{group[:start_time]}</stringProp>
+              <stringProp name="#{group[:hold_time]}">#{group[:hold_time]}</stringProp>
+              <stringProp name="#{group[:stop_time]}">#{group[:stop_time]}</stringProp>
+            </collectionProp>
+          EOS
+      end
+
+      attach_node(node, &block)
+    end
+
+    alias_method :ultimate, :ultimate_thread_group
+
     def composite_graph(name, params = {}, &block)
       node = RubyJmeter::Plugins::CompositeGraph.new(name, params)
       attach_node(node, &block)
