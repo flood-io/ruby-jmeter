@@ -189,7 +189,7 @@ describe 'DSL' do
   describe 'setup thread groups' do
     let(:doc) do
       test do
-        setup_thread_group count: 101, continue_forever: true, duration: 69
+        setup_thread_group count: 101, duration: 69, loops: 77
       end.to_doc
     end
 
@@ -204,11 +204,11 @@ describe 'DSL' do
     end
 
     it 'should match on continue_forever' do
-      fragment.search(".//boolProp[@name='LoopController.continue_forever']").text.should == 'true'
+      fragment.search(".//boolProp[@name='LoopController.continue_forever']").text.should == 'false'
     end
 
     it 'should match on loops' do
-      fragment.search(".//stringProp[@name='LoopController.loops']").text.should == '-1'
+      fragment.search(".//stringProp[@name='LoopController.loops']").text.should == '77'
     end
 
     it 'should match on duration' do
