@@ -373,6 +373,30 @@ end
 
 This work is being sponsored by Flood IO. Get in touch with us if you'd like to be involved.
 
+## Building
+
+To build project you need to install gem, see:
+
+- https://rubygems.org/pages/download
+
+Then run in ruby-jmeter folder:
+
+- gem build ruby-jmeter.gemspec 
+
+This will generate a ruby-jmeter-X.Y.Z.gem file 
+
+To test your new build, install it:
+
+- gem install ruby-jmeter-X.Y.Z.gem
+
+You can then test your new build by running:
+
+- ruby yourtest.rb
+
+For more details on gem, see:
+
+- http://guides.rubygems.org/make-your-own-gem/#your-first-gem
+
 ## Contributing
 
 1. Fork it
