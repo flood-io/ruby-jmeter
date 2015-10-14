@@ -225,7 +225,6 @@ describe 'DSL' do
 
     let(:fragment) { doc.search("//kg.apc.jmeter.threads.SteppingThreadGroup").first }
     it 'should match on on_sample_error' do
-      puts fragment
       fragment.search(".//stringProp[@name='ThreadGroup.on_sample_error']").text.should == 'startnextloop'
     end
 
@@ -1045,6 +1044,36 @@ describe 'DSL' do
     it 'should match on response data' do
       fragment.search("//stringProp[@name='RESPONSE_DATA']").text.should == 'Some response data'
     end
+  end
 
+  describe 'perfmon collector' do
+    let(:doc) do
+      test do
+        threads do
+          perfmon_collector 'perfmon collector name',
+          [
+            {server: '1.1.1.1', port: 4444, metric: 'CPU', parameters: ''},
+            {server: '2.2.2.2', port: 4444, metric: 'CPU', parameters: ''}
+          ],
+          "perf.jtl",
+          false
+        end
+      end.to_doc
+    end
+
+    let(:fragment) { doc.search("//kg.apc.jmeter.perfmon.PerfMonCollector").first }
+    let(:metric_connections) { fragment.search("//collectionProp[@name='metricConnections']").first }
+
+    it 'should match on name' do
+      fragment.attributes['testname'].value.should == 'perfmon collector name'
+    end
+
+    it 'should match on xml flag' do
+      fragment.search(".//xml").first.text.should == 'false'
+    end
+
+    it 'should match on first server ip' do
+      metric_connections.search("//stringProp[@name='']").first.text.should == '1.1.1.1'
+    end
   end
 end
