@@ -419,6 +419,19 @@ Much of the behaviour of the gem is defined in `lib/ruby-jmeter/dsl.rb` which is
 
 Some custom code has been contributed particularly for support of JMeter plugins. These are not included in the IDL and as such should be added to `lib/ruby-jmeter/plugins`. Please follow some of the other examples.
 
+### Bundler
+
+We recommend using the Ruby gem bundle to manage your dependencies. Typical setup would be:
+
+
+```sh
+gem install bundler
+cd <your local clone>
+bundle install
+```
+
+Then you can run any rake / test tasks with the prefix `bundle exec`
+
 ### Tests
 
 If contributing please add an appropriate test. See `spec/dsl_spec.rb` for examples. Tests can be run from the command line as follows:
@@ -440,3 +453,6 @@ Note: most of the examples assume the JMeter binary is installed in `/usr/share/
 
 
 ```ruby
+...
+end.run(path: 'C/Program Files/JMeter-2.13/bin/', gui: true)
+```
