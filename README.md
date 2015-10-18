@@ -381,3 +381,62 @@ This work is being sponsored by Flood IO. Get in touch with us if you'd like to 
 4. Commit your changes (`git commit -am 'Add some feature'`)
 5. Push to the branch (`git push origin my-new-feature`)
 6. Create new Pull Request
+
+### IDL
+
+We use an interface description language (IDL) as a bridge between JMeter's components expressed as XML in a `.jmx` test plan to Ruby's DSL objects in this repository.
+
+To automate this `lib/ruby-jmeter/idl.rb` can be executed from the command line which will read from `lib/ruby-jmeter/idl.xml` and output to `lib/ruby-jmeter/dsl`
+
+For example:
+
+```sh
+flood/ruby-jmeter - [master●] » ruby lib/ruby-jmeter/idl.rb
+flood/ruby-jmeter - [master●] » git status
+On branch master
+Your branch is up-to-date with 'origin/master'.
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git checkout -- <file>..." to discard changes in working directory)
+
+  modified:   lib/ruby-jmeter/DSL.md
+  modified:   lib/ruby-jmeter/dsl/foreach_controller.rb
+  modified:   lib/ruby-jmeter/dsl/http_request.rb
+  modified:   lib/ruby-jmeter/dsl/http_request_defaults.rb
+  modified:   lib/ruby-jmeter/dsl/regular_expression_extractor.rb
+  modified:   lib/ruby-jmeter/dsl/response_assertion.rb
+  modified:   lib/ruby-jmeter/dsl/test_fragment.rb
+  modified:   lib/ruby-jmeter/dsl/user_parameters.rb
+```
+
+You **should never manually update** code in `lib/ruby-jmeter/dsl` as this is automatically overwritten whenever we run the IDL script. As new components / plugins are added, or major versions of JMeter are updated, we open `lib/ruby-jmeter/idl.xml` in the JMeter UI with those updates prior to running the IDL script. This makes updating between versions more easy.
+
+### DSL
+
+Much of the behaviour of the gem is defined in `lib/ruby-jmeter/dsl.rb` which is where you should be updating code. This is now a very long module and in much need of refactoring. PR's are welcomed.
+
+### Plugins
+
+Some custom code has been contributed particularly for support of JMeter plugins. These are not included in the IDL and as such should be added to `lib/ruby-jmeter/plugins`. Please follow some of the other examples.
+
+### Tests
+
+If contributing please add an appropriate test. See `spec/dsl_spec.rb` for examples. Tests can be run from the command line as follows:
+
+    $ bundle exec rspec
+
+### Examples
+
+It is often useful to add an appropriate example for other users and for testing your changes locally with the JMeter UI. See `examples` for different types of examples. To let your examples work locally from your own changes / commits simply prefix the examples with:
+
+```ruby
+$LOAD_PATH.unshift(File.join(File.dirname(__FILE__), '..', 'lib'))
+```
+
+    $ flood/ruby-jmeter - [master●] » ruby examples/basic_assertion.rb
+      W, [2015-10-17T19:31:12.021004 #33216]  WARN -- : Test executing locally ...
+
+Note: most of the examples assume the JMeter binary is installed in `/usr/share/jmeter-2.13/bin/` however you can modify this in your example to something that suits your installation e.g.:
+
+
+```ruby
