@@ -19,6 +19,7 @@ module RubyJmeter
   <stringProp name="filename"/>
   <stringProp name="cacheKey"/>
   <stringProp name="script"/>
+  <stringProp name="scriptLanguage"/>
 </JSR223Assertion>)
       EOS
       update params
