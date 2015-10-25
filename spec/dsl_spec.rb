@@ -794,6 +794,30 @@ describe 'DSL' do
       end
     end
 
+    describe 'json assertion' do
+      let(:doc) do
+        test do
+          visit '/' do
+            assert json: '.key', value: 'value'
+          end
+        end.to_doc
+      end
+
+      let(:fragment) { doc.search('//com.atlantbh.jmeter.plugins.jsonutils.jsonpathassertion.JSONPathAssertion').first }
+
+      it 'should match on expected value' do
+        fragment.search(".//stringProp[@name='EXPECTED_VALUE']").text.should == "value"
+      end
+
+      it 'should match on json path' do
+        fragment.search(".//stringProp[@name='JSON_PATH']").text.should == ".key"
+      end
+
+      it 'should have json validation by default' do
+        fragment.search(".//boolProp[@name='JSONVALIDATION']").text.should == "true"
+      end
+    end
+
     describe 'scope main' do
       let(:doc) do
         test do

@@ -401,13 +401,7 @@ module RubyJmeter
     def response_assertion(params = {}, &block)
       params[:test_type] = parse_test_type(params)
       params['0'] = params.values.first
-      node = RubyJmeter::ResponseAssertion.new(params)
-      if params[:variable] then
-        params['Scope.variable'] = params[:variable]
-        node.doc.xpath("//stringProp[@name='Assertion.scope']").first.content = 'variable'
-      end
-      node.doc.xpath("//stringProp[@name='Assertion.scope']").remove if
-        params[:scope] == 'main' || params['scope'] == 'main'
+      node = params[:json] ? json_path_assertion(params) : assertion(params)
       attach_node(node, &block)
     end
 
@@ -671,6 +665,25 @@ module RubyJmeter
       @log       ||= Logger.new(STDOUT)
       @log.level = Logger::DEBUG
       @log
+    end
+
+    def json_path_assertion(params)
+      params[:EXPECTED_VALUE] = params[:value]
+      params[:JSON_PATH] = params[:json]
+      RubyJmeter::Plugins::JsonPathAssertion.new(params)
+    end
+
+    def assertion(params)
+      RubyJmeter::ResponseAssertion.new(params).tap do |node|
+        if params[:variable]
+          params['Scope.variable'] = params[:variable]
+          node.doc.xpath("//stringProp[@name='Assertion.scope']").first.content = 'variable'
+        end
+
+        if params[:scope] == 'main' || params['scope'] == 'main'
+          node.doc.xpath("//stringProp[@name='Assertion.scope']").remove
+        end
+      end
     end
   end
 end
