@@ -225,7 +225,6 @@ describe 'DSL' do
 
     let(:fragment) { doc.search("//kg.apc.jmeter.threads.SteppingThreadGroup").first }
     it 'should match on on_sample_error' do
-      puts fragment
       fragment.search(".//stringProp[@name='ThreadGroup.on_sample_error']").text.should == 'startnextloop'
     end
 
