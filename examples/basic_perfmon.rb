@@ -20,7 +20,8 @@ test do
   # You need perfmon agent running
   #   http://jmeter-plugins.org/wiki/PerfMonAgent/
   #
-  perfmon_collector 'Perfmon Metrics Collector', [
+  perfmon_collector name: 'Perfmon Metrics Collector',
+  nodes: [
    {
        server: 'localhost',
        port: 4444,

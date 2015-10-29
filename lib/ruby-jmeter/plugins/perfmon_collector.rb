@@ -3,26 +3,10 @@ module RubyJmeter
     class PerfmonCollector
       attr_accessor :doc
       include Helper
-      def initialize(name, params={}, filename="perfMon.jtl")
-        metricNodes = params.collect do |m|
-          "
-            <collectionProp name=\"\">
-              <stringProp name=\"\">#{m[:server]}</stringProp>
-              <stringProp name=\"\">#{m[:port]}</stringProp>
-              <stringProp name=\"\">#{m[:metric]}</stringProp>
-              <stringProp name=\"\">#{m[:parameters]}</stringProp>
-            </collectionProp>
-          "
-        end
 
-        metricConnections = Nokogiri::XML(<<-XML.strip_heredoc)
-          <collectionProp name="metricConnections">
-              #{metricNodes.join "\n"}
-          </collectionProp>
-        XML
-
+      def initialize(params = {})
         @doc = Nokogiri::XML(<<-XML.strip_heredoc)
-          <kg.apc.jmeter.perfmon.PerfMonCollector guiclass="kg.apc.jmeter.vizualizers.PerfMonGui" testclass="kg.apc.jmeter.perfmon.PerfMonCollector" testname="#{name}" enabled="true">
+          <kg.apc.jmeter.perfmon.PerfMonCollector guiclass="kg.apc.jmeter.vizualizers.PerfMonGui" testclass="kg.apc.jmeter.perfmon.PerfMonCollector" testname="#{params[:name] || 'PerfmonCollector'}" enabled="true">
             <boolProp name="ResultCollector.error_logging">false</boolProp>
             <objProp>
               <name>saveConfig</name>
@@ -41,7 +25,7 @@ module RubyJmeter
                 <subresults>false</subresults>
                 <responseData>false</responseData>
                 <samplerData>false</samplerData>
-                <xml>true</xml>
+                <xml>#{(params[:xml] || false).to_s}</xml>
                 <fieldNames>false</fieldNames>
                 <responseHeaders>false</responseHeaders>
                 <requestHeaders>false</requestHeaders>
@@ -53,7 +37,7 @@ module RubyJmeter
                 <sampleCount>true</sampleCount>
               </value>
             </objProp>
-            <stringProp name="filename">#{filename}</stringProp>
+            <stringProp name="filename">#{params[:filename] || 'perfmon.jtl'}</stringProp>
             <longProp name="interval_grouping">1000</longProp>
             <boolProp name="graph_aggregated">false</boolProp>
             <stringProp name="include_sample_labels"></stringProp>
@@ -62,10 +46,33 @@ module RubyJmeter
             <stringProp name="end_offset"></stringProp>
             <boolProp name="include_checkbox_state">false</boolProp>
             <boolProp name="exclude_checkbox_state">false</boolProp>
-            #{metricConnections.root.to_s}
+            #{metric_connections(params).root.to_s}
           </kg.apc.jmeter.perfmon.PerfMonCollector>
         XML
         update params
+      end
+
+      private
+
+      def metric_connections(params)
+        Nokogiri::XML(<<-XML.strip_heredoc)
+          <collectionProp name="metricConnections">
+              #{metric_nodes(params[:nodes]).join "\n"}
+          </collectionProp>
+        XML
+      end
+
+      def metric_nodes(nodes)
+        nodes.collect do |node|
+          %(
+            <collectionProp name="">
+              <stringProp name="">#{node[:server]}</stringProp>
+              <stringProp name="">#{node[:port]}</stringProp>
+              <stringProp name="">#{node[:metric]}</stringProp>
+              <stringProp name="">#{node[:parameters]}</stringProp>
+            </collectionProp>
+          )
+        end
       end
     end
   end
