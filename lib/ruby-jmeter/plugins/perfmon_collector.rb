@@ -3,7 +3,7 @@ module RubyJmeter
     class PerfmonCollector
       attr_accessor :doc
       include Helper
-      def initialize(name, params={}, filename="perfMon.jtl")
+      def initialize(name, params={}, filename="perfMon.jtl", xml=true)
         metricNodes = params.collect do |m|
           "
             <collectionProp name=\"\">
@@ -41,7 +41,7 @@ module RubyJmeter
                 <subresults>false</subresults>
                 <responseData>false</responseData>
                 <samplerData>false</samplerData>
-                <xml>true</xml>
+                <xml>#{xml}</xml>
                 <fieldNames>false</fieldNames>
                 <responseHeaders>false</responseHeaders>
                 <requestHeaders>false</requestHeaders>
@@ -70,4 +70,3 @@ module RubyJmeter
     end
   end
 end
-
