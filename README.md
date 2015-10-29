@@ -303,7 +303,7 @@ This method takes 2 parameters: the constant delay, and an optional variable del
 # constant delay of 3 seconds
 think_time 3000
 # constant delay of 1 seconds with variance up to 6 seconds.
-random_timer 1000,5000
+random_timer 1000, 6000
 ```
 
 ### Response Extractor
