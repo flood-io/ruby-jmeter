@@ -1101,4 +1101,27 @@ describe 'DSL' do
         metric_connections.search("//stringProp[@name='']").first.text.should == '1.1.1.1'
       end
     end
+
+    describe 'jsr223_assertion' do
+      let(:doc) do
+        test do
+          threads do
+            jsr223_assertion name: 'assertion name', scriptLanguage: 'javascript', script: 'var foo = "";'
+          end
+        end.to_doc
+      end
+
+      let(:fragment) { doc.search("//JSR223Assertion").first }
+      it 'should match on name' do
+        fragment.attributes['testname'].value.should == 'assertion name'
+      end
+
+      it 'should match on script language' do
+        fragment.search("//stringProp[@name='scriptLanguage']").text.should == 'javascript'
+      end
+
+      it 'should match on script' do
+        fragment.search("//stringProp[@name='script']").text.should == 'var foo = "";'
+      end
+    end
 end
