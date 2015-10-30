@@ -914,19 +914,11 @@
         </HTMLAssertion>
         <hashTree/>
         <JSR223Assertion guiclass="TestBeanGUI" testclass="JSR223Assertion" testname="JSR223 Assertion" enabled="true">
-          <stringProp name="cacheKey"></stringProp>
-          <stringProp name="filename"></stringProp>
-          <stringProp name="parameters"></stringProp>
-          <stringProp name="script"></stringProp>
-          <stringProp name="scriptLanguage"></stringProp>
-        </JSR223Assertion>
-        <hashTree/>
-        <JSR223Assertion guiclass="TestBeanGUI" testclass="JSR223Assertion" testname="JSR223 Assertion" enabled="true">
-          <stringProp name="scriptLanguage"></stringProp>
           <stringProp name="parameters"></stringProp>
           <stringProp name="filename"></stringProp>
           <stringProp name="cacheKey"></stringProp>
           <stringProp name="script"></stringProp>
+          <stringProp name="scriptLanguage"></stringProp>
         </JSR223Assertion>
         <hashTree/>
         <MD5HexAssertion guiclass="MD5HexAssertionGUI" testclass="MD5HexAssertion" testname="MD5Hex Assertion" enabled="true">
