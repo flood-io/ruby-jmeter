@@ -19,5 +19,12 @@ test do
       with_xhr
     end
   end
+  
+  post name: 'with_headers', ur: '/',
+    fill_in: {
+      js: true
+    } do
+      header [{ name: 'Cache-Control', value: 'no-cache'}]
+  end
 
 end.run(path: '/usr/share/jmeter-2.13/bin/', gui: true)
