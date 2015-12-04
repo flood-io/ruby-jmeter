@@ -1101,4 +1101,57 @@ describe 'DSL' do
         metric_connections.search("//stringProp[@name='']").first.text.should == '1.1.1.1'
       end
     end
+
+    describe 'redis data set' do
+      describe 'random keep' do
+        let(:doc) do
+          test do
+            threads do
+              redis_data_set 'redis data set name',
+                host: 'the_host',
+                port: 1234
+
+            end
+          end.to_doc
+        end
+
+        let(:fragment) { doc.search("//kg.apc.jmeter.config.redis.RedisDataSet").first }
+
+        it 'should have a name' do
+          fragment.attributes['testname'].value.should == 'redis data set name'
+        end
+
+        it 'should be configured for random keep' do
+          fragment.search("//intProp[@name='getMode']").text.should == '1'
+        end
+
+        it 'should point to the host' do
+          fragment.search("//stringProp[@name='host']").text.should == 'the_host'
+        end
+
+        it 'should configure a port' do
+          fragment.search("//stringProp[@name='port']").text.should == '1234'
+        end
+      end
+
+      describe 'random remove' do
+        let(:doc) do
+          test do
+            threads do
+              redis_data_set 'redis data set remove', remove: true
+            end
+          end.to_doc
+        end
+
+        let(:fragment) { doc.search("//kg.apc.jmeter.config.redis.RedisDataSet").first }
+
+        it 'should have a name' do
+          fragment.attributes['testname'].value.should == 'redis data set remove'
+        end
+
+        it 'should be configured for random remove' do
+          fragment.search("//intProp[@name='getMode']").text.should == '0'
+        end
+      end
+    end
 end
