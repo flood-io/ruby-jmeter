@@ -1107,7 +1107,7 @@ describe 'DSL' do
         let(:doc) do
           test do
             threads do
-              redis_data_set 'redis data set name',
+              redis_data_set name: 'redis data set name',
                 host: 'the_host',
                 port: 1234
 
@@ -1138,15 +1138,15 @@ describe 'DSL' do
         let(:doc) do
           test do
             threads do
-              redis_data_set 'redis data set remove', remove: true
+              redis_data_set remove: true
             end
           end.to_doc
         end
 
         let(:fragment) { doc.search("//kg.apc.jmeter.config.redis.RedisDataSet").first }
 
-        it 'should have a name' do
-          fragment.attributes['testname'].value.should == 'redis data set remove'
+        it 'should have a default name' do
+          fragment.attributes['testname'].value.should == 'Redis Data Set Config'
         end
 
         it 'should be configured for random remove' do

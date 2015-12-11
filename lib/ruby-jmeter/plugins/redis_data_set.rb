@@ -3,10 +3,11 @@ module RubyJmeter
     class RedisDataSet
       attr_accessor :doc
       include Helper
-      def initialize(name, params={})
+      def initialize(params={})
+        testname = params.kind_of?(Array) ? 'Redis Data Set Config' : (params[:name] || 'Redis Data Set Config')
         params[:getMode] ||= "1" unless params[:remove] == true
         @doc = Nokogiri::XML(<<-XML.strip_heredoc)
-          <kg.apc.jmeter.config.redis.RedisDataSet guiclass="TestBeanGUI" testclass="kg.apc.jmeter.config.redis.RedisDataSet" testname="#{name}" enabled="true">
+          <kg.apc.jmeter.config.redis.RedisDataSet guiclass="TestBeanGUI" testclass="kg.apc.jmeter.config.redis.RedisDataSet" testname="#{testname}" enabled="true">
             <stringProp name="database">0</stringProp>
             <stringProp name="delimiter">,</stringProp>
             <intProp name="getMode">0</intProp>
