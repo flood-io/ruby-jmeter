@@ -108,7 +108,6 @@ try {
       variableNames: 'user_id,start_date,end_date'
 
     # User workflow begins here.
-    # Note that think times are defined inside the page methods.
     visit name: 'REST API query',
       url: '/rest/query',
       always_encode: true,
