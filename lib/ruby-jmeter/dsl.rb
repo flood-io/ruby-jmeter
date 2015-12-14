@@ -519,6 +519,11 @@ module RubyJmeter
 
     alias_method :loadosophia, :loadosophia_uploader
 
+    def redis_data_set(params = {}, &block)
+      node = RubyJmeter::Plugins::RedisDataSet.new(params)
+      attach_node(node, &block)
+    end
+
 
 
     # API Methods
