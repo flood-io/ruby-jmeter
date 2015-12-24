@@ -470,10 +470,10 @@ module RubyJmeter
 
     alias_method :step, :stepping_thread_group
 
-    def ultimate_thread_group(params = {}, &block)
+    def ultimate_thread_group(threads = [], params = {}, &block)
       node = RubyJmeter::Plugins::UltimateThreadGroup.new(params)
 
-      params.each_with_index do |group, index|
+      threads.each_with_index do |group, index|
         node.doc.at_xpath('//collectionProp') <<
           Nokogiri::XML(<<-EOS.strip_heredoc).children
             <collectionProp name="index">

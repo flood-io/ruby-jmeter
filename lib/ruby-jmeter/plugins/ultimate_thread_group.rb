@@ -15,6 +15,7 @@ module RubyJmeter
            <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
          </kg.apc.jmeter.threads.UltimateThreadGroup>
         EOF
+        update params
       end
     end
   end
