@@ -27,7 +27,8 @@ test do
       hold_time: 60,
       stop_time: 5
     }
-  ] do
+  ],
+    {on_sample_error: 'startnextloop'} do
 
     random_timer 1000, 3000
 
