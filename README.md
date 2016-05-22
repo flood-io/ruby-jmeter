@@ -138,6 +138,26 @@ Flood IO provides a shared grid for free, suitable for 5 minute tests, check you
 
 Alternatively upgrade to a paid subscription on Flood IO and start your own grids on demand.
 
+### Upload test file via rsync
+
+You can upload the JMeter test plan to remote server by calling the `rsync` method of the test like this.
+
+```ruby
+test do
+  threads count: 10 do
+    visit name: 'Google Search', url: 'http://google.com'
+  end
+end.rsync(
+  remote_host: 'xxx.xxx.xxx.xxx',
+  remote_user: 'user',
+  remote_path: '/path/to/remote',
+  rsync_bin_path: '/usr/bin/rsync',
+  rsync_params: '-az -e "ssh -i /path/to/key.pem"',
+  file: './jmx/' + File.basename(__FILE__, ".rb") + '.jmx',
+  debug: true
+)
+```
+
 ## Advanced Usage
 
 ### Blocks

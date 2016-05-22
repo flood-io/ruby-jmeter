@@ -545,6 +545,23 @@ module RubyJmeter
       doc.clone
     end
 
+    def rsync(params = {})
+      file(params)
+      logger.warn "Test file upload via rsync ..."
+
+      cmd = "#{params[:rsync_bin_path]} #{params[:rsync_params]} #{params[:file]} #{params[:remote_user]}@#{params[:remote_host]}:#{params[:remote_path]}"
+      logger.debug cmd if params[:debug]
+      Open3.popen2e("#{cmd}") do |stdin, stdout_err, wait_thr|
+        while line = stdout_err.gets
+          logger.debug line.chomp if params[:debug]
+        end
+
+        exit_status = wait_thr.value
+        abort "FAILED !!! #{cmd}" unless exit_status.success?
+      end
+      logger.info "Upload success."
+    end
+
     def run(params = {})
       file(params)
       logger.warn "Test executing locally ..."
