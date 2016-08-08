@@ -6,5 +6,6 @@ test do
       protocol: 'https',
       download_resources: true,
       use_concurrent_pool: 5,
-      urls_must_match: 'http.+?example.com'
-end.run(path: '/usr/share/jmeter-2.13/bin/', gui: true)
+      urls_must_match: 'http.+?example.com',
+      md5: true
+end.run(path: '/usr/share/jmeter/bin/', gui: true)
