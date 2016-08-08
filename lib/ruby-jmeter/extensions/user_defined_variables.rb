@@ -4,6 +4,7 @@ module RubyJmeter
       if params.is_a?(Hash)
         params['Argument.name'] = params[:name]
       end
+
       super
     end
 
