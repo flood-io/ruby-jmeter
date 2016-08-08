@@ -15,6 +15,4 @@ test do
         { '//assertions' => 'true' }
       ]
   end
-end.flood(ENV['FLOOD_API_TOKEN'], {
-  name: 'Basic Assertion Results'
-})
+end.run(path: '/usr/share/jmeter/bin/', gui: true)
