@@ -1,4 +1,4 @@
-source 'http://rubygems.org'
+source 'https://rubygems.org'
 
 # Specify your gem's dependencies in ruby-jmeter.gemspec
 gemspec
@@ -12,7 +12,7 @@ platforms :jruby do
 end
 
 group :development do
-  gem 'pry', :require => 'pry'
+  gem 'byebug'
 end
 
 group :test do
