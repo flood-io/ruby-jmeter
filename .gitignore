@@ -20,3 +20,4 @@ tmp
 *.jmx
 *.jtl
 *.bak
+.byebug_history

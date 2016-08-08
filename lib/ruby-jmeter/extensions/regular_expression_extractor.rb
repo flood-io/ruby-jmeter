@@ -1,5 +1,3 @@
-require 'byebug'
-
 module RubyJmeter
   class ExtendedDSL < DSL
     def regular_expression_extractor(params, &block)
