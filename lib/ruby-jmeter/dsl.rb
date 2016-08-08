@@ -20,15 +20,6 @@ module RubyJmeter
     ##
     # Config Elements
 
-    def user_defined_variables(params, &block)
-      if params.is_a?(Hash)
-        params['Argument.name'] = params[:name]
-      end
-      super
-    end
-
-    alias_method :variables, :user_defined_variables
-
     def http_request_defaults(params = {}, &block)
       params[:image_parser] = true if params.keys.include? :download_resources
       params[:concurrentDwn] = true if params.keys.include? :use_concurrent_pool
@@ -319,34 +310,6 @@ module RubyJmeter
       end
 
       attach_node(node, &block)
-    end
-
-    def user_parameters(params, &block)
-      if params.is_a?(Hash)
-        params['Argument.name'] = params[:name]
-      end
-
-      params[:names] = Nokogiri::XML::Builder.new do |b|
-        b.builder do
-          params[:names].each do |name|
-            b.stringProp name, name: name
-          end
-        end
-      end
-
-      params[:thread_values] = Nokogiri::XML::Builder.new do |b|
-        b.builder do
-          params[:thread_values].map do |user, values|
-            b.collectionProp name: user do
-              values.each_with_index.map do |value, index|
-                b.stringProp value, name: index
-              end
-            end
-          end
-        end
-      end
-
-      super
     end
 
     alias_method :bsh_pre, :beanshell_preprocessor
