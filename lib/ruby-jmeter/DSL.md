@@ -223,6 +223,8 @@
   `monitor_results`
 - Response Time Graph
   `response_time_graph`
+- Response Time Graph
+  `response_time_graph`
 - Save Responses to a file
   `save_responses_to_a_file`
 - Simple Data Writer
