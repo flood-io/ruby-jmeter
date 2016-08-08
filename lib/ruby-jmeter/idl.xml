@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jmeterTestPlan version="1.2" properties="2.8" jmeter="2.13 r1665067">
+<jmeterTestPlan version="1.2" properties="2.9" jmeter="3.0 r1743807">
   <hashTree>
     <TestPlan guiclass="TestPlanGui" testclass="TestPlan" testname="Test Plan" enabled="true">
       <stringProp name="TestPlan.comments"></stringProp>
@@ -395,8 +395,8 @@
         <hashTree/>
         <AnchorModifier guiclass="AnchorModifierGui" testclass="AnchorModifier" testname="HTML Link Parser" enabled="true"/>
         <hashTree/>
-        <ParamModifier guiclass="ParamModifierGui" testclass="ParamModifier" testname="HTML Parameter Mask" enabled="true">
-          <elementProp name="ParamModifier.mask" elementType="ParamMask">
+        <ConfigTestElement guiclass="ObsoleteGui" testclass="ConfigTestElement" testname="HTML Parameter Mask" enabled="true">
+          <elementProp name="ParamModifier.mask" elementType="ConfigTestElement">
             <stringProp name="ParamModifier.field_name"></stringProp>
             <stringProp name="ParamModifier.prefix"></stringProp>
             <longProp name="ParamModifier.lower_bound">0</longProp>
@@ -404,7 +404,7 @@
             <longProp name="ParamModifier.increment">1</longProp>
             <stringProp name="ParamModifier.suffix"></stringProp>
           </elementProp>
-        </ParamModifier>
+        </ConfigTestElement>
         <hashTree/>
         <URLRewritingModifier guiclass="URLRewritingModifierGui" testclass="URLRewritingModifier" testname="HTTP URL Re-writing Modifier" enabled="true">
           <stringProp name="argument_name"></stringProp>
@@ -643,6 +643,8 @@
               </elementProp>
             </collectionProp>
           </elementProp>
+          <stringProp name="jms.expiration"></stringProp>
+          <stringProp name="jms.priority"></stringProp>
         </PublisherSampler>
         <hashTree/>
         <SubscriberSampler guiclass="JMSSubscriberGui" testclass="SubscriberSampler" testname="JMS Subscriber" enabled="true">
