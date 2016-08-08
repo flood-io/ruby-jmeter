@@ -179,6 +179,22 @@ describe 'http_request' do
     end
   end
 
+  describe 'post raw body containing xml entities' do
+    let(:doc) do
+      test do
+        threads do
+          post url: 'http://example.com', raw_body: 'username=my_name&password=my_password&email="my name <test@example.com>"'
+        end
+      end.to_doc
+    end
+
+    let(:fragment) { doc.search('//HTTPSamplerProxy').first }
+
+    it 'escape raw_body' do
+      expect(fragment.search(".//stringProp[@name='Argument.value']").text).to eq 'username=my_name&password=my_password&email="my name <test@example.com>"'
+    end
+  end
+
   describe 'submit' do
     let(:doc) do
       test do

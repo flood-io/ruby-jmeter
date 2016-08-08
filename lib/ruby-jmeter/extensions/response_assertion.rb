@@ -4,7 +4,13 @@ module RubyJmeter
       params[:test_type] = parse_test_type(params)
       params['0'] = params.values.first
 
-      node = RubyJmeter::ResponseAssertion.new(params).tap do |node|
+      if params[:json]
+        params[:EXPECTED_VALUE] = params[:value]
+        params[:JSON_PATH] = params[:json]
+        node = RubyJmeter::Plugins::JsonPathAssertion.new(params)
+      end
+
+      node ||= RubyJmeter::ResponseAssertion.new(params).tap do |node|
         if params[:variable]
           params['Scope.variable'] = params[:variable]
           node.doc.xpath("//stringProp[@name='Assertion.scope']").first.content = 'variable'
