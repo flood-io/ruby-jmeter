@@ -1,5 +1,5 @@
 require 'spec_helper'
-require 'pry'
+require 'byebug'
 
 describe 'DSL' do
   describe 'aliased DSL methods' do
@@ -461,44 +461,6 @@ describe 'DSL' do
 
     it 'should match on protocol' do
       fragment.search(".//stringProp[@name='HTTPSampler.protocol']").text.should == 'https'
-    end
-  end
-
-  describe 'user_parameters' do
-    let(:doc) do
-      test do
-        threads do
-          transaction name: "TC_02", parent: true, include_timers: true do
-            visit url: "/" do
-              user_parameters names: ['name1', 'name2'],
-                thread_values: {
-                  user_1: [
-                    'value1',
-                    'value2'
-                  ],
-
-                  user_2: [
-                    'value1',
-                    'value2'
-                  ]
-                }
-            end
-          end
-        end
-      end.to_doc
-    end
-
-    let(:names) { doc.search("//collectionProp[@name='UserParameters.names']").first }
-    let(:thread_values) { doc.search("//collectionProp[@name='UserParameters.thread_values']").first }
-
-    it 'should match on names' do
-      names.search(".//stringProp[@name='name1']").text.should == 'name1'
-      names.search(".//stringProp[@name='name2']").text.should == 'name2'
-    end
-
-    it 'should match on thread values' do
-      thread_values.search(".//stringProp[@name='0']").first.text.should == 'value1'
-      thread_values.search(".//stringProp[@name='1']").first.text.should == 'value2'
     end
   end
 
