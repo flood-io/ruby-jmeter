@@ -37,6 +37,8 @@ module RubyJmeter
       </elementProp>
     </collectionProp>
   </elementProp>
+  <stringProp name="jms.expiration"/>
+  <stringProp name="jms.priority"/>
 </PublisherSampler>)
       EOS
       update params
