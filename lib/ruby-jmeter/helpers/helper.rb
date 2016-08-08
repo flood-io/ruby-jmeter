@@ -1,5 +1,3 @@
-require 'byebug'
-
 module RubyJmeter
   def dsl_eval(dsl, &block)
     block_context = eval("self", block.binding)
