@@ -1,20 +1,8 @@
 require 'spec_helper'
-require 'byebug'
 
 describe 'DSL' do
-  describe 'aliased DSL methods' do
-    it "test plan should respond to aliased methods" do
-      test {}.should respond_to :variables
-      test {}.should respond_to :defaults
-      test {}.should respond_to :cookies
-      test {}.should respond_to :cache
-      test {}.should respond_to :header
-      test {}.should respond_to :auth
-    end
-  end
-
   describe 'write to stdout and file' do
-    it "should output a test plan to stdout" do
+    it 'should output a test plan to stdout' do
       $stdout.should_receive(:puts).with(/jmeterTestPlan/i)
       test do
       end.out
@@ -29,22 +17,6 @@ describe 'DSL' do
     end
   end
 
-  describe 'user agent' do
-    let(:doc) do
-      test do
-        with_user_agent :chrome
-        threads
-      end.to_doc
-    end
-
-    let(:fragment) { doc.search('//HeaderManager').first }
-
-    it 'should match on user_agent' do
-      fragment.search(".//stringProp[@name='Header.name']").text.should == 'User-Agent'
-      fragment.search(".//stringProp[@name='Header.value']").text.should ==
-        'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_7_4) AppleWebKit/536.5 (KHTML, like Gecko) Chrome/19.0.1084.46 Safari/536.5'
-    end
-  end
 
 
   describe 'disabled elements' do
@@ -61,41 +33,7 @@ describe 'DSL' do
     end
   end
 
-  describe 'header manager' do
-    let(:doc) do
-      test do
-        header name: 'Accept', value: '*'
-      end.to_doc
-    end
 
-    let(:fragment) { doc.search('//HeaderManager').first }
-
-    it 'should match on accept' do
-      fragment.search(".//stringProp[@name='Header.name']").text.should == 'Accept'
-      fragment.search(".//stringProp[@name='Header.value']").text.should == '*'
-    end
-  end
-
-  describe 'header manager multiple values' do
-    let(:doc) do
-      test do
-        header [ { name: 'Accept', value: '1' }, { name: 'Accept', value: '2' }]
-      end.to_doc
-    end
-
-    let(:fragment) { doc.search('//HeaderManager') }
-
-
-    it 'should match on accept for fragment_first' do
-      fragment.search(".//stringProp[@name='Header.name']").first.text.should == 'Accept'
-      fragment.search(".//stringProp[@name='Header.value']").first.text.should == '1'
-    end
-
-    it 'should match on accept for fragment_last' do
-      fragment.search(".//stringProp[@name='Header.name']").last.text.should == 'Accept'
-      fragment.search(".//stringProp[@name='Header.value']").last.text.should == '2'
-    end
-  end
 
 
 
@@ -113,133 +51,6 @@ describe 'DSL' do
 
 
 
-  describe 'stepping thread group' do
-    let(:doc) do
-      test do
-        stepping_thread_group on_sample_error: 'startnextloop', total_threads: 100, initial_delay: 1, start_threads: 2, add_threads: 3, start_every: 4, stop_threads: 5, stop_every: 6, flight_time: 7, rampup: 8
-      end.to_doc
-    end
-
-    let(:fragment) { doc.search("//kg.apc.jmeter.threads.SteppingThreadGroup").first }
-    it 'should match on on_sample_error' do
-      fragment.search(".//stringProp[@name='ThreadGroup.on_sample_error']").text.should == 'startnextloop'
-    end
-
-    it 'should match on total_threads' do
-      fragment.search(".//stringProp[@name='ThreadGroup.num_threads']").text.should == '100'
-    end
-
-    it 'should match on initial_delay' do
-      fragment.search(".//stringProp[@name='Threads initial delay']").text.should == '1'
-    end
-
-    it 'should match on start_threads' do
-      fragment.search(".//stringProp[@name='Start users count']").text.should == '2'
-    end
-
-    it 'should match on add_threads' do
-      fragment.search(".//stringProp[@name='Start users count burst']").text.should == '3'
-    end
-
-    it 'should match on start_every' do
-      fragment.search(".//stringProp[@name='Start users period']").text.should == '4'
-    end
-
-    it 'should match on stop_threads' do
-      fragment.search(".//stringProp[@name='Stop users count']").text.should == '5'
-    end
-
-    it 'should match on stop_every' do
-      fragment.search(".//stringProp[@name='Stop users period']").text.should == '6'
-    end
-
-    it 'should match on flight_time' do
-      fragment.search(".//stringProp[@name='flighttime']").text.should == '7'
-    end
-
-    it 'should match on rampup' do
-      fragment.search(".//stringProp[@name='rampUp']").text.should == '8'
-    end
-  end
-
-  describe 'thread groups old syntax' do
-    let(:doc) do
-      test do
-        threads 101, continue_forever: true, duration: 69
-      end.to_doc
-    end
-
-    let(:fragment) { doc.search("//ThreadGroup").first }
-
-    it 'should match on num_threads' do
-      fragment.search(".//stringProp[@name='ThreadGroup.num_threads']").text.should == '101'
-    end
-
-    it 'should match on continue_forever' do
-      fragment.search(".//boolProp[@name='LoopController.continue_forever']").text.should == 'true'
-    end
-
-    it 'should match on loops' do
-      fragment.search(".//intProp[@name='LoopController.loops']").text.should == '-1'
-    end
-
-    it 'should match on duration' do
-      fragment.search(".//stringProp[@name='ThreadGroup.duration']").text.should == '69'
-    end
-  end
-
-  describe 'transaction controller' do
-    let(:doc) do
-      test do
-        threads do
-          transaction name: "TC_01", parent: false, include_timers: true
-          transaction name: "TC_02", parent: true, include_timers: false
-        end
-      end.to_doc
-    end
-
-    let(:fragment) { doc.search("//TransactionController") }
-
-    it 'should match on parent when false' do
-      fragment.first.search(".//boolProp[@name='TransactionController.parent']").text.should == 'false'
-    end
-
-    it 'should match on includeTimers when true' do
-      fragment.first.search(".//boolProp[@name='TransactionController.includeTimers']").text.should == 'true'
-    end
-
-    it 'should match on parent when true' do
-      fragment.last.search(".//boolProp[@name='TransactionController.parent']").text.should == 'true'
-    end
-
-    it 'should match on includeTimers when false' do
-      fragment.last.search(".//boolProp[@name='TransactionController.includeTimers']").text.should == 'false'
-    end
-  end
-
-  describe 'throughput controller' do
-    let(:doc) do
-      test do
-        threads do
-          throughput_controller percent: 99 do
-            transaction name: "TC_01", parent: true, include_timers: true
-          end
-        end
-      end.to_doc
-    end
-
-    let(:fragment) { doc.search("//ThroughputController").first }
-
-    it 'should match on maxThroughput' do
-      # puts doc.to_xml indent: 2
-      fragment.search(".//intProp[@name='ThroughputController.maxThroughput']").text.should == '99'
-      fragment.search(".//FloatProperty/value").text.should == '99.0'
-    end
-
-    it 'should match on style' do
-      fragment.search(".//intProp[@name='ThroughputController.style']").text.should == '1'
-    end
-  end
 
 
 
@@ -248,45 +59,11 @@ describe 'DSL' do
 
 
 
-  describe 'xhr' do
-    let(:doc) do
-      test do
-        threads do
-          transaction name: "TC_02", parent: true, include_timers: true do
-            visit url: "/" do
-              with_xhr
-            end
-          end
-        end
-      end.to_doc
-    end
 
-    let(:fragment) { doc.search('//HeaderManager').first }
 
-    it 'should match on XHR' do
-      fragment.search(".//stringProp[@name='Header.value']").text.should == 'XMLHttpRequest'
-    end
-  end
 
-  describe 'gzip' do
-    let(:doc) do
-      test do
-        threads do
-          transaction name: 'TC_02', parent: true, include_timers: true do
-            visit url: '/' do
-              with_gzip
-            end
-          end
-        end
-      end.to_doc
-    end
 
-    let(:fragment) { doc.search('//HeaderManager').first }
 
-    it 'should match on Acept Encoding' do
-      fragment.search(".//stringProp[@name='Header.value']").text.should == 'gzip, deflate'
-    end
-  end
 
 
 
@@ -344,23 +121,7 @@ describe 'DSL' do
     end
   end
 
-  describe 'Loop' do
-    let(:doc) do
-      test do
-        threads do
-          Loop count: 5 do
-            visit url: "/"
-          end
-        end
-      end.to_doc
-    end
 
-    let(:fragment) { doc.search('//LoopController').first }
-
-    it 'should match on Loops' do
-      fragment.search(".//stringProp[@name='LoopController.loops']").text.should == '5'
-    end
-  end
 
   describe 'Counter' do
     let(:doc) do
@@ -427,19 +188,6 @@ describe 'DSL' do
     end
   end
 
-  describe 'testdata extract' do
-    let(:doc) do
-      test do
-        test_data 'http://54.252.206.143:8080/SRANDMEMBER/postcodes?type=text'
-      end.to_doc
-    end
-
-    let(:fragment) { doc.search('//RegexExtractor').first }
-
-    it 'should match on refname' do
-      fragment.search(".//stringProp[@name='RegexExtractor.refname']").text.should == 'testdata'
-    end
-  end
 
   describe 'assertions' do
     describe 'json assertion' do
@@ -624,163 +372,7 @@ describe 'DSL' do
     end
   end
 
-  describe 'module controllers' do
-    let(:doc) do
-      test name: 'tests' do
-        threads 1, name: 'threads' do
-          Simple name: 'controller_to_call'
-        end
-        threads 1 do
-          module_controller name: 'modules', node_path: [
-            'WorkBench',
-            'tests',
-            'threads',
-            'controller_to_call'
-          ]
-        end
-      end.to_doc
-    end
 
-    let(:simple_controller) { doc.search("//GenericController").first }
-    let(:test_module) { doc.search("//ModuleController").first }
-    let(:nodes) { test_module.search(".//stringProp") }
 
-    it 'should have a node path' do
-      nodes.length.should == 4
-      nodes[0].text.should == 'WorkBench'
-      nodes[1].text.should == 'tests'
-      nodes[2].text.should == 'threads'
-      nodes[3].text.should == 'controller_to_call'
-    end
-  end
 
-  describe 'module controllers with test fragment' do
-    let(:doc) do
-      test do
-        test_fragment name: 'some_test_fragment', enabled: 'false' do
-          get name: 'Home Page', url: 'http://google.com'
-        end
-
-        threads count: 1 do
-          module_controller test_fragment: 'WorkBench/TestPlan/some_test_fragment'
-        end
-      end.to_doc
-    end
-
-    let(:simple_controller) { doc.search("//GenericController").first }
-    let(:test_module) { doc.search("//ModuleController").first }
-    let(:nodes) { test_module.search(".//stringProp") }
-
-    it 'should have a node path specified by test fragment' do
-      nodes.length.should == 3
-      nodes[0].text.should == 'WorkBench'
-      nodes[1].text.should == 'TestPlan'
-      nodes[2].text.should == 'some_test_fragment'
-    end
-  end
-
-  describe 'dummy sampler' do
-    let(:doc) do
-      test do
-        threads do
-          dummy_sampler 'dummy sampler name', { RESPONSE_DATA: "Some response data" }
-        end
-      end.to_doc
-    end
-
-    let(:fragment) { doc.search("//kg.apc.jmeter.samplers.DummySampler").first }
-
-    it 'should match on name' do
-      fragment.attributes['testname'].value.should == 'dummy sampler name'
-    end
-
-    it 'should match on response data' do
-      fragment.search("//stringProp[@name='RESPONSE_DATA']").text.should == 'Some response data'
-    end
-  end
-
-  describe 'perfmon collector' do
-      let(:doc) do
-        test do
-          threads do
-            perfmon_collector name: 'perfmon collector name',
-            nodes:
-              [
-                {server: '1.1.1.1', port: 4444, metric: 'CPU', parameters: ''},
-                {server: '2.2.2.2', port: 4444, metric: 'CPU', parameters: ''}
-              ],
-            filename: 'perf.jtl',
-            xml: false
-          end
-        end.to_doc
-      end
-
-      let(:fragment) { doc.search("//kg.apc.jmeter.perfmon.PerfMonCollector").first }
-      let(:metric_connections) { fragment.search("//collectionProp[@name='metricConnections']").first }
-
-      it 'should match on name' do
-        fragment.attributes['testname'].value.should == 'perfmon collector name'
-      end
-
-      it 'should match on xml flag' do
-        fragment.search(".//xml").first.text.should == 'false'
-      end
-
-      it 'should match on first server ip' do
-        metric_connections.search("//stringProp[@name='']").first.text.should == '1.1.1.1'
-      end
-    end
-
-    describe 'redis data set' do
-      describe 'random keep' do
-        let(:doc) do
-          test do
-            threads do
-              redis_data_set name: 'redis data set name',
-                host: 'the_host',
-                port: 1234
-
-            end
-          end.to_doc
-        end
-
-        let(:fragment) { doc.search("//kg.apc.jmeter.config.redis.RedisDataSet").first }
-
-        it 'should have a name' do
-          fragment.attributes['testname'].value.should == 'redis data set name'
-        end
-
-        it 'should be configured for random keep' do
-          fragment.search("//intProp[@name='getMode']").text.should == '1'
-        end
-
-        it 'should point to the host' do
-          fragment.search("//stringProp[@name='host']").text.should == 'the_host'
-        end
-
-        it 'should configure a port' do
-          fragment.search("//stringProp[@name='port']").text.should == '1234'
-        end
-      end
-
-      describe 'random remove' do
-        let(:doc) do
-          test do
-            threads do
-              redis_data_set remove: true
-            end
-          end.to_doc
-        end
-
-        let(:fragment) { doc.search("//kg.apc.jmeter.config.redis.RedisDataSet").first }
-
-        it 'should have a default name' do
-          fragment.attributes['testname'].value.should == 'Redis Data Set Config'
-        end
-
-        it 'should be configured for random remove' do
-          fragment.search("//intProp[@name='getMode']").text.should == '0'
-        end
-      end
-    end
 end
