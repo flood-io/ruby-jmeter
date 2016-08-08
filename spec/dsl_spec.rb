@@ -46,38 +46,6 @@ describe 'DSL' do
     end
   end
 
-  describe 'http request defaults' do
-    let(:doc) do
-      test do
-        defaults domain: 'example.com',
-            protocol: 'https',
-            implementation: 'HttpClient3.1',
-            download_resources: true,
-            use_concurrent_pool: 5,
-            urls_must_match: 'http.+?example.com'
-        threads do
-          visit url: "/"
-        end
-      end.to_doc
-    end
-
-    let(:config_fragment) { doc.search('//ConfigTestElement').first }
-    let(:sampler_fragment) { doc.search('//HTTPSamplerProxy').first }
-
-    it 'should match on implementation' do
-      sampler_fragment.search(".//stringProp[@name='HTTPSampler.implementation']").text.should == ''
-    end
-
-    it 'should match on defaults' do
-      config_fragment.search(".//stringProp[@name='HTTPSampler.domain']").text.should == 'example.com'
-      config_fragment.search(".//stringProp[@name='HTTPSampler.protocol']").text.should == 'https'
-      config_fragment.search(".//stringProp[@name='HTTPSampler.implementation']").text.should == 'HttpClient3.1'
-      config_fragment.search(".//boolProp[@name='HTTPSampler.image_parser']").text.should == 'true'
-      config_fragment.search(".//boolProp[@name='HTTPSampler.concurrentDwn']").text.should == 'true'
-      config_fragment.search(".//stringProp[@name='HTTPSampler.concurrentPool']").text.should == '5'
-      config_fragment.search(".//stringProp[@name='HTTPSampler.embedded_url_re']").text.should == 'http.+?example.com'
-    end
-  end
 
   describe 'disabled elements' do
     let(:doc) do
@@ -344,125 +312,12 @@ describe 'DSL' do
     end
   end
 
-  describe 'visit' do
-    let(:doc) do
-      test do
-        threads do
-          transaction name: "TC_01", parent: true, include_timers: true do
-            visit url: "/home?location=melbourne&location=sydney", always_encode: true
-          end
-        end
-      end.to_doc
-    end
 
-    let(:fragment) { doc.search('//HTTPSamplerProxy').first }
 
-    it 'should match on path' do
-      fragment.search(".//stringProp[@name='HTTPSampler.path']").text.should == '/home'
-    end
 
-    context "first argument" do
-      it 'should match on always_encode' do
-        fragment.search(".//boolProp[@name='HTTPArgument.always_encode']")[0].text.should == 'true'
-      end
 
-      it 'should match on query param name: location' do
-        fragment.search(".//stringProp[@name='Argument.name']")[0].text.should == 'location'
-      end
 
-      it 'should match on query param value: melbourne' do
-        fragment.search(".//stringProp[@name='Argument.value']")[0].text.should == 'melbourne'
-      end
-    end
 
-    context "second argument" do
-      it 'should match on always_encode' do
-        fragment.search(".//boolProp[@name='HTTPArgument.always_encode']")[1].text.should == 'true'
-      end
-
-      it 'should match on query param name: location' do
-        fragment.search(".//stringProp[@name='Argument.name']")[1].text.should == 'location'
-      end
-
-      it 'should match on query param value: sydney' do
-        fragment.search(".//stringProp[@name='Argument.value']")[1].text.should == 'sydney'
-      end
-    end
-  end
-
-  describe 'visit old syntax' do
-    let(:doc) do
-      test do
-        threads do
-          visit "/home?location=melbourne", always_encode: true
-        end
-      end.to_doc
-    end
-
-    let(:fragment) { doc.search('//HTTPSamplerProxy').first }
-
-    it 'should match on path' do
-      fragment.search(".//stringProp[@name='HTTPSampler.path']").text.should == '/home'
-    end
-  end
-
-  describe 'visit raw_path' do
-    let(:doc) do
-      test do
-        threads do
-          transaction name: "TC_02" do
-            post url: "/home?location=melbourne", raw_path: true
-          end
-        end
-      end.to_doc
-    end
-
-    let(:fragment) { doc.search('//HTTPSamplerProxy').first }
-
-    it 'should match on path' do
-      fragment.search(".//stringProp[@name='HTTPSampler.path']").text.should == '/home?location=melbourne'
-    end
-  end
-
-  describe 'get_with_parameterized_domain' do
-    let(:doc) do
-      test do
-        threads do
-          transaction name: "TC_01", parent: true, include_timers: true do
-            visit url: "/home?location=melbourne", domain: "${custom_domain}"
-          end
-        end
-      end.to_doc
-    end
-
-    let(:fragment) { doc.search('//HTTPSamplerProxy').first }
-
-    it 'should match on path' do
-      fragment.search(".//stringProp[@name='HTTPSampler.path']").text.should == '/home'
-    end
-
-    it 'should match on domain' do
-      fragment.search(".//stringProp[@name='HTTPSampler.domain']").text.should == '${custom_domain}'
-    end
-  end
-
-  describe 'https' do
-    let(:doc) do
-      test do
-        threads do
-          transaction name: "TC_01", parent: true, include_timers: true do
-            visit url: "https://example.com"
-          end
-        end
-      end.to_doc
-    end
-
-    let(:fragment) { doc.search('//HTTPSamplerProxy').first }
-
-    it 'should match on protocol' do
-      fragment.search(".//stringProp[@name='HTTPSampler.protocol']").text.should == 'https'
-    end
-  end
 
   describe 'xhr' do
     let(:doc) do
@@ -504,51 +359,7 @@ describe 'DSL' do
     end
   end
 
-  describe 'submit' do
-    let(:doc) do
-      test do
-        threads do
-          transaction name: 'TC_03', parent: true, include_timers: true do
-            submit url: "/", fill_in: { username: 'tim', password: 'password' }
-          end
-        end
-      end.to_doc
-    end
 
-    let(:fragment) { doc.search('//HTTPSamplerProxy').first }
-
-    it 'should match on POST' do
-      fragment.search(".//stringProp[@name='HTTPSampler.method']").text.should == 'POST'
-    end
-
-    it 'should have no files' do
-      fragment.search(".//elementProp[@name='HTTPsampler.Files']").length.should == 0
-    end
-  end
-
-  describe 'submit_with_files' do
-    let(:doc) do
-      test do
-        threads do
-          transaction name: "TC_03", parent: true, include_timers: true do
-            submit url: "/", fill_in: { username: 'tim', password: 'password' },
-                   files: [{path: '/tmp/foo', paramname: 'fileup', mimetype: 'text/plain'},
-                           {path: '/tmp/bar', paramname: 'otherfileup'}]
-          end
-        end
-      end.to_doc
-    end
-
-    let(:fragment) { doc.search("//HTTPSamplerProxy/elementProp[@name='HTTPsampler.Files']").first }
-
-    it 'should have two files' do
-      fragment.search("./collectionProp/elementProp[@elementType='HTTPFileArg']").length.should == 2
-    end
-
-    it 'should have one empty mimetype' do
-      fragment.search("./collectionProp/elementProp[@elementType='HTTPFileArg']/stringProp[@name='File.mimetype' and normalize-space(.) = '']").length.should == 1
-    end
-  end
 
   describe 'If' do
     let(:doc) do
