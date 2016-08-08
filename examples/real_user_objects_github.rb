@@ -108,5 +108,5 @@ test do
     user.view_branch '/flood-io/ruby-jmeter/tree/v2.11.8'
 
   end
-end.run(path: '/usr/share/jmeter-2.13/bin/', gui: true)
+end.run(path: '/usr/share/jmeter/bin/', gui: true)
 
