@@ -7,4 +7,4 @@ test do
     { name: 'email', value: 'support@flood.io' },
     { name: 'password', value: 'password' }
   ]
-end.run(path: '/usr/share/jmeter-2.13/bin/', gui: true)
+end.run(path: '/usr/share/jmeter/bin/', gui: true)

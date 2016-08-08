@@ -4,7 +4,7 @@ describe 'user_parameters' do
   let(:doc) do
     test do
       threads do
-        transaction name: "TC_02", parent: true, include_timers: true do
+        transaction name: 'user_parameters', parent: true, include_timers: true do
           visit url: "/" do
             user_parameters names: ['name1', 'name2'],
               thread_values: {
