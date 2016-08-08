@@ -29,7 +29,6 @@ module RubyJmeter
   <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
   <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
   <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
-  <stringProp name="HTTPSampler.implementation"/>
   <boolProp name="HTTPSampler.monitor">false</boolProp>
   <stringProp name="HTTPSampler.embedded_url_re"/>
 </HTTPSamplerProxy>)

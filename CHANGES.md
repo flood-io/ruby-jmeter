@@ -1,11 +1,23 @@
 # Changes
 
-## v2.1.5
+## v2.13.2
+
+- Support for Loadosophia plugin
+
+## v2.13.0
+
+- Update to JMeter 2.13
+
+## v2.11.11
+
+- Support for `test_fragment` for use with the `module_controller`. [See example here](https://github.com/flood-io/ruby-jmeter/blob/master/examples/basic_test_fragment.rb).
+
+## v2.11.5
 
 - HTTP Request Defaults now have more intuitive key names:
 
 ```ruby
-defaults domain: 'example.com', 
+defaults domain: 'example.com',
       protocol: 'https',
       download_resources: true,
       use_concurrent_pool: 5,
@@ -55,5 +67,5 @@ test do
     debug_sampler
     view_results
   end
-end.run(path: '/usr/share/jmeter/bin/', gui: true)
+end.run(path: '/usr/share/jmeter-2.13/bin/', gui: true)
 ```

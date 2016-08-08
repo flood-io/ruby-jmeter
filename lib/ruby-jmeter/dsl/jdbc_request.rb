@@ -22,6 +22,7 @@ module RubyJmeter
   <stringProp name="resultVariable"/>
   <stringProp name="variableNames"/>
   <stringProp name="queryTimeout"/>
+  <stringProp name="resultSetHandler">Store as String</stringProp>
 </JDBCSampler>)
       EOS
       update params

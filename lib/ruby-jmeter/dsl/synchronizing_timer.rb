@@ -15,6 +15,7 @@ module RubyJmeter
       @doc = Nokogiri::XML(<<-EOS.strip_heredoc)
 <SyncTimer guiclass="TestBeanGUI" testclass="SyncTimer" testname="#{testname}" enabled="true">
   <intProp name="groupSize">0</intProp>
+  <longProp name="timeoutInMs">0</longProp>
 </SyncTimer>)
       EOS
       update params

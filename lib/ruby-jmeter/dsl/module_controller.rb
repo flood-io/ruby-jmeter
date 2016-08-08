@@ -13,7 +13,9 @@ module RubyJmeter
     def initialize(params={})
       testname = params.kind_of?(Array) ? 'ModuleController' : (params[:name] || 'ModuleController')
       @doc = Nokogiri::XML(<<-EOS.strip_heredoc)
-<ModuleController guiclass="ModuleControllerGui" testclass="ModuleController" testname="#{testname}" enabled="true"/>)
+<ModuleController guiclass="ModuleControllerGui" testclass="ModuleController" testname="#{testname}" enabled="true">
+  <collectionProp name="ModuleController.node_path"/>
+</ModuleController>)
       EOS
       update params
       update_at_xpath params if params.is_a?(Hash) && params[:update_at_xpath]

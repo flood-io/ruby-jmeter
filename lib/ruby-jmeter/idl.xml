@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jmeterTestPlan version="1.2" properties="2.6" jmeter="2.11 r1554548">
+<jmeterTestPlan version="1.2" properties="2.9" jmeter="3.0 r1743807">
   <hashTree>
     <TestPlan guiclass="TestPlanGui" testclass="TestPlan" testname="Test Plan" enabled="true">
       <stringProp name="TestPlan.comments"></stringProp>
@@ -64,6 +64,7 @@
         <collectionProp name="CookieManager.cookies"/>
         <boolProp name="CookieManager.clearEachIteration">false</boolProp>
         <stringProp name="CookieManager.policy">default</stringProp>
+        <stringProp name="CookieManager.implementation">org.apache.jmeter.protocol.http.control.HC4CookieHandler</stringProp>
       </CookieManager>
       <hashTree/>
       <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager" enabled="true">
@@ -90,7 +91,6 @@
         <boolProp name="HTTPSampler.image_parser">true</boolProp>
         <boolProp name="HTTPSampler.concurrentDwn">true</boolProp>
         <stringProp name="HTTPSampler.concurrentPool">4</stringProp>
-        <stringProp name="HTTPSampler.embedded_url_re"> </stringProp>
       </ConfigTestElement>
       <hashTree/>
       <JavaConfig guiclass="JavaConfigGui" testclass="JavaConfig" testname="Java Request Defaults" enabled="true">
@@ -241,6 +241,8 @@
         <stringProp name="TestPlan.comments"> </stringProp>
       </Arguments>
       <hashTree/>
+      <TestFragmentController guiclass="TestFragmentControllerGui" testclass="TestFragmentController" testname="Test Fragment" enabled="true"/>
+      <hashTree/>
       <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="Thread Group" enabled="true">
         <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
         <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="Loop Controller" enabled="true">
@@ -278,7 +280,9 @@
           <stringProp name="LoopController.loops">1</stringProp>
         </LoopController>
         <hashTree/>
-        <ModuleController guiclass="ModuleControllerGui" testclass="ModuleController" testname="Module Controller" enabled="true"/>
+        <ModuleController guiclass="ModuleControllerGui" testclass="ModuleController" testname="Module Controller" enabled="true">
+          <collectionProp name="ModuleController.node_path"/>
+        </ModuleController>
         <hashTree/>
         <OnceOnlyController guiclass="OnceOnlyControllerGui" testclass="OnceOnlyController" testname="Once Only Controller" enabled="true"/>
         <hashTree/>
@@ -367,6 +371,7 @@
         <hashTree/>
         <SyncTimer guiclass="TestBeanGUI" testclass="SyncTimer" testname="Synchronizing Timer" enabled="true">
           <intProp name="groupSize">0</intProp>
+          <longProp name="timeoutInMs">0</longProp>
         </SyncTimer>
         <hashTree/>
         <UniformRandomTimer guiclass="UniformRandomTimerGui" testclass="UniformRandomTimer" testname="Uniform Random Timer" enabled="true">
@@ -390,8 +395,8 @@
         <hashTree/>
         <AnchorModifier guiclass="AnchorModifierGui" testclass="AnchorModifier" testname="HTML Link Parser" enabled="true"/>
         <hashTree/>
-        <ParamModifier guiclass="ParamModifierGui" testclass="ParamModifier" testname="HTML Parameter Mask" enabled="true">
-          <elementProp name="ParamModifier.mask" elementType="ParamMask">
+        <ConfigTestElement guiclass="ObsoleteGui" testclass="ConfigTestElement" testname="HTML Parameter Mask" enabled="true">
+          <elementProp name="ParamModifier.mask" elementType="ConfigTestElement">
             <stringProp name="ParamModifier.field_name"></stringProp>
             <stringProp name="ParamModifier.prefix"></stringProp>
             <longProp name="ParamModifier.lower_bound">0</longProp>
@@ -399,7 +404,7 @@
             <longProp name="ParamModifier.increment">1</longProp>
             <stringProp name="ParamModifier.suffix"></stringProp>
           </elementProp>
-        </ParamModifier>
+        </ConfigTestElement>
         <hashTree/>
         <URLRewritingModifier guiclass="URLRewritingModifierGui" testclass="URLRewritingModifier" testname="HTTP URL Re-writing Modifier" enabled="true">
           <stringProp name="argument_name"></stringProp>
@@ -407,6 +412,7 @@
           <boolProp name="path_extension_no_equals">false</boolProp>
           <boolProp name="path_extension_no_questionmark">false</boolProp>
           <boolProp name="cache_value">false</boolProp>
+          <boolProp name="encode">false</boolProp>
         </URLRewritingModifier>
         <hashTree/>
         <JDBCPreProcessor guiclass="TestBeanGUI" testclass="JDBCPreProcessor" testname="JDBC PreProcessor" enabled="true">
@@ -418,6 +424,7 @@
           <stringProp name="resultVariable"></stringProp>
           <stringProp name="variableNames"></stringProp>
           <stringProp name="queryTimeout"></stringProp>
+          <stringProp name="resultSetHandler">Store as String</stringProp>
         </JDBCPreProcessor>
         <hashTree/>
         <JSR223PreProcessor guiclass="TestBeanGUI" testclass="JSR223PreProcessor" testname="JSR223 PreProcessor" enabled="true">
@@ -584,6 +591,7 @@
           <stringProp name="resultVariable"></stringProp>
           <stringProp name="variableNames"></stringProp>
           <stringProp name="queryTimeout"></stringProp>
+          <stringProp name="resultSetHandler">Store as String</stringProp>
         </JDBCSampler>
         <hashTree/>
         <JMSSampler guiclass="JMSSamplerGui" testclass="JMSSampler" testname="JMS Point-to-Point" enabled="true">
@@ -635,6 +643,8 @@
               </elementProp>
             </collectionProp>
           </elementProp>
+          <stringProp name="jms.expiration"></stringProp>
+          <stringProp name="jms.priority"></stringProp>
         </PublisherSampler>
         <hashTree/>
         <SubscriberSampler guiclass="JMSSubscriberGui" testclass="SubscriberSampler" testname="JMS Subscriber" enabled="true">
@@ -838,6 +848,7 @@
           <stringProp name="resultVariable"></stringProp>
           <stringProp name="variableNames"></stringProp>
           <stringProp name="queryTimeout"></stringProp>
+          <stringProp name="resultSetHandler">Store as String</stringProp>
         </JDBCPostProcessor>
         <hashTree/>
         <JSR223PostProcessor guiclass="TestBeanGUI" testclass="JSR223PostProcessor" testname="JSR223 PostProcessor" enabled="true">

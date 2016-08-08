@@ -17,6 +17,7 @@ module RubyJmeter
   <collectionProp name="CookieManager.cookies"/>
   <boolProp name="CookieManager.clearEachIteration">false</boolProp>
   <stringProp name="CookieManager.policy">default</stringProp>
+  <stringProp name="CookieManager.implementation">org.apache.jmeter.protocol.http.control.HC4CookieHandler</stringProp>
 </CookieManager>)
       EOS
       update params

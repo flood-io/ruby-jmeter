@@ -2,10 +2,13 @@
 
 [![Build Status](https://travis-ci.org/flood-io/ruby-jmeter.png)](https://travis-ci.org/flood-io/ruby-jmeter)
 [![Code Climate](https://codeclimate.com/github/flood-io/ruby-jmeter.png)](https://codeclimate.com/github/flood-io/ruby-jmeter)
+[![Gem Version](https://badge.fury.io/rb/ruby-jmeter.svg)](http://badge.fury.io/rb/ruby-jmeter)
 
 Tired of using the JMeter GUI or looking at hairy XML files?
 
 This gem lets you write test plans for JMeter in your favourite text editor, and optionally run them on [flood.io](http://flood.io).
+
+![](https://flood.io/images/logo-flood-medium.png)
 
 ## Installation
 
@@ -20,7 +23,6 @@ Install it yourself as:
 To use the DSL, first let's require the gem:
 
 ```ruby
-require 'rubygems'
 require 'ruby-jmeter'
 ```
 
@@ -98,25 +100,42 @@ end.run(
   jtl: 'results.jtl')
 ```
 
-### Running a JMeter Test Plan on flood.io
+### Running a JMeter Test Plan on Flood IO
 
-You can also execute JMeter test plans on flood.io using our API. To do so, you require an account and API token. If you don't know your token, sign in to [flood.io](https://flood.io/api) and check your account settings.
+You can also execute JMeter test plans on Flood IO using our API. To do so, you require an account and API token. If you don't know your token, sign in to [flood.io](https://flood.io/) and check your account settings.
 
-To execute the test on flood.io, call the `grid` method on the test and pass it the API token like this.
+To execute the test on Flood IO, call the `flood` method on the test and pass it the API token like this.
 
 ```ruby
 test do
   threads count: 10 do
     visit name: 'Google Search', url: 'http://google.com'
   end
-end.grid('OxtZ-4v-v0koSz5Y0enEQQ')
+end.flood(
+  ENV['FLOOD_API_TOKEN'],
+  name: 'Demo',
+  privacy_flag: 'public',
+  ## Select a grid or region to distribute this flood to
+  # grid: 'pmmi24XaSMnKjGVEtutroQ',
+  # region: 'ap-southeast-2'
+)
 ```
 
-This will then provide you with a link to the live test results on flood.io like this.
+This will then provide you with a link to the live test results on Flood IO like this.
 
 ```
-Results at: http://prod.flood.io/shared?testguid=73608030311611e2962f123141011033&run_id=339&tags=jmeter&domain=altentee.com&cluster=54.251.48.129&status=running&view=
+I, [2015-02-24T11:15:25.669029 #14010]  INFO -- : Flood results at: https://flood.io/AbRWkFl7VODYCkQuy3ffvA
 ```
+
+Note you will need to provide a `grid` or `region` parameter to the `.flood` method to describe which grid to distribute the flood test to. Otherwise it will default to the shared grid. You can find the Grid ID from the URL of the target grid in your [grids](https://flood.io/dashboard/grids) dashboard e.g.:
+
+![](https://s3.amazonaws.com/flood-io-support/Flood_IO_2015-02-24_11-43-21.jpg)
+
+Flood IO provides a shared grid for free, suitable for 5 minute tests, check your dashboard for the latest grid:
+
+![](https://s3.amazonaws.com/flood-io-support/Flood_IO_2015-02-24_11-44-29.jpg)
+
+Alternatively upgrade to a paid subscription on Flood IO and start your own grids on demand.
 
 ## Advanced Usage
 
@@ -253,6 +272,22 @@ submit name: 'Submit Form', url: 'http://altentee.com/',
 
 This method makes a single request. The fill_in parameter lets you specify key/value pairs for form field parameters. You can also use the built in JMeter `${expression}` language to access run time variables extracted from previous responses.
 
+### POST JSON
+
+```ruby
+  header [
+    { name: 'Content-Type', value: 'application/json' }
+  ]
+
+  person = { name: "Tom" }
+
+  post name: 'Create Person',
+        url: "https://example.com/people.json",
+        raw_body: person.to_json do
+        with_xhr
+      end
+```
+
 ### Think Time
 
 You can use the `think_time` method to insert pauses into the simulation. This method is aliased as `random_timer`.
@@ -267,7 +302,7 @@ This method takes 2 parameters: the constant delay, and an optional variable del
 # constant delay of 3 seconds
 think_time 3000
 # constant delay of 1 seconds with variance up to 6 seconds.
-random_timer 1000,5000
+random_timer 1000, 6000
 ```
 
 ### Response Extractor
@@ -297,6 +332,17 @@ visit name: "Altentee", url: "http://altentee.com" do
     match_number: 0 # random
 end
 ```
+You can later use the extracted values with subsequent requests:
+
+```ruby
+post name: 'Authenticate', url: 'http://example.com/api/authentication/facebook', raw_body: '{"auth_token": "FB_TOKEN"}' do
+  extract name: 'auth_token', regex: %q{.*"token":"([^"]+)".*}
+  extract name: 'user_id', regex: %q{.*"user_id":([^,]+),.*}
+end
+
+header({name: 'X-Auth-Token', value: '${auth_token}'})
+visit name: 'User profile', url: 'http://example.com/api/users/${user_id}'
+```
 
 ### Response Assertion
 
@@ -324,7 +370,7 @@ end
 
 ## Roadmap
 
-This work is being sponsored by flood.io. Get in touch with us if you'd like to be involved.
+This work is being sponsored by Flood IO. Get in touch with us if you'd like to be involved.
 
 ## Contributing
 
@@ -334,3 +380,78 @@ This work is being sponsored by flood.io. Get in touch with us if you'd like to 
 4. Commit your changes (`git commit -am 'Add some feature'`)
 5. Push to the branch (`git push origin my-new-feature`)
 6. Create new Pull Request
+
+### IDL
+
+We use an interface description language (IDL) as a bridge between JMeter's components expressed as XML in a `.jmx` test plan to Ruby's DSL objects in this repository.
+
+To automate this `lib/ruby-jmeter/idl.rb` can be executed from the command line which will read from `lib/ruby-jmeter/idl.xml` and output to `lib/ruby-jmeter/dsl`
+
+For example:
+
+```sh
+flood/ruby-jmeter - [master●] » ruby lib/ruby-jmeter/idl.rb
+flood/ruby-jmeter - [master●] » git status
+On branch master
+Your branch is up-to-date with 'origin/master'.
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git checkout -- <file>..." to discard changes in working directory)
+
+  modified:   lib/ruby-jmeter/DSL.md
+  modified:   lib/ruby-jmeter/dsl/foreach_controller.rb
+  modified:   lib/ruby-jmeter/dsl/http_request.rb
+  modified:   lib/ruby-jmeter/dsl/http_request_defaults.rb
+  modified:   lib/ruby-jmeter/dsl/regular_expression_extractor.rb
+  modified:   lib/ruby-jmeter/dsl/response_assertion.rb
+  modified:   lib/ruby-jmeter/dsl/test_fragment.rb
+  modified:   lib/ruby-jmeter/dsl/user_parameters.rb
+```
+
+You **should never manually update** code in `lib/ruby-jmeter/dsl` as this is automatically overwritten whenever we run the IDL script. As new components / plugins are added, or major versions of JMeter are updated, we open `lib/ruby-jmeter/idl.xml` in the JMeter UI with those updates prior to running the IDL script. This makes updating between versions more easy.
+
+### DSL
+
+Much of the behaviour of the gem is defined in `lib/ruby-jmeter/dsl.rb` which is where you should be updating code. You can extend individual DSL component behaviour in `live/ruby-jmeter/extend/**/*.rb`
+
+### Plugins
+
+Some custom code has been contributed particularly for support of JMeter plugins. These are not included in the IDL and as such should be added to `lib/ruby-jmeter/plugins`. Please follow some of the other examples.
+
+### Bundler
+
+We recommend using the Ruby gem bundle to manage your dependencies. Typical setup would be:
+
+
+```sh
+gem install bundler
+cd <your local clone>
+bundle install
+```
+
+Then you can run any rake / test tasks with the prefix `bundle exec`
+
+### Tests
+
+If contributing please add an appropriate test. See `spec/*_spec.rb` for examples. Tests can be run from the command line as follows:
+
+    $ bundle exec rspec
+
+### Examples
+
+It is often useful to add an appropriate example for other users and for testing your changes locally with the JMeter UI. See `examples` for different types of examples. To let your examples work locally from your own changes / commits simply prefix the examples with:
+
+```ruby
+$LOAD_PATH.unshift(File.join(File.dirname(__FILE__), '..', 'lib'))
+```
+
+    $ flood/ruby-jmeter - [master●] » ruby examples/basic_assertion.rb
+      W, [2015-10-17T19:31:12.021004 #33216]  WARN -- : Test executing locally ...
+
+Note: most of the examples assume the JMeter binary is installed in `/usr/share/jmeter/bin/` however you can modify this in your example to something that suits your installation e.g.:
+
+
+```ruby
+...
+end.run(path: 'C/Program Files/JMeter/bin/', gui: true)
+```

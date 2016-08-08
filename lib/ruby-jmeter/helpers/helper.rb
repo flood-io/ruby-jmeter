@@ -1,5 +1,4 @@
 module RubyJmeter
-
   def dsl_eval(dsl, &block)
     block_context = eval("self", block.binding)
     proxy_context = RubyJmeter::FallbackContextProxy.new(dsl, block_context)
@@ -17,13 +16,14 @@ module RubyJmeter
   module Helper
     def update(params)
       params.delete(:name)
+      enabled_disabled(params)
       if params.class == Array
         update_collection params
       else
         params.each do |name, value|
           node = @doc.children.xpath("//*[contains(@name,\"#{name.to_s}\")]")
           if value.class == Nokogiri::XML::Builder
-            node.first << value.doc.at_xpath('//builder').children
+            node.first.children = value.doc.at_xpath('//builder').children
           else
             node.first.content = value unless node.empty?
           end
@@ -32,9 +32,20 @@ module RubyJmeter
       end
     end
 
+    def enabled_disabled(params)
+      return unless params.is_a?(Hash)
+      @doc.children.first.attributes['enabled'].value = params[:enabled].to_s.empty? ? 'true' : 'false'
+    end
+
     def update_at_xpath(params)
       params[:update_at_xpath].each do |fragment|
-        @doc.at_xpath(fragment[:xpath]) << fragment[:value]
+        if fragment[:xpath]
+          @doc.at_xpath(fragment[:xpath]) << fragment[:value]
+        else
+          fragment.each do |xpath, value|
+            @doc.at_xpath(xpath).content = value
+          end
+        end
       end
     end
 

@@ -1,4 +1,4 @@
-source 'http://rubygems.org'
+source 'https://rubygems.org'
 
 # Specify your gem's dependencies in ruby-jmeter.gemspec
 gemspec
@@ -12,10 +12,7 @@ platforms :jruby do
 end
 
 group :development do
-  gem 'pry', :require => 'pry'
-  gem 'pry-nav', :require => 'pry-nav'
-  gem 'pry-debugger', :require => 'pry-debugger'
-  gem 'awesome_print', :require => 'ap'
+  gem 'byebug'
 end
 
 group :test do
@@ -23,5 +20,4 @@ group :test do
   gem 'rspec'
   gem 'sinatra'
   gem 'haml'
-  gem 'pry-debugger', :require => 'pry-debugger'
 end
