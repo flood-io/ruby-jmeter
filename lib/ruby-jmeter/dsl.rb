@@ -17,19 +17,8 @@ module RubyJmeter
       @current_node = attach_to_last(node)
     end
 
-    ##
-    # Config Elements
 
 
-
-
-
-    def http_cache_manager(params = {}, &block)
-      params[:clearEachIteration] = true if params.keys.include? :clear_each_iteration
-      super
-    end
-
-    alias_method :cache, :http_cache_manager
 
     def with_user_agent(device)
       http_header_manager name: 'User-Agent',
