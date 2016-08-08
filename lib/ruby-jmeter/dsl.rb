@@ -18,12 +18,6 @@ module RubyJmeter
     end
 
 
-
-
-
-
-
-
     def soapxmlrpc_request(params, &block)
       params[:method] ||= 'POST'
       super
@@ -40,24 +34,6 @@ module RubyJmeter
     end
 
 
-
-    ##
-    # Listeners
-
-    alias_method :view_results, :view_results_tree
-
-    alias_method :log, :simple_data_writer
-
-    alias_method :response_graph, :response_time_graph
-
-    ##
-    # Other Elements
-
-
-
-    alias_method :bsh_pre, :beanshell_preprocessor
-
-    alias_method :bsh_post, :beanshell_postprocessor
 
     def extract(params, &block)
       node = if params[:regex]
@@ -109,105 +85,7 @@ module RubyJmeter
 
     # API Methods
 
-    def out(params = {})
-      puts doc.to_xml(:indent => 2)
-    end
 
-    def jmx(params = {})
-      file(params)
-      logger.info "Test plan saved to: #{params[:file]}"
-    end
-
-    def to_xml
-      doc.to_xml(:indent => 2)
-    end
-
-    def to_doc
-      doc.clone
-    end
-
-    def run(params = {})
-      file(params)
-      logger.warn "Test executing locally ..."
-      properties = params.has_key?(:properties) ? build_properties(params[:properties]) : "-q #{File.dirname(__FILE__)}/helpers/jmeter.properties"
-
-      if params[:remote_hosts]
-        remote_hosts = params[:remote_hosts]
-        remote_hosts = remote_hosts.join(',') if remote_hosts.kind_of?(Array)
-        remote_hosts = "-R #{remote_hosts}"
-      end
-
-      cmd = "#{params[:path]}jmeter #{"-n" unless params[:gui] } -t #{params[:file]} -j #{params[:log] ? params[:log] : 'jmeter.log' } -l #{params[:jtl] ? params[:jtl] : 'jmeter.jtl' } #{properties} #{remote_hosts}"
-      logger.debug cmd if params[:debug]
-      Open3.popen2e("#{cmd}") do |stdin, stdout_err, wait_thr|
-        while line = stdout_err.gets
-          logger.debug line.chomp if params[:debug]
-        end
-
-        exit_status = wait_thr.value
-        abort "FAILED !!! #{cmd}" unless exit_status.success?
-      end
-      logger.info "Local Results at: #{params[:jtl] ? params[:jtl] : 'jmeter.jtl'}"
-    end
-
-    def flood(token, params = {})
-      if params[:region] == 'local'
-        logger.info 'Starting test ...'
-        params[:started] = Time.now
-        run params
-        params[:stopped] = Time.now
-        logger.info 'Completed test ...'
-        logger.debug 'Uploading results ...' if params[:debug]
-      end
-      RestClient.proxy = params[:proxy] if params[:proxy]
-      begin
-        file = Tempfile.new(['jmeter', '.jmx'])
-        file.write(doc.to_xml(:indent => 2))
-        file.rewind
-
-        flood_files = {
-          file: File.new("#{file.path}", 'rb')
-        }
-
-        if params[:files]
-          flood_files.merge!(Hash[params[:files].map.with_index { |value, index| [index, File.new(value, 'rb')] }])
-          params.delete(:files)
-        end
-
-        response = RestClient.post "#{params[:endpoint] ? params[:endpoint] : 'https://api.flood.io'}/floods?auth_token=#{token}",
-        {
-          :flood => {
-            :tool => 'jmeter',
-            :url => params[:url],
-            :name => params[:name],
-            :notes => params[:notes],
-            :tag_list => params[:tag_list],
-            :threads => params[:threads],
-            :rampup => params[:rampup],
-            :duration => params[:duration],
-            :override_hosts => params[:override_hosts],
-            :override_parameters => params[:override_parameters],
-            # specials for API
-            :started => params[:started],
-            :stopped => params[:stopped]
-          },
-          :flood_files => flood_files,
-          :results => (File.new("#{params[:jtl] ? params[:jtl] : 'jmeter.jtl'}", 'rb') if params[:region] == 'local'),
-          :region => params[:region],
-          :multipart => true,
-          :content_type => 'application/octet-stream'
-        }.merge(params)
-        if response.code == 201
-          logger.info "Flood results at: #{JSON.parse(response)["permalink"]}"
-        else
-          logger.fatal "Sorry there was an error: #{JSON.parse(response)["error"]}"
-        end
-      rescue => e
-        logger.fatal "Sorry there was an error: #{JSON.parse(e.response)["error"]}"
-      end
-    end
-
-    alias_method :grid, :flood
 
     private
 

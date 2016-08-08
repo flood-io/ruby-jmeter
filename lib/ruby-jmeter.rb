@@ -6,6 +6,7 @@ require 'open3'
 
 require 'ruby-jmeter/version'
 require 'ruby-jmeter/aliases'
+require 'ruby-jmeter/api'
 require 'ruby-jmeter/helpers/helper'
 require 'ruby-jmeter/helpers/parser'
 require 'ruby-jmeter/helpers/fallback_content_proxy'
