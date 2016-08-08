@@ -17,7 +17,7 @@ module RubyJmeter
       @current_node = attach_to_last(node)
     end
 
-    alias_method :auth, :http_authorization_manager
+
 
 
 
@@ -29,18 +29,6 @@ module RubyJmeter
       super
     end
 
-    alias_method :soap, :soapxmlrpc_request
-
-    alias_method :ldap, :ldap_request
-
-    alias_method :ldap_ext, :ldap_extended_request
-
-    alias_method :ldap_extended, :ldap_extended_request
-
-    ##
-    # Controllers
-
-
 
     def exists(variable, &block)
       params ||= {}
@@ -51,23 +39,7 @@ module RubyJmeter
       attach_node(node, &block)
     end
 
-    alias_method :If, :if_controller
 
-
-
-
-
-    alias_method :Switch, :switch_controller
-
-    alias_method :While, :while_controller
-
-    alias_method :Interleave, :random_controller
-
-    alias_method :Random_order, :random_order_controller
-
-    alias_method :Simple, :simple_controller
-
-    alias_method :Once, :once_only_controller
 
     ##
     # Listeners
