@@ -7,15 +7,15 @@ test do
     user_parameters names: ['name1', 'name2'],
       thread_values: {
         user_1: [
-          'value1',
-          'value2'
+          'user1_value1',
+          'user1_value2'
         ],
 
         user_2: [
-          'value1',
-          'value2'
+          'user2_value1',
+          'user2_value2'
         ]
-      }
+      },
+      per_iteration: true
   end
-# end.run(path: '/usr/share/jmeter-2.13/bin/', gui: true)
-end.out
+end.run(path: '/usr/share/jmeter/bin/', gui: true)

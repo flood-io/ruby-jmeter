@@ -15,7 +15,9 @@ module RubyJmeter
       @doc = Nokogiri::XML(<<-EOS.strip_heredoc)
 <UserParameters guiclass="UserParametersGui" testclass="UserParameters" testname="#{testname}" enabled="true">
   <collectionProp name="UserParameters.names"/>
-  <collectionProp name="UserParameters.thread_values"/>
+  <collectionProp name="UserParameters.thread_values">
+    <collectionProp name="1"/>
+    <collectionProp name="1"/>
   </collectionProp>
   <boolProp name="UserParameters.per_iteration">false</boolProp>
 </UserParameters>)
