@@ -6,7 +6,7 @@ module RubyJmeter
     def initialize(params = {})
       @root = Nokogiri::XML(<<-EOF.strip_heredoc)
         <?xml version="1.0" encoding="UTF-8"?>
-        <jmeterTestPlan version="1.2" properties="2.8" jmeter="2.13" ruby-jmeter="2.13.0">
+        <jmeterTestPlan version="1.2" properties="2.9" jmeter="3.0" ruby-jmeter="3.0">
         <hashTree>
         </hashTree>
         </jmeterTestPlan>
@@ -361,17 +361,6 @@ module RubyJmeter
 
     alias_method :ConstantThroughputTimer, :constant_throughput_timer
 
-    def response_assertion(params = {}, &block)
-      params[:test_type] = parse_test_type(params)
-      params['0'] = params.values.first
-      node = params[:json] ? json_path_assertion(params) : assertion(params)
-      attach_node(node, &block)
-    end
-
-    alias_method :assert, :response_assertion
-
-    alias_method :web_reg_find, :response_assertion
-
     ##
     # JMeter Plugins
 
@@ -639,19 +628,6 @@ module RubyJmeter
       params[:EXPECTED_VALUE] = params[:value]
       params[:JSON_PATH] = params[:json]
       RubyJmeter::Plugins::JsonPathAssertion.new(params)
-    end
-
-    def assertion(params)
-      RubyJmeter::ResponseAssertion.new(params).tap do |node|
-        if params[:variable]
-          params['Scope.variable'] = params[:variable]
-          node.doc.xpath("//stringProp[@name='Assertion.scope']").first.content = 'variable'
-        end
-
-        if params[:scope] == 'main' || params['scope'] == 'main'
-          node.doc.xpath("//stringProp[@name='Assertion.scope']").remove
-        end
-      end
     end
   end
 end

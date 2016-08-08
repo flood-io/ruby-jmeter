@@ -702,30 +702,6 @@ describe 'DSL' do
   end
 
   describe 'assertions' do
-    describe 'scope all' do
-      let(:doc) do
-        test do
-          visit '/' do
-            assert contains: 'Welcome'
-          end
-        end.to_doc
-      end
-
-      let(:fragment) { doc.search("//ResponseAssertion").first }
-
-      it 'should match on match' do
-        fragment.search(".//stringProp[@name='0']").text.should == 'Welcome'
-      end
-
-      it 'should match on scope' do
-        fragment.search(".//stringProp[@name='Assertion.scope']").text.should == 'all'
-      end
-
-      it 'should match on test_type' do
-        fragment.search(".//intProp[@name='Assertion.test_type']").text.should == '2'
-      end
-    end
-
     describe 'json assertion' do
       let(:doc) do
         test do
@@ -763,26 +739,6 @@ describe 'DSL' do
 
       it 'should match on scope' do
         fragment.search(".//stringProp[@name='Assertion.scope']").text.should == ""
-      end
-    end
-
-    describe 'scope variable' do
-      let(:doc) do
-        test do
-          visit '/' do
-            assert contains: 'someting', variable: 'some_jmeter_variable'
-          end
-        end.to_doc
-      end
-
-      let(:fragment) { doc.search("//ResponseAssertion").first }
-
-      it 'should match on scope' do
-        fragment.search(".//stringProp[@name='Assertion.scope']").text.should == "variable"
-      end
-
-      it 'should match on variable' do
-        fragment.search(".//stringProp[@name='Scope.variable']").text.should == "some_jmeter_variable"
       end
     end
   end
