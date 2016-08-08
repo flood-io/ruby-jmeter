@@ -1,5 +1,6 @@
-module RubyJmeter
+require 'byebug'
 
+module RubyJmeter
   def dsl_eval(dsl, &block)
     block_context = eval("self", block.binding)
     proxy_context = RubyJmeter::FallbackContextProxy.new(dsl, block_context)
@@ -24,7 +25,7 @@ module RubyJmeter
         params.each do |name, value|
           node = @doc.children.xpath("//*[contains(@name,\"#{name.to_s}\")]")
           if value.class == Nokogiri::XML::Builder
-            node.first << value.doc.at_xpath('//builder').children
+            node.first.children = value.doc.at_xpath('//builder').children
           else
             node.first.content = value unless node.empty?
           end
