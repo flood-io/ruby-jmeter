@@ -58,7 +58,4 @@ test do
     end
 
   end
-
-# end.grid ARGV[1]
-# end.jmx
-end.run(path: '/usr/share/jmeter-2.13/bin/', gui: true)
+end.run(path: '/usr/share/jmeter/bin/', gui: true)

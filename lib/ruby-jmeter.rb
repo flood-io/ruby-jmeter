@@ -8,19 +8,19 @@ require 'ruby-jmeter/version'
 
 lib = File.dirname(File.absolute_path(__FILE__))
 
-Dir.glob(lib + '/ruby-jmeter/helpers/*').each do |file|
+Dir.glob(lib + '/ruby-jmeter/helpers/**/*.rb').each do |file|
   require file
 end
 
-Dir.glob(lib + '/ruby-jmeter/dsl/*').each do |file|
+Dir.glob(lib + '/ruby-jmeter/dsl/**/*.rb').each do |file|
   require file
 end
 
-Dir.glob(lib + '/ruby-jmeter/extensions/*').each do |file|
+Dir.glob(lib + '/ruby-jmeter/extend/**/*.rb').each do |file|
   require file
 end
 
-Dir.glob(lib + '/ruby-jmeter/plugins/*').each do |file|
+Dir.glob(lib + '/ruby-jmeter/plugins/**/*.rb').each do |file|
   require file
 end
 
