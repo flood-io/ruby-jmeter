@@ -181,10 +181,6 @@
   `html_assertion`
 - JSR223 Assertion
   `jsr223_assertion`
-- JSR223 Assertion
-  `jsr223_assertion`
-- MD5Hex Assertion
-  `md5hex_assertion`
 - MD5Hex Assertion
   `md5hex_assertion`
 - Response Assertion
@@ -221,8 +217,6 @@
   `mailer_visualizer`
 - Monitor Results
   `monitor_results`
-- Response Time Graph
-  `response_time_graph`
 - Response Time Graph
   `response_time_graph`
 - Save Responses to a file
