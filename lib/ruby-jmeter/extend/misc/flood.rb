@@ -36,7 +36,7 @@ module RubyJmeter
           content_type: 'application/octet-stream'
         }.merge(params)
         if response.code == 201
-          logger.info 'Flood results at: #{JSON.parse(response)["permalink"]}'
+          logger.info "Flood results at: #{JSON.parse(response)["permalink"]}"
         else
           logger.fatal "Sorry there was an error: #{JSON.parse(response)["error"]}"
         end
