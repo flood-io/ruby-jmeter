@@ -14,11 +14,11 @@ module RubyJmeter
       testname = params.kind_of?(Array) ? 'Jsr223Assertion' : (params[:name] || 'Jsr223Assertion')
       @doc = Nokogiri::XML(<<-EOS.strip_heredoc)
 <JSR223Assertion guiclass="TestBeanGUI" testclass="JSR223Assertion" testname="#{testname}" enabled="true">
-  <stringProp name="scriptLanguage"/>
-  <stringProp name="parameters"/>
-  <stringProp name="filename"/>
   <stringProp name="cacheKey"/>
+  <stringProp name="filename"/>
+  <stringProp name="parameters"/>
   <stringProp name="script"/>
+  <stringProp name="scriptLanguage"/>
 </JSR223Assertion>)
       EOS
       update params
