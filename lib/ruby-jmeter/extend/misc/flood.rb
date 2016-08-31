@@ -23,6 +23,7 @@ module RubyJmeter
             name: params[:name],
             notes: params[:notes],
             tag_list: params[:tag_list],
+            project: params[:project],
             threads: params[:threads],
             rampup: params[:rampup],
             duration: params[:duration],
