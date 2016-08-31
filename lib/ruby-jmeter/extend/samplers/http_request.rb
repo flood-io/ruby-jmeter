@@ -17,7 +17,19 @@ module RubyJmeter
 
       parse_http_request(params)
 
-      node = RubyJmeter::HttpRequest.new(params).tap do |node|
+      if params[:sample]
+        transaction name: params[:name], parent: true do
+          loops count: params[:sample].to_i do
+            attach_node(http_request_node(params), &block)
+          end
+        end
+      else
+        attach_node(http_request_node(params), &block)
+      end
+    end
+
+    def http_request_node(params)
+      RubyJmeter::HttpRequest.new(params).tap do |node|
         node.doc.children.first.add_child (
           Nokogiri::XML(<<-EOS.strip_heredoc).children
             <stringProp name="HTTPSampler.implementation">#{params[:implementation]}</stringProp>
@@ -30,8 +42,6 @@ module RubyJmeter
           EOS
         ) if params[:comments]
       end
-
-      attach_node(node, &block)
     end
 
     alias request http_request
