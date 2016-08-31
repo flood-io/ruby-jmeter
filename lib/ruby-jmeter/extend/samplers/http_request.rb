@@ -20,6 +20,7 @@ module RubyJmeter
       if params[:sample]
         transaction name: params[:name], parent: true do
           loops count: params[:sample].to_i do
+            params.delete(:sample)
             attach_node(http_request_node(params), &block)
           end
         end
