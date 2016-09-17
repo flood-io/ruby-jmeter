@@ -18,6 +18,17 @@ module RubyJmeter
           EOS
         ) if params[:md5]
 
+        node.doc.children.first.add_child (
+          Nokogiri::XML(<<-EOS.strip_heredoc).children
+            <stringProp name="HTTPSampler.proxyHost">#{params[:proxy_host]}</stringProp>
+          EOS
+        ) if params[:proxy_host]
+
+        node.doc.children.first.add_child (
+          Nokogiri::XML(<<-EOS.strip_heredoc).children
+            <stringProp name="HTTPSampler.proxyPort">#{params[:proxy_port]}</stringProp>
+          EOS
+        ) if params[:proxy_port]
       end
 
       attach_node(node, &block)
