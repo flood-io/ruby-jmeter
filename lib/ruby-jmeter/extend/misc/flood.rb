@@ -30,7 +30,7 @@ module RubyJmeter
             override_parameters: params[:override_parameters],
             started: params[:started],
             stopped: params[:stopped],
-            privacy_flag: params[:privacy_flag] || 'private',
+            privacy_flag: params[:privacy] || 'private',
           },
           flood_files: flood_files,
           region: params[:region],
