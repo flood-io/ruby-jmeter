@@ -29,7 +29,8 @@ module RubyJmeter
             duration: params[:duration],
             override_parameters: params[:override_parameters],
             started: params[:started],
-            stopped: params[:stopped]
+            stopped: params[:stopped],
+            privacy_flag: params[:privacy_flag] || 'private',
           },
           flood_files: flood_files,
           region: params[:region],
