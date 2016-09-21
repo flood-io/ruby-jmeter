@@ -20,6 +20,8 @@ module RubyJmeter
           )
         end
       end
+
+      attach_node(node, &block)
     end
   end
 end
