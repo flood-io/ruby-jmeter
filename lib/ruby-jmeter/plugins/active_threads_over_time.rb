@@ -3,9 +3,10 @@ module RubyJmeter
     class ActiveThreadsOverTime
       attr_accessor :doc
       include Helper
-      def initialize(name, params={})
+      def initialize(params={})
+        testname = params.kind_of?(Array) ? 'ActiveThreadsOverTime' : (params[:name] || 'ActiveThreadsOverTime')
         @doc = Nokogiri::XML(<<-XML.strip_heredoc)
-          <kg.apc.jmeter.vizualizers.CorrectedResultCollector guiclass="kg.apc.jmeter.vizualizers.ThreadsStateOverTimeGui" testclass="kg.apc.jmeter.vizualizers.CorrectedResultCollector" testname="#{name}" enabled="true">
+          <kg.apc.jmeter.vizualizers.CorrectedResultCollector guiclass="kg.apc.jmeter.vizualizers.ThreadsStateOverTimeGui" testclass="kg.apc.jmeter.vizualizers.CorrectedResultCollector" testname="#{testname}" enabled="true">
             <boolProp name="ResultCollector.error_logging">false</boolProp>
             <objProp>
               <name>saveConfig</name>

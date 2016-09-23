@@ -3,9 +3,10 @@ module RubyJmeter
     class DummySampler
       attr_accessor :doc
       include Helper
-      def initialize(name, params={})
+      def initialize(params={})
+        testname = params.kind_of?(Array) ? 'DummySampler' : (params[:name] || 'DummySampler')
         @doc = Nokogiri::XML(<<-EOF.strip_heredoc)
-          <kg.apc.jmeter.samplers.DummySampler guiclass="kg.apc.jmeter.samplers.DummySamplerGui" testclass="kg.apc.jmeter.samplers.DummySampler" testname="#{name}" enabled="true">
+          <kg.apc.jmeter.samplers.DummySampler guiclass="kg.apc.jmeter.samplers.DummySamplerGui" testclass="kg.apc.jmeter.samplers.DummySampler" testname="#{testname}" enabled="true">
           <boolProp name="WAITING">true</boolProp>
           <boolProp name="SUCCESFULL">true</boolProp>
           <stringProp name="RESPONSE_CODE">200</stringProp>

@@ -1,51 +1,51 @@
 module RubyJmeter
   class ExtendedDSL < DSL
-    def response_codes_per_second(name = 'Response Codes per Second', params = {}, &block)
-      node = RubyJmeter::Plugins::ResponseCodesPerSecond.new(name, params)
+    def response_codes_per_second(params = {}, &block)
+      node = RubyJmeter::Plugins::ResponseCodesPerSecond.new(params)
       attach_node(node, &block)
     end
 
-    def response_times_distribution(name = 'Response Times Distribution', params = {}, &block)
-      node = RubyJmeter::Plugins::ResponseTimesDistribution.new(name, params)
+    def response_times_distribution(params = {}, &block)
+      node = RubyJmeter::Plugins::ResponseTimesDistribution.new(params)
       attach_node(node, &block)
     end
 
-    def response_times_over_time(name = 'Response Times Over Time', params = {}, &block)
-      node = RubyJmeter::Plugins::ResponseTimesOverTime.new(name, params)
+    def response_times_over_time(params = {}, &block)
+      node = RubyJmeter::Plugins::ResponseTimesOverTime.new(params)
       attach_node(node, &block)
     end
 
-    def response_times_percentiles(name = 'Response Times Percentiles', params = {}, &block)
-      node = RubyJmeter::Plugins::ResponseTimesPercentiles.new(name, params)
+    def response_times_percentiles(params = {}, &block)
+      node = RubyJmeter::Plugins::ResponseTimesPercentiles.new(params)
       attach_node(node, &block)
     end
 
-    def transactions_per_second(name = 'Transactions per Second', params = {}, &block)
-      node = RubyJmeter::Plugins::TransactionsPerSecond.new(name, params)
+    def transactions_per_second(params = {}, &block)
+      node = RubyJmeter::Plugins::TransactionsPerSecond.new(params)
       attach_node(node, &block)
     end
 
-    def latencies_over_time(name = 'Response Latencies Over Time', params = {}, &block)
-      node = RubyJmeter::Plugins::LatenciesOverTime.new(name, params)
+    def latencies_over_time(params = {}, &block)
+      node = RubyJmeter::Plugins::LatenciesOverTime.new(params)
       attach_node(node, &block)
     end
 
-    def console_status_logger(name = 'Console Status Logger', params = {}, &block)
-      node = RubyJmeter::Plugins::ConsoleStatusLogger.new(name, params)
+    def console_status_logger(params = {}, &block)
+      node = RubyJmeter::Plugins::ConsoleStatusLogger.new(params)
       attach_node(node, &block)
     end
 
     alias console console_status_logger
 
-    def throughput_shaper(name = 'Throughput Shaping Timer', steps=[], params = {}, &block)
-      node = RubyJmeter::Plugins::ThroughputShapingTimer.new(name, steps)
+    def throughput_shaper(params = {}, &block)
+      node = RubyJmeter::Plugins::ThroughputShapingTimer.new(params)
       attach_node(node, &block)
     end
 
     alias shaper throughput_shaper
 
-    def dummy_sampler(name = 'Dummy Sampler', params = {}, &block)
-      node = RubyJmeter::Plugins::DummySampler.new(name, params)
+    def dummy_sampler(params = {}, &block)
+      node = RubyJmeter::Plugins::DummySampler.new(params)
       attach_node(node, &block)
     end
 
@@ -58,10 +58,10 @@ module RubyJmeter
 
     alias step stepping_thread_group
 
-    def ultimate_thread_group(threads = [], params = {}, &block)
+    def ultimate_thread_group(params = {}, &block)
       node = RubyJmeter::Plugins::UltimateThreadGroup.new(params)
 
-      threads.each_with_index do |group, index|
+       (params.kind_of?(Array) ? params : params[:threads]).each_with_index do |group, index|
         node.doc.at_xpath('//collectionProp') <<
           Nokogiri::XML(<<-EOS.strip_heredoc).children
             <collectionProp name="index">
@@ -79,8 +79,8 @@ module RubyJmeter
 
     alias ultimate ultimate_thread_group
 
-    def composite_graph(name, params = {}, &block)
-      node = RubyJmeter::Plugins::CompositeGraph.new(name, params)
+    def composite_graph(params = {}, &block)
+      node = RubyJmeter::Plugins::CompositeGraph.new(params)
       attach_node(node, &block)
     end
 
@@ -100,8 +100,8 @@ module RubyJmeter
 
     alias perfmon perfmon_collector
 
-    def loadosophia_uploader(name = "Loadosophia.org Uploader", params = {}, &block)
-      node = RubyJmeter::Plugins::LoadosophiaUploader.new(name, params)
+    def loadosophia_uploader(params = {}, &block)
+      node = RubyJmeter::Plugins::LoadosophiaUploader.new(params)
       attach_node(node, &block)
     end
 

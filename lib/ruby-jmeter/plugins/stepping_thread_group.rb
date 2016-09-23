@@ -4,9 +4,9 @@ module RubyJmeter
       attr_accessor :doc
       include Helper
       def initialize(params={})
-        params[:name] ||= 'jp@gc - Stepping Thread Group'
+        testname = params.kind_of?(Array) ? 'SteppingThreadGroup' : (params[:name] || 'SteppingThreadGroup')
         @doc = Nokogiri::XML(<<-EOF.strip_heredoc)
-          <kg.apc.jmeter.threads.SteppingThreadGroup guiclass="kg.apc.jmeter.threads.SteppingThreadGroupGui" testclass="kg.apc.jmeter.threads.SteppingThreadGroup" testname="#{params[:name]}" enabled="true">
+          <kg.apc.jmeter.threads.SteppingThreadGroup guiclass="kg.apc.jmeter.threads.SteppingThreadGroupGui" testclass="kg.apc.jmeter.threads.SteppingThreadGroup" testname="#{testname}" enabled="true">
             <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
             <stringProp name="ThreadGroup.num_threads">#{params[:total_threads]}</stringProp>
             <stringProp name="Threads initial delay">#{params[:initial_delay]}</stringProp>

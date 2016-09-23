@@ -3,9 +3,10 @@ module RubyJmeter
     class ResponseCodesPerSecond
       attr_accessor :doc
       include Helper
-      def initialize(name, params={})
+      def initialize(params={})
+        testname = params.kind_of?(Array) ? 'ResponseCodesPerSecond' : (params[:name] || 'ResponseCodesPerSecond')
         @doc = Nokogiri::XML(<<-EOF.strip_heredoc)
-          <kg.apc.jmeter.vizualizers.CorrectedResultCollector guiclass="kg.apc.jmeter.vizualizers.ResponseCodesPerSecondGui" testclass="kg.apc.jmeter.vizualizers.CorrectedResultCollector" testname="#{name}" enabled="#{enabled(params)}">
+          <kg.apc.jmeter.vizualizers.CorrectedResultCollector guiclass="kg.apc.jmeter.vizualizers.ResponseCodesPerSecondGui" testclass="kg.apc.jmeter.vizualizers.CorrectedResultCollector" testname="#{testname}" enabled="#{enabled(params)}">
             <boolProp name="ResultCollector.error_logging">false</boolProp>
             <objProp>
               <name>saveConfig</name>

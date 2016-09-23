@@ -3,13 +3,14 @@ module RubyJmeter
     class ThroughputShapingTimer
       attr_accessor :doc
       include Helper
-      def initialize(name, steps, params={})
+      def initialize(params={})
+        testname = params.kind_of?(Array) ? 'ThroughputShapingTimer' : (params[:name] || 'ThroughputShapingTimer')
         @doc = Nokogiri::XML(<<-EOF.strip_heredoc)
-          <kg.apc.jmeter.timers.VariableThroughputTimer guiclass="kg.apc.jmeter.timers.VariableThroughputTimerGui" testclass="kg.apc.jmeter.timers.VariableThroughputTimer" testname="#{name}" enabled="true">
+          <kg.apc.jmeter.timers.VariableThroughputTimer guiclass="kg.apc.jmeter.timers.VariableThroughputTimerGui" testclass="kg.apc.jmeter.timers.VariableThroughputTimer" testname="#{testname}" enabled="true">
             <collectionProp name="load_profile"/>
           </kg.apc.jmeter.timers.VariableThroughputTimer>
         EOF
-        steps.each_with_index do |step, index|
+        (params.kind_of?(Array) ? params : params[:steps]).each_with_index do |step, index|
           @doc.at_xpath('//collectionProp') <<
             Nokogiri::XML(<<-EOF.strip_heredoc).children
               <collectionProp name="step_#{index}">

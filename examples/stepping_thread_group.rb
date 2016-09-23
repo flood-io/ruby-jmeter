@@ -12,7 +12,8 @@ test do
     { name: 'Accept', value: 'text/javascript, text/html, application/xml, text/xml, */*' }
   ]
 
-  step  total_threads: 200,
+  step  name: 'stepping thread group example',
+        total_threads: 200,
         initial_delay: 0,
         start_threads: 20,
         add_threads: 0,

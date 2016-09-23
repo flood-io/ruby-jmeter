@@ -3,7 +3,8 @@ module RubyJmeter
     class CompositeGraph
       attr_accessor :doc
       include Helper
-      def initialize(name, params={})
+      def initialize(params={})
+        testname = params.kind_of?(Array) ? 'CompositeGraph' : (params[:name] || 'CompositeGraph')
         graphNodes = params.collect { |g| "<stringProp name=\"\">#{g[:graph]}</stringProp>"}
         metricNodes = params.collect { |m| "<stringProp name=\"\">#{m[:metric]}</stringProp>"}
 
@@ -19,7 +20,7 @@ module RubyJmeter
         XML
 
         @doc = Nokogiri::XML(<<-XML.strip_heredoc)
-        <kg.apc.jmeter.vizualizers.CompositeResultCollector guiclass="kg.apc.jmeter.vizualizers.CompositeGraphGui" testclass="kg.apc.jmeter.vizualizers.CompositeResultCollector" testname="#{name}" enabled="true">
+        <kg.apc.jmeter.vizualizers.CompositeResultCollector guiclass="kg.apc.jmeter.vizualizers.CompositeGraphGui" testclass="kg.apc.jmeter.vizualizers.CompositeResultCollector" testname="#{testname}" enabled="true">
           <boolProp name="ResultCollector.error_logging">false</boolProp>
           <objProp>
             <name>saveConfig</name>
