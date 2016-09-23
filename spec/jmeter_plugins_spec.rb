@@ -53,7 +53,7 @@ describe 'dummy sampler' do
   let(:doc) do
     test do
       threads do
-        dummy_sampler 'dummy sampler name', { RESPONSE_DATA: "Some response data" }
+        dummy_sampler name: 'dummy sampler name', response_data: 'Some response data'
       end
     end.to_doc
   end

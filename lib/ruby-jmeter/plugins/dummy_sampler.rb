@@ -17,7 +17,9 @@ module RubyJmeter
           <stringProp name="LATENCY">0</stringProp>
         </kg.apc.jmeter.samplers.DummySampler>
         EOF
-        update params
+        upcased_params = {}
+        params.each {|k,v| upcased_params[k.to_s.upcase] = v}
+        update upcased_params
       end
     end
   end
