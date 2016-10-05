@@ -15,11 +15,7 @@ module RubyJmeter
       @doc = Nokogiri::XML(<<-EOS.strip_heredoc)
 <ConstantThroughputTimer guiclass="TestBeanGUI" testclass="ConstantThroughputTimer" testname="#{testname}" enabled="true">
   <intProp name="calcMode">0</intProp>
-  <doubleProp>
-    <name>throughput</name>
-    <value>0.0</value>
-    <savedValue>0.0</savedValue>
-  </doubleProp>
+  <stringProp name="throughput">0.0</stringProp>
 </ConstantThroughputTimer>)
       EOS
       update params
