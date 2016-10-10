@@ -16,8 +16,7 @@ module RubyJmeter
           params.delete(:files)
         end
 
-        response = RestClient.post "#{params[:endpoint] ? params[:endpoint] : 'https://api.flood.io'}/floods?auth_token=#{token}",
-        {
+        post_params = {
           flood: {
             tool: 'jmeter',
             name: params[:name],
@@ -31,12 +30,15 @@ module RubyJmeter
             started: params[:started],
             stopped: params[:stopped],
             privacy_flag: params[:privacy] || 'private',
-          },
+            grids: params[:grids]
+          }.select { |_, value| !value.nil? },
           flood_files: flood_files,
           region: params[:region],
           multipart: true,
           content_type: 'application/octet-stream'
-        }.merge(params)
+        }.merge(params).select { |_, value| !value.nil? }
+
+        response = RestClient.post "#{params[:endpoint] ? params[:endpoint] : 'https://api.flood.io'}/floods?auth_token=#{token}", post_params
         if response.code == 201
           logger.info "Flood results at: #{JSON.parse(response)["permalink"]}"
         else
