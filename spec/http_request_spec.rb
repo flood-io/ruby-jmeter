@@ -5,7 +5,7 @@ describe 'http_request' do
     let(:doc) do
       test do
         threads count: 1 do
-          get name: 'Home Page', url: 'http://google.com/'
+          get name: 'Home Page', url: 'https://flooded.io/'
         end
       end.to_doc
     end
@@ -37,7 +37,7 @@ describe 'http_request' do
     let(:doc) do
       test do
         threads count: 1 do
-          get name: 'Home Page', url: 'http://google.com/', follow_redirects: false, use_keepalive: false
+          get name: 'Home Page', url: 'https://flooded.io/', follow_redirects: false, use_keepalive: false
         end
       end.to_doc
     end
@@ -57,7 +57,7 @@ describe 'http_request' do
     let(:doc) do
       test do
         threads count: 1 do
-          visit name: 'Home Page', url: 'http://google.com/'
+          visit name: 'Home Page', url: 'https://flooded.io/'
         end
       end.to_doc
     end
@@ -149,7 +149,7 @@ describe 'http_request' do
     let(:doc) do
       test do
         threads count: 1 do
-          post name: 'Home Page', url: 'http://google.com/'
+          post name: 'Home Page', url: 'https://flooded.io/'
         end
       end.to_doc
     end
@@ -199,7 +199,7 @@ describe 'http_request' do
     let(:doc) do
       test do
         threads count: 1 do
-          submit name: 'Home Page', url: 'http://google.com/'
+          submit name: 'Home Page', url: 'https://flooded.io/'
         end
       end.to_doc
     end
@@ -259,7 +259,7 @@ describe 'http_request' do
     let(:doc) do
       test do
         threads count: 1 do
-          patch name: 'Home Page', url: 'http://google.com/'
+          patch name: 'Home Page', url: 'https://flooded.io/'
         end
       end.to_doc
     end
@@ -275,7 +275,7 @@ describe 'http_request' do
     let(:doc) do
       test do
         threads count: 1 do
-          head name: 'Home Page', url: 'http://google.com/'
+          head name: 'Home Page', url: 'https://flooded.io/'
         end
       end.to_doc
     end
@@ -291,7 +291,7 @@ describe 'http_request' do
     let(:doc) do
       test do
         threads count: 1 do
-          put name: 'Home Page', url: 'http://google.com/'
+          put name: 'Home Page', url: 'https://flooded.io/'
         end
       end.to_doc
     end

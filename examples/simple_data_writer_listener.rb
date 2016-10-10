@@ -3,7 +3,7 @@ require 'ruby-jmeter'
 
 test do
   threads count: 1 do
-    visit name: 'Home Page', url: 'http://google.com/'
+    visit name: 'Home Page', url: 'https://flooded.io/'
 
     # write errors to a simple data writer with the log alias
     log filename: '/var/log/flood/custom.log', error_logging: true

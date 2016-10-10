@@ -3,7 +3,7 @@ require 'ruby-jmeter'
 
 test do
   # user parameters with multiple values
-  visit name: 'Home Page', url: 'http://google.com/' do
+  visit name: 'Home Page', url: 'https://flooded.io/' do
     user_parameters names: ['name1', 'name2'],
       thread_values: {
         user_1: [

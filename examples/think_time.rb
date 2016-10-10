@@ -7,7 +7,7 @@ test do
     think_time 5000, 5000
 
     transaction name: 'Google Search' do
-      visit name: 'Home Page', url: 'http://google.com/'
+      visit name: 'Home Page', url: 'https://flooded.io/'
       random_timer 3000
     end
 

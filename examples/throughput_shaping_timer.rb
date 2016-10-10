@@ -14,7 +14,7 @@ test do
     ]
 
     transaction name: 'Google Search' do
-      visit name: 'Home Page', url: 'http://google.com/'
+      visit name: 'Home Page', url: 'https://flooded.io/'
     end
   end
 end.run(path: '/usr/share/jmeter/bin/', gui: true)
