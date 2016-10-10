@@ -10,13 +10,11 @@ describe 'constant_throughput_timer' do
     end.to_doc
   end
 
-  let(:fragment) { doc.search("//ConstantThroughputTimer").first }
-
   it 'should match on throughput using value' do
-    expect(fragment.search("//doubleProp/value").first.text).to eq '60.0'
+    expect(doc.search('//ConstantThroughputTimer[1]/stringProp[@name="throughput"]').first.content).to eq '60.0'
   end
-
+  
   it 'should match on throughput using throughput' do
-    expect(fragment.search("//doubleProp/value").last.text).to eq '70.0'
+    expect(doc.search('//ConstantThroughputTimer[2]/stringProp[@name="throughput"]').first.content).to eq '70.0'
   end
 end

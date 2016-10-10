@@ -4,8 +4,7 @@ module RubyJmeter
       params[:value] ||= params[:throughput] || 0.0
 
       node = RubyJmeter::ConstantThroughputTimer.new(params)
-      node.doc.xpath('.//value').first.content = params[:value].to_f
-
+      node.doc.xpath('//stringProp[@name="throughput"]').first.content = params[:value]
       attach_node(node, &block)
     end
   end
