@@ -86,7 +86,7 @@ test do
 end.run
 ```
 
-This will launch JMeter in headless (non-GUI mode) and execute the test plan. This is useful for shaking out the script before you push it to the Grid. There are a few parameters that you can set such as the `path` to the JMeter binary, the `file` path/name for the JMX file, the `log` path/name to output JMeter logs, the `jtl` path/name for JMeter results like this, the `properties` path/name for the additional JMeter property file.
+This will launch JMeter in headless (non-GUI mode) and execute the test plan. This is useful for shaking out the script before you push it to the Grid. There are a few parameters that you can set such as the `path` to the JMeter binary, the `file` path/name for the JMX file, the `log` path/name to output JMeter logs, the `jtl` path/name for JMeter results like this, and the `properties` path/name for the additional JMeter property file.
 
 ```ruby
 test do
