@@ -4,7 +4,7 @@ module RubyJmeter
       attr_accessor :doc
       include Helper
       def initialize(params={})
-        
+
         params[:name] ||= 'JMX Collector'
         params[:jtl] ||= ''
 
