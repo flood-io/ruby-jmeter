@@ -42,7 +42,7 @@ module RubyJmeter
             </value>
           </objProp>
           <stringProp name="filename">#{params[:jtl]}</stringProp>
-          <longProp name="interval_grouping">1000</longProp>
+          <longProp name="interval_grouping">1000</longProp
           <boolProp name="graph_aggregated">false</boolProp>
           <stringProp name="include_sample_labels"></stringProp>
           <stringProp name="exclude_sample_labels"></stringProp>
@@ -52,15 +52,15 @@ module RubyJmeter
           <boolProp name="exclude_checkbox_state">false</boolProp>
           <collectionProp name="samplers">
             <collectionProp name="311458936">
-              <stringProp name="0"></stringProp>
-              <stringProp name="-1685784265">service:jmx:rmi:///jndi/rmi://#{params[:host]}:#{params[:port]}/jmxrmi</stringProp>
-              <stringProp name="0"></stringProp>
-              <stringProp name="0"></stringProp>
-              <stringProp name="-1508861468">java.lang:type=#{params[:object_name]}</stringProp>
-              <stringProp name="-687755404">#{params[:attribute_name]}</stringProp>
-              <stringProp name="3599293">#{params[:attribute_key]}</stringProp>
-              <stringProp name="1237">false</stringProp>
-              <stringProp name="1231">true</stringProp>
+              <stringProp name="label"></stringProp>
+              <stringProp name="service_endpoint">service:jmx:rmi:///jndi/rmi://#{params[:host]}:#{params[:port]}/jmxrmi</stringProp>
+              <stringProp name="username"></stringProp>
+              <stringProp name="password"></stringProp>
+              <stringProp name="object_name">#{params[:object_name]}</stringProp>
+              <stringProp name="attribute_name">#{params[:attribute_name]}</stringProp>
+              <stringProp name="attribute_key">#{params[:attribute_key]}</stringProp>
+              <stringProp name="delta">false</stringProp>
+              <stringProp name="retry">true</stringProp>
             </collectionProp>
           </collectionProp>
         </kg.apc.jmeter.jmxmon.JMXMonCollector>
