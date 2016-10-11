@@ -7,6 +7,7 @@ module RubyJmeter
 
         params[:name] ||= 'JMX Collector'
         params[:jtl] ||= ''
+        params[:attribute_key] ||= ''
 
         @doc = Nokogiri::XML(<<-XML.strip_heredoc)
         <kg.apc.jmeter.jmxmon.JMXMonCollector guiclass="kg.apc.jmeter.vizualizers.JMXMonGui" testclass="kg.apc.jmeter.jmxmon.JMXMonCollector" testname="#{params[:name]}" enabled="true">
