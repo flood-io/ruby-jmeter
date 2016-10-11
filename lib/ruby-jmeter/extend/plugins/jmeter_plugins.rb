@@ -111,5 +111,10 @@ module RubyJmeter
       node = RubyJmeter::Plugins::RedisDataSet.new(params)
       attach_node(node, &block)
     end
+
+    def jmx_collector(params = {}, &block)
+      node = RubyJmeter::Plugins::JMXCollector.new(params)
+      attach_node(node, &block)
+    end
   end
 end
