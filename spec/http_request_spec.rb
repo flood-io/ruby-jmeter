@@ -17,15 +17,15 @@ describe 'http_request' do
     end
 
     it 'matches on domain' do
-      expect(fragment.search(".//stringProp[@name='HTTPSampler.domain']").text).to eq 'google.com'
+      expect(fragment.search(".//stringProp[@name='HTTPSampler.domain']").text).to eq 'flooded.io'
     end
 
     it 'matches on port' do
-      expect(fragment.search(".//stringProp[@name='HTTPSampler.port']").text).to eq '80'
+      expect(fragment.search(".//stringProp[@name='HTTPSampler.port']").text).to eq '443'
     end
 
     it 'matches on protocol' do
-      expect(fragment.search(".//stringProp[@name='HTTPSampler.protocol']").text).to eq 'http'
+      expect(fragment.search(".//stringProp[@name='HTTPSampler.protocol']").text).to eq 'https'
     end
 
     it 'matches on path' do
