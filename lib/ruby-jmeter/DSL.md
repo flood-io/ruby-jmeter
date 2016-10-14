@@ -161,6 +161,8 @@
   `debug_postprocessor`
 - JDBC PostProcessor
   `jdbc_postprocessor`
+- JSON Path PostProcessor
+  `json_path_postprocessor`
 - JSR223 PostProcessor
   `jsr223_postprocessor`
 - Regular Expression Extractor
