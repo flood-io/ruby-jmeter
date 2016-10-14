@@ -8,6 +8,6 @@ test do
 end.flood ENV['FLOOD_API_TOKEN'],
   privacy: 'public',
   name: ENV['FLOOD_NAME'] ||= 'Simple Demo',
-  project: 'workspace',
+  project: 'Workspace',
   region: ENV['REGION'] ||= 'us-west-2',
   override_parameters: '-Dsun.net.inetaddr.ttl=30'
