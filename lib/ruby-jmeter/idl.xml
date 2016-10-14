@@ -847,6 +847,12 @@
           <stringProp name="resultSetHandler">Store as String</stringProp>
         </JDBCPostProcessor>
         <hashTree/>
+        <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="JSON Path PostProcessor" enabled="true">
+          <stringProp name="JSONPostProcessor.referenceNames"></stringProp>
+          <stringProp name="JSONPostProcessor.jsonPathExprs"></stringProp>
+          <stringProp name="JSONPostProcessor.match_numbers"></stringProp>
+        </JSONPostProcessor>
+        <hashTree/>
         <JSR223PostProcessor guiclass="TestBeanGUI" testclass="JSR223PostProcessor" testname="JSR223 PostProcessor" enabled="true">
           <stringProp name="cacheKey"></stringProp>
           <stringProp name="filename"></stringProp>
