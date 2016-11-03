@@ -153,3 +153,93 @@ describe 'redis data set' do
     end
   end
 end
+
+describe 'jmx collector' do
+
+  describe 'passing all optionals' do
+    let(:doc) do
+      test do
+        jmx_collector(
+            name: 'some jmx collector name',
+            host: 'localhost',
+            port: 12345,
+            object_name: 'java.lang:type=Memory',
+            attribute_name: 'HeapMemoryUsage',
+            attribute_key: 'committed',
+            jtl: 'path/to/some/dir/file.jtl'
+        )
+      end.to_doc
+    end
+
+    let(:fragment) {
+      doc.search('//kg.apc.jmeter.jmxmon.JMXMonCollector').first }
+
+    it 'should have a name' do
+      expect(fragment.attributes['testname'].value).to eq 'some jmx collector name'
+    end
+
+    it 'should point to the service endpoint' do
+      expect(fragment.search("//stringProp[@name='service_endpoint']").text).to eq 'service:jmx:rmi:///jndi/rmi://localhost:12345/jmxrmi'
+    end
+
+    it 'should use the object name' do
+      expect(fragment.search("//stringProp[@name='object_name']").text).to eq 'java.lang:type=Memory'
+    end
+
+    it 'should use the attribute name' do
+      expect(fragment.search("//stringProp[@name='attribute_name']").text).to eq 'HeapMemoryUsage'
+    end
+
+    it 'should use the attribute key' do
+      expect(fragment.search("//stringProp[@name='attribute_key']").text).to eq 'committed'
+    end
+
+    it 'should use the jtl path' do
+      expect(fragment.search("//stringProp[@name='filename']").text).to eq 'path/to/some/dir/file.jtl'
+    end
+
+  end
+
+  describe 'passing no optionals' do
+    let(:doc) do
+      test do
+        jmx_collector(
+            host: '127.0.0.1',
+            port: 54321,
+            object_name: 'java.lang:type=Threading',
+            attribute_name: 'ThreadCount',
+        )
+      end.to_doc
+    end
+
+    let(:fragment) {
+      doc.search('//kg.apc.jmeter.jmxmon.JMXMonCollector').first }
+
+    it 'should have a default name' do
+      expect(fragment.attributes['testname'].value).to eq 'JMX Collector'
+    end
+
+    it 'should point to the service endpoint' do
+      expect(fragment.search("//stringProp[@name='service_endpoint']").text).to eq 'service:jmx:rmi:///jndi/rmi://127.0.0.1:54321/jmxrmi'
+    end
+
+    it 'should use the object name' do
+      expect(fragment.search("//stringProp[@name='object_name']").text).to eq 'java.lang:type=Threading'
+    end
+
+    it 'should use the attribute name' do
+      expect(fragment.search("//stringProp[@name='attribute_name']").text).to eq 'ThreadCount'
+    end
+
+    it 'should use an empty attribute key' do
+      expect(fragment.search("//stringProp[@name='attribute_key']").text).to eq ''
+    end
+
+    it 'should use an empty jtl path' do
+      expect(fragment.search("//stringProp[@name='filename']").text).to eq ''
+    end
+
+  end
+
+end
+
