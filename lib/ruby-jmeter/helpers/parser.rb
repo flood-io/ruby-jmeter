@@ -53,7 +53,7 @@ module RubyJmeter
                   <boolProp name="HTTPArgument.always_encode">#{params[:always_encode] ? 'true' : false}</boolProp>
                   <stringProp name="Argument.value">#{value}</stringProp>
                   <stringProp name="Argument.metadata">=</stringProp>
-                  <boolProp name="HTTPArgument.use_equals">true</boolProp>
+                  <boolProp name="HTTPArgument.use_equals">#{params[:use_equals] ? 'true' : false}</boolProp>
                   <stringProp name="Argument.name">#{name}</stringProp>
                 </elementProp>
                 EOF
@@ -77,6 +77,7 @@ module RubyJmeter
         :value => Nokogiri::XML(<<-EOF.strip_heredoc).children
           <elementProp name="" elementType="HTTPArgument">
             <boolProp name="HTTPArgument.always_encode">false</boolProp>
+            <boolProp name="HTTPArgument.use_equals">false</boolProp>
             <stringProp name="Argument.value">#{params[:raw_body].encode(:xml => :text)}</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>

@@ -47,6 +47,7 @@ class VirtualUser
   def search_for_repository(repo)
     visit name: 'Search for project', url: '/search',
       always_encode: true,
+      use_equals: true,
       fill_in: {
         'q' => repo,
         'ref' => 'cmdform'

@@ -73,7 +73,7 @@ describe 'http_request' do
     let(:doc) do
       test do
         threads do
-          visit url: "/home?location=melbourne&location=sydney", always_encode: true
+          visit url: "/home?location=melbourne&location=sydney", always_encode: true, use_equals: false
         end
       end.to_doc
     end
@@ -87,6 +87,10 @@ describe 'http_request' do
     context 'first argument' do
       it 'should match on always_encode' do
         expect(fragment.search(".//boolProp[@name='HTTPArgument.always_encode']")[0].text).to eq 'true'
+      end
+
+      it 'should match on use_equals' do
+        expect(fragment.search(".//boolProp[@name='HTTPArgument.use_equals']")[0].text).to eq 'false'
       end
 
       it 'should match on query param name: location' do
@@ -103,6 +107,10 @@ describe 'http_request' do
         expect(fragment.search(".//boolProp[@name='HTTPArgument.always_encode']")[1].text).to eq 'true'
       end
 
+      it 'should match on use_equals' do
+        expect(fragment.search(".//boolProp[@name='HTTPArgument.use_equals']")[1].text).to eq 'false'
+      end
+
       it 'should match on query param name: location' do
         expect(fragment.search(".//stringProp[@name='Argument.name']")[1].text).to eq 'location'
       end
@@ -117,7 +125,7 @@ describe 'http_request' do
     let(:doc) do
       test do
         threads do
-          visit "/home?location=melbourne", always_encode: true
+          visit "/home?location=melbourne", always_encode: true, use_equals: false
         end
       end.to_doc
     end
