@@ -12,6 +12,7 @@ module RubyJmeter
 
     def initialize(params={})
       testname = params.kind_of?(Array) ? 'Jsr223Timer' : (params[:name] || 'Jsr223Timer')
+      testname = CGI.escapeHTML(testname.to_s)
       @doc = Nokogiri::XML(<<-EOS.strip_heredoc)
 <JSR223Timer guiclass="TestBeanGUI" testclass="JSR223Timer" testname="#{testname}" enabled="true">
   <stringProp name="cacheKey"/>

@@ -12,6 +12,7 @@ module RubyJmeter
 
     def initialize(params={})
       testname = params.kind_of?(Array) ? 'WhileController' : (params[:name] || 'WhileController')
+      testname = CGI.escapeHTML(testname.to_s)
       @doc = Nokogiri::XML(<<-EOS.strip_heredoc)
 <WhileController guiclass="WhileControllerGui" testclass="WhileController" testname="#{testname}" enabled="true">
   <stringProp name="WhileController.condition"/>

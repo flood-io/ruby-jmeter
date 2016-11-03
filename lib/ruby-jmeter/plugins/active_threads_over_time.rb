@@ -5,6 +5,7 @@ module RubyJmeter
       include Helper
       def initialize(params={})
         testname = params.kind_of?(Array) ? 'ActiveThreadsOverTime' : (params[:name] || 'ActiveThreadsOverTime')
+        testname = CGI.escapeHTML(testname.to_s)
         @doc = Nokogiri::XML(<<-XML.strip_heredoc)
           <kg.apc.jmeter.vizualizers.CorrectedResultCollector guiclass="kg.apc.jmeter.vizualizers.ThreadsStateOverTimeGui" testclass="kg.apc.jmeter.vizualizers.CorrectedResultCollector" testname="#{testname}" enabled="true">
             <boolProp name="ResultCollector.error_logging">false</boolProp>

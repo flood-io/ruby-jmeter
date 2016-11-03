@@ -12,6 +12,7 @@ module RubyJmeter
 
     def initialize(params={})
       testname = params.kind_of?(Array) ? 'JmsPublisher' : (params[:name] || 'JmsPublisher')
+      testname = CGI.escapeHTML(testname.to_s)
       @doc = Nokogiri::XML(<<-EOS.strip_heredoc)
 <PublisherSampler guiclass="JMSPublisherGui" testclass="PublisherSampler" testname="#{testname}" enabled="true">
   <stringProp name="jms.jndi_properties">false</stringProp>

@@ -12,6 +12,7 @@ module RubyJmeter
 
     def initialize(params={})
       testname = params.kind_of?(Array) ? 'RandomController' : (params[:name] || 'RandomController')
+      testname = CGI.escapeHTML(testname.to_s)
       @doc = Nokogiri::XML(<<-EOS.strip_heredoc)
 <RandomController guiclass="RandomControlGui" testclass="RandomController" testname="#{testname}" enabled="true">
   <intProp name="InterleaveControl.style">1</intProp>

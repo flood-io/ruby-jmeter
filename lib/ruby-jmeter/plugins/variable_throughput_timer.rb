@@ -5,6 +5,7 @@ module RubyJmeter
       include Helper
       def initialize(params={})
         testname = params.kind_of?(Array) ? 'ThroughputShapingTimer' : (params[:name] || 'ThroughputShapingTimer')
+        testname = CGI.escapeHTML(testname.to_s)
         @doc = Nokogiri::XML(<<-EOF.strip_heredoc)
           <kg.apc.jmeter.timers.VariableThroughputTimer guiclass="kg.apc.jmeter.timers.VariableThroughputTimerGui" testclass="kg.apc.jmeter.timers.VariableThroughputTimer" testname="#{testname}" enabled="true">
             <collectionProp name="load_profile"/>

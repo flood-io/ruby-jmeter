@@ -12,6 +12,7 @@ module RubyJmeter
 
     def initialize(params={})
       testname = params.kind_of?(Array) ? 'HtmlParameterMask' : (params[:name] || 'HtmlParameterMask')
+      testname = CGI.escapeHTML(testname.to_s)
       @doc = Nokogiri::XML(<<-EOS.strip_heredoc)
 <ConfigTestElement guiclass="ObsoleteGui" testclass="ConfigTestElement" testname="#{testname}" enabled="true">
   <elementProp name="ParamModifier.mask" elementType="ConfigTestElement">

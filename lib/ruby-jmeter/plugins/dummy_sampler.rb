@@ -5,6 +5,7 @@ module RubyJmeter
       include Helper
       def initialize(params={})
         testname = params.kind_of?(Array) ? 'DummySampler' : (params[:name] || 'DummySampler')
+        testname = CGI.escapeHTML(testname.to_s)
         @doc = Nokogiri::XML(<<-EOF.strip_heredoc)
           <kg.apc.jmeter.samplers.DummySampler guiclass="kg.apc.jmeter.samplers.DummySamplerGui" testclass="kg.apc.jmeter.samplers.DummySampler" testname="#{testname}" enabled="true">
           <boolProp name="WAITING">true</boolProp>

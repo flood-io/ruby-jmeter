@@ -12,6 +12,7 @@ module RubyJmeter
 
     def initialize(params={})
       testname = params.kind_of?(Array) ? 'MailerVisualizer' : (params[:name] || 'MailerVisualizer')
+      testname = CGI.escapeHTML(testname.to_s)
       @doc = Nokogiri::XML(<<-EOS.strip_heredoc)
 <MailerResultCollector guiclass="MailerVisualizer" testclass="MailerResultCollector" testname="#{testname}" enabled="true">
   <boolProp name="ResultCollector.error_logging">false</boolProp>

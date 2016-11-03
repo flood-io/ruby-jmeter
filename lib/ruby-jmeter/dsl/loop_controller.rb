@@ -12,6 +12,7 @@ module RubyJmeter
 
     def initialize(params={})
       testname = params.kind_of?(Array) ? 'LoopController' : (params[:name] || 'LoopController')
+      testname = CGI.escapeHTML(testname.to_s)
       @doc = Nokogiri::XML(<<-EOS.strip_heredoc)
 <LoopController guiclass="LoopControlPanel" testclass="LoopController" testname="#{testname}" enabled="true">
   <boolProp name="LoopController.continue_forever">true</boolProp>

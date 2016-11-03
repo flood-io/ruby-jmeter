@@ -12,6 +12,7 @@ module RubyJmeter
 
     def initialize(params={})
       testname = params.kind_of?(Array) ? 'AssertionResults' : (params[:name] || 'AssertionResults')
+      testname = CGI.escapeHTML(testname.to_s)
       @doc = Nokogiri::XML(<<-EOS.strip_heredoc)
 <ResultCollector guiclass="AssertionVisualizer" testclass="ResultCollector" testname="#{testname}" enabled="true">
   <boolProp name="ResultCollector.error_logging">false</boolProp>

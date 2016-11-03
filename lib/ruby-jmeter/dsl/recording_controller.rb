@@ -12,6 +12,7 @@ module RubyJmeter
 
     def initialize(params={})
       testname = params.kind_of?(Array) ? 'RecordingController' : (params[:name] || 'RecordingController')
+      testname = CGI.escapeHTML(testname.to_s)
       @doc = Nokogiri::XML(<<-EOS.strip_heredoc)
 <RecordingController guiclass="RecordController" testclass="RecordingController" testname="#{testname}" enabled="true"/>)
       EOS

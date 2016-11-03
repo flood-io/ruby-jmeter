@@ -12,6 +12,7 @@ module RubyJmeter
 
     def initialize(params={})
       testname = params.kind_of?(Array) ? 'BsfSampler' : (params[:name] || 'BsfSampler')
+      testname = CGI.escapeHTML(testname.to_s)
       @doc = Nokogiri::XML(<<-EOS.strip_heredoc)
 <BSFSampler guiclass="TestBeanGUI" testclass="BSFSampler" testname="#{testname}" enabled="true">
   <stringProp name="filename"/>

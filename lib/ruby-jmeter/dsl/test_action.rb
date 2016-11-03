@@ -12,6 +12,7 @@ module RubyJmeter
 
     def initialize(params={})
       testname = params.kind_of?(Array) ? 'TestAction' : (params[:name] || 'TestAction')
+      testname = CGI.escapeHTML(testname.to_s)
       @doc = Nokogiri::XML(<<-EOS.strip_heredoc)
 <TestAction guiclass="TestActionGui" testclass="TestAction" testname="#{testname}" enabled="true">
   <intProp name="ActionProcessor.action">1</intProp>

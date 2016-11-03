@@ -12,6 +12,7 @@ module RubyJmeter
 
     def initialize(params={})
       testname = params.kind_of?(Array) ? 'DebugPostprocessor' : (params[:name] || 'DebugPostprocessor')
+      testname = CGI.escapeHTML(testname.to_s)
       @doc = Nokogiri::XML(<<-EOS.strip_heredoc)
 <DebugPostProcessor guiclass="TestBeanGUI" testclass="DebugPostProcessor" testname="#{testname}" enabled="true">
   <boolProp name="displayJMeterProperties">false</boolProp>

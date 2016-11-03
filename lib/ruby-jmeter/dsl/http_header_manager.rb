@@ -12,6 +12,7 @@ module RubyJmeter
 
     def initialize(params={})
       testname = params.kind_of?(Array) ? 'HttpHeaderManager' : (params[:name] || 'HttpHeaderManager')
+      testname = CGI.escapeHTML(testname.to_s)
       @doc = Nokogiri::XML(<<-EOS.strip_heredoc)
 <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="#{testname}" enabled="true">
   <collectionProp name="HeaderManager.headers">

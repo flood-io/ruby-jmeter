@@ -12,6 +12,7 @@ module RubyJmeter
 
     def initialize(params={})
       testname = params.kind_of?(Array) ? 'ResponseTimeGraph' : (params[:name] || 'ResponseTimeGraph')
+      testname = CGI.escapeHTML(testname.to_s)
       @doc = Nokogiri::XML(<<-EOS.strip_heredoc)
 <ResultCollector guiclass="RespTimeGraphVisualizer" testclass="ResultCollector" testname="#{testname}" enabled="true">
   <boolProp name="ResultCollector.error_logging">false</boolProp>

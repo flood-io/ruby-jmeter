@@ -12,6 +12,7 @@ module RubyJmeter
 
     def initialize(params={})
       testname = params.kind_of?(Array) ? 'LdapRequest' : (params[:name] || 'LdapRequest')
+      testname = CGI.escapeHTML(testname.to_s)
       @doc = Nokogiri::XML(<<-EOS.strip_heredoc)
 <LDAPSampler guiclass="LdapTestSamplerGui" testclass="LDAPSampler" testname="#{testname}" enabled="true">
   <stringProp name="servername"/>

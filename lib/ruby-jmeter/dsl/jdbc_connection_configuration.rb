@@ -12,6 +12,7 @@ module RubyJmeter
 
     def initialize(params={})
       testname = params.kind_of?(Array) ? 'JdbcConnectionConfiguration' : (params[:name] || 'JdbcConnectionConfiguration')
+      testname = CGI.escapeHTML(testname.to_s)
       @doc = Nokogiri::XML(<<-EOS.strip_heredoc)
 <JDBCDataSource guiclass="TestBeanGUI" testclass="JDBCDataSource" testname="#{testname}" enabled="true">
   <boolProp name="autocommit">true</boolProp>

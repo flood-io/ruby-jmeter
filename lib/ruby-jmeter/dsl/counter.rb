@@ -12,6 +12,7 @@ module RubyJmeter
 
     def initialize(params={})
       testname = params.kind_of?(Array) ? 'Counter' : (params[:name] || 'Counter')
+      testname = CGI.escapeHTML(testname.to_s)
       @doc = Nokogiri::XML(<<-EOS.strip_heredoc)
 <CounterConfig guiclass="CounterConfigGui" testclass="CounterConfig" testname="#{testname}" enabled="true">
   <stringProp name="CounterConfig.start"/>

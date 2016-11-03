@@ -5,7 +5,7 @@ describe 'assertions' do
     let(:doc) do
       test do
         visit '/' do
-          assert json: '.key', value: 'value', name: "some_name"
+          assert json: '.key', value: 'value', name: "\"some_name\""
         end
       end.to_doc
     end
@@ -24,8 +24,8 @@ describe 'assertions' do
       expect(fragment.search(".//boolProp[@name='JSONVALIDATION']").text).to eq "true"
     end
 
-    it 'should have the given name' do
-      expect(fragment["testname"]).to eq "some_name"
+    it 'should have the given name and HTML escape it' do
+      expect(fragment["testname"]).to eq "\"some_name\""
     end
   end
 end

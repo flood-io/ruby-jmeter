@@ -12,6 +12,7 @@ module RubyJmeter
 
     def initialize(params={})
       testname = params.kind_of?(Array) ? 'JunitRequest' : (params[:name] || 'JunitRequest')
+      testname = CGI.escapeHTML(testname.to_s)
       @doc = Nokogiri::XML(<<-EOS.strip_heredoc)
 <JUnitSampler guiclass="JUnitTestSamplerGui" testclass="JUnitSampler" testname="#{testname}" enabled="true">
   <stringProp name="junitSampler.classname">test.RerunTest</stringProp>

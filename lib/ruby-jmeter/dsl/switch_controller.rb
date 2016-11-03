@@ -12,6 +12,7 @@ module RubyJmeter
 
     def initialize(params={})
       testname = params.kind_of?(Array) ? 'SwitchController' : (params[:name] || 'SwitchController')
+      testname = CGI.escapeHTML(testname.to_s)
       @doc = Nokogiri::XML(<<-EOS.strip_heredoc)
 <SwitchController guiclass="SwitchControllerGui" testclass="SwitchController" testname="#{testname}" enabled="true">
   <stringProp name="SwitchController.value"/>

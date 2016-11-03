@@ -12,6 +12,7 @@ module RubyJmeter
 
     def initialize(params={})
       testname = params.kind_of?(Array) ? 'XpathAssertion' : (params[:name] || 'XpathAssertion')
+      testname = CGI.escapeHTML(testname.to_s)
       @doc = Nokogiri::XML(<<-EOS.strip_heredoc)
 <XPathAssertion guiclass="XPathAssertionGui" testclass="XPathAssertion" testname="#{testname}" enabled="true">
   <boolProp name="XPath.negate">false</boolProp>

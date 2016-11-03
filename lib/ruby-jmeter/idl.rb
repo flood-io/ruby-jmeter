@@ -54,6 +54,7 @@ module RubyJmeter
 
     def initialize(params={})
       testname = params.kind_of?(Array) ? '#{klass}' : (params[:name] || '#{klass}')
+      testname = CGI.escapeHTML(testname.to_s)
       @doc = Nokogiri::XML(<<-EOS.strip_heredoc)
 #{element.to_xml.gsub /testname=".+?"/, 'testname="#{testname}"'})
       EOS

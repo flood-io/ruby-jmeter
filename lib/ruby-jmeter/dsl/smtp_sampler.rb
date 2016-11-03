@@ -12,6 +12,7 @@ module RubyJmeter
 
     def initialize(params={})
       testname = params.kind_of?(Array) ? 'SmtpSampler' : (params[:name] || 'SmtpSampler')
+      testname = CGI.escapeHTML(testname.to_s)
       @doc = Nokogiri::XML(<<-EOS.strip_heredoc)
 <SmtpSampler guiclass="SmtpSamplerGui" testclass="SmtpSampler" testname="#{testname}" enabled="true">
   <stringProp name="SMTPSampler.server"/>

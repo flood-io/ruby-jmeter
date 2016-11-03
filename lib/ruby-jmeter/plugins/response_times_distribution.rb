@@ -5,6 +5,7 @@ module RubyJmeter
       include Helper
       def initialize(params={})
         testname = params.kind_of?(Array) ? 'ResponseTimesDistribution' : (params[:name] || 'ResponseTimesDistribution')
+        testname = CGI.escapeHTML(testname.to_s)
         @doc = Nokogiri::XML(<<-EOF.strip_heredoc)
           <kg.apc.jmeter.vizualizers.CorrectedResultCollector guiclass="kg.apc.jmeter.vizualizers.ResponseTimesDistributionGui" testclass="kg.apc.jmeter.vizualizers.CorrectedResultCollector" testname="#{testname}" enabled="#{enabled(params)}">
             <boolProp name="ResultCollector.error_logging">false</boolProp>

@@ -12,6 +12,7 @@ module RubyJmeter
 
     def initialize(params={})
       testname = params.kind_of?(Array) ? 'RuntimeController' : (params[:name] || 'RuntimeController')
+      testname = CGI.escapeHTML(testname.to_s)
       @doc = Nokogiri::XML(<<-EOS.strip_heredoc)
 <RunTime guiclass="RunTimeGui" testclass="RunTime" testname="#{testname}" enabled="true">
   <stringProp name="RunTime.seconds">1</stringProp>

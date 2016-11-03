@@ -12,6 +12,7 @@ module RubyJmeter
 
     def initialize(params={})
       testname = params.kind_of?(Array) ? 'DurationAssertion' : (params[:name] || 'DurationAssertion')
+      testname = CGI.escapeHTML(testname.to_s)
       @doc = Nokogiri::XML(<<-EOS.strip_heredoc)
 <DurationAssertion guiclass="DurationAssertionGui" testclass="DurationAssertion" testname="#{testname}" enabled="true">
   <stringProp name="DurationAssertion.duration"/>

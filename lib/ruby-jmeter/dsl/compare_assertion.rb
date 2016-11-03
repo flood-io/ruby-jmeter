@@ -12,6 +12,7 @@ module RubyJmeter
 
     def initialize(params={})
       testname = params.kind_of?(Array) ? 'CompareAssertion' : (params[:name] || 'CompareAssertion')
+      testname = CGI.escapeHTML(testname.to_s)
       @doc = Nokogiri::XML(<<-EOS.strip_heredoc)
 <CompareAssertion guiclass="TestBeanGUI" testclass="CompareAssertion" testname="#{testname}" enabled="true">
   <boolProp name="compareContent">true</boolProp>

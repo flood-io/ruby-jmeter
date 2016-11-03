@@ -12,6 +12,7 @@ module RubyJmeter
 
     def initialize(params={})
       testname = params.kind_of?(Array) ? 'JmsPointtopoint' : (params[:name] || 'JmsPointtopoint')
+      testname = CGI.escapeHTML(testname.to_s)
       @doc = Nokogiri::XML(<<-EOS.strip_heredoc)
 <JMSSampler guiclass="JMSSamplerGui" testclass="JMSSampler" testname="#{testname}" enabled="true">
   <stringProp name="JMSSampler.queueconnectionfactory"/>

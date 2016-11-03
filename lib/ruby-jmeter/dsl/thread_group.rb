@@ -12,6 +12,7 @@ module RubyJmeter
 
     def initialize(params={})
       testname = params.kind_of?(Array) ? 'ThreadGroup' : (params[:name] || 'ThreadGroup')
+      testname = CGI.escapeHTML(testname.to_s)
       @doc = Nokogiri::XML(<<-EOS.strip_heredoc)
 <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="#{testname}" enabled="true">
   <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>

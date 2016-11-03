@@ -12,6 +12,7 @@ module RubyJmeter
 
     def initialize(params={})
       testname = params.kind_of?(Array) ? 'OsProcessSampler' : (params[:name] || 'OsProcessSampler')
+      testname = CGI.escapeHTML(testname.to_s)
       @doc = Nokogiri::XML(<<-EOS.strip_heredoc)
 <SystemSampler guiclass="SystemSamplerGui" testclass="SystemSampler" testname="#{testname}" enabled="true">
   <boolProp name="SystemSampler.checkReturnCode">false</boolProp>

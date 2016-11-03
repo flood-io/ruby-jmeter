@@ -12,6 +12,7 @@ module RubyJmeter
 
     def initialize(params={})
       testname = params.kind_of?(Array) ? 'ThroughputController' : (params[:name] || 'ThroughputController')
+      testname = CGI.escapeHTML(testname.to_s)
       @doc = Nokogiri::XML(<<-EOS.strip_heredoc)
 <ThroughputController guiclass="ThroughputControllerGui" testclass="ThroughputController" testname="#{testname}" enabled="true">
   <intProp name="ThroughputController.style">0</intProp>

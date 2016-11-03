@@ -12,6 +12,7 @@ module RubyJmeter
 
     def initialize(params={})
       testname = params.kind_of?(Array) ? 'UserParameters' : (params[:name] || 'UserParameters')
+      testname = CGI.escapeHTML(testname.to_s)
       @doc = Nokogiri::XML(<<-EOS.strip_heredoc)
 <UserParameters guiclass="UserParametersGui" testclass="UserParameters" testname="#{testname}" enabled="true">
   <collectionProp name="UserParameters.names"/>

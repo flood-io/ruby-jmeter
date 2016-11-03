@@ -12,6 +12,7 @@ module RubyJmeter
 
     def initialize(params={})
       testname = params.kind_of?(Array) ? 'SynchronizingTimer' : (params[:name] || 'SynchronizingTimer')
+      testname = CGI.escapeHTML(testname.to_s)
       @doc = Nokogiri::XML(<<-EOS.strip_heredoc)
 <SyncTimer guiclass="TestBeanGUI" testclass="SyncTimer" testname="#{testname}" enabled="true">
   <intProp name="groupSize">0</intProp>

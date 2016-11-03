@@ -5,6 +5,7 @@ module RubyJmeter
       include Helper
       def initialize(params={})
         testname = params.kind_of?(Array) ? 'CompositeGraph' : (params[:name] || 'CompositeGraph')
+        testname = CGI.escapeHTML(testname.to_s)
         graphNodes = params.collect { |g| "<stringProp name=\"\">#{g[:graph]}</stringProp>"}
         metricNodes = params.collect { |m| "<stringProp name=\"\">#{m[:metric]}</stringProp>"}
 

@@ -12,6 +12,7 @@ module RubyJmeter
 
     def initialize(params={})
       testname = params.kind_of?(Array) ? 'HtmlLinkParser' : (params[:name] || 'HtmlLinkParser')
+      testname = CGI.escapeHTML(testname.to_s)
       @doc = Nokogiri::XML(<<-EOS.strip_heredoc)
 <AnchorModifier guiclass="AnchorModifierGui" testclass="AnchorModifier" testname="#{testname}" enabled="true"/>)
       EOS

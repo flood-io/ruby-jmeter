@@ -12,6 +12,7 @@ module RubyJmeter
 
     def initialize(params={})
       testname = params.kind_of?(Array) ? 'CsvDataSetConfig' : (params[:name] || 'CsvDataSetConfig')
+      testname = CGI.escapeHTML(testname.to_s)
       @doc = Nokogiri::XML(<<-EOS.strip_heredoc)
 <CSVDataSet guiclass="TestBeanGUI" testclass="CSVDataSet" testname="#{testname}" enabled="true">
   <stringProp name="delimiter">,</stringProp>

@@ -12,6 +12,7 @@ module RubyJmeter
 
     def initialize(params={})
       testname = params.kind_of?(Array) ? 'GenerateSummaryResults' : (params[:name] || 'GenerateSummaryResults')
+      testname = CGI.escapeHTML(testname.to_s)
       @doc = Nokogiri::XML(<<-EOS.strip_heredoc)
 <Summariser guiclass="SummariserGui" testclass="Summariser" testname="#{testname}" enabled="true"/>)
       EOS

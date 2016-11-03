@@ -5,6 +5,7 @@ module RubyJmeter
       include Helper
       def initialize(params={})
         testname = params.kind_of?(Array) ? 'Redis Data Set Config' : (params[:name] || 'Redis Data Set Config')
+        testname = CGI.escapeHTML(testname.to_s)
         params[:getMode] ||= "1" unless params[:remove] == true
         @doc = Nokogiri::XML(<<-XML.strip_heredoc)
           <kg.apc.jmeter.config.redis.RedisDataSet guiclass="TestBeanGUI" testclass="kg.apc.jmeter.config.redis.RedisDataSet" testname="#{testname}" enabled="true">

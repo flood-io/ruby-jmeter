@@ -12,6 +12,7 @@ module RubyJmeter
 
     def initialize(params={})
       testname = params.kind_of?(Array) ? 'ModuleController' : (params[:name] || 'ModuleController')
+      testname = CGI.escapeHTML(testname.to_s)
       @doc = Nokogiri::XML(<<-EOS.strip_heredoc)
 <ModuleController guiclass="ModuleControllerGui" testclass="ModuleController" testname="#{testname}" enabled="true">
   <collectionProp name="ModuleController.node_path"/>

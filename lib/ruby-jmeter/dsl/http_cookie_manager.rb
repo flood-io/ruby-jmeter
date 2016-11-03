@@ -12,6 +12,7 @@ module RubyJmeter
 
     def initialize(params={})
       testname = params.kind_of?(Array) ? 'HttpCookieManager' : (params[:name] || 'HttpCookieManager')
+      testname = CGI.escapeHTML(testname.to_s)
       @doc = Nokogiri::XML(<<-EOS.strip_heredoc)
 <CookieManager guiclass="CookiePanel" testclass="CookieManager" testname="#{testname}" enabled="true">
   <collectionProp name="CookieManager.cookies"/>
