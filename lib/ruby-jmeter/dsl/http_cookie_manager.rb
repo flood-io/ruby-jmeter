@@ -34,8 +34,8 @@ module RubyJmeter
           path = attrs.fetch(:path, "")
           secure = attrs.fetch(:secure, false)
           expires = attrs.fetch(:expires, 0)
-          path_specified = path.present?
-          domain_specified = domain.present?
+          path_specified = !path.empty?
+          domain_specified = !domain.empty?
           element = <<-EOS.strip_heredoc
 <elementProp name="#{name}" elementType="Cookie" testname="#{name}">
   <stringProp name="Cookie.value">#{value}</stringProp>
