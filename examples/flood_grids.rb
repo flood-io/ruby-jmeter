@@ -18,4 +18,5 @@ end.flood ENV['FLOOD_API_TOKEN'],
       region: 'us-west-2',
       stop_after: 60
     }
-  ]
+  ],
+  debug: true

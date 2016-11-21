@@ -38,6 +38,8 @@ module RubyJmeter
           content_type: 'application/octet-stream'
         }.merge(params).select { |_, value| !value.nil? }
 
+        logger.debug(post_params) if params[:debug]
+
         response = RestClient.post "#{params[:endpoint] ? params[:endpoint] : 'https://api.flood.io'}/floods?auth_token=#{token}", post_params
         if response.code == 201
           logger.info "Flood results at: #{JSON.parse(response)["permalink"]}"
