@@ -882,6 +882,7 @@
           <boolProp name="XPathExtractor.validate">false</boolProp>
           <boolProp name="XPathExtractor.tolerant">false</boolProp>
           <boolProp name="XPathExtractor.namespace">false</boolProp>
+          <stringProp name="Sample.scope">all</stringProp>
         </XPathExtractor>
         <hashTree/>
         <BeanShellAssertion guiclass="BeanShellAssertionGui" testclass="BeanShellAssertion" testname="BeanShell Assertion" enabled="true">
@@ -966,6 +967,7 @@
           <boolProp name="XPath.whitespace">false</boolProp>
           <boolProp name="XPath.tolerant">false</boolProp>
           <boolProp name="XPath.namespace">false</boolProp>
+          <stringProp name="Assertion.scope">all</stringProp>
         </XPathAssertion>
         <hashTree/>
         <ResultCollector guiclass="StatGraphVisualizer" testclass="ResultCollector" testname="Aggregate Graph" enabled="true">
