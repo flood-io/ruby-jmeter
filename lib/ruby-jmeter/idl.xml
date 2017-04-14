@@ -826,6 +826,7 @@
           <stringProp name="HtmlExtractor.default"></stringProp>
           <stringProp name="HtmlExtractor.match_number"></stringProp>
           <stringProp name="HtmlExtractor.extractor_impl"></stringProp>
+          <boolProp name="HtmlExtractor.default_empty_value"/>
         </HtmlExtractor>
         <hashTree/>
         <DebugPostProcessor guiclass="TestBeanGUI" testclass="DebugPostProcessor" testname="Debug PostProcessor" enabled="true">
@@ -869,6 +870,7 @@
           <stringProp name="RegexExtractor.default"></stringProp>
           <stringProp name="RegexExtractor.match_number"></stringProp>
           <stringProp name="Sample.scope">all</stringProp>
+          <boolProp name="RegexExtractor.default_empty_value"/>
         </RegexExtractor>
         <hashTree/>
         <ResultAction guiclass="ResultActionGui" testclass="ResultAction" testname="Result Status Action Handler" enabled="true">
