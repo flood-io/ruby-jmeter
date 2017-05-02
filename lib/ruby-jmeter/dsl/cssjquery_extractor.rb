@@ -20,6 +20,7 @@ module RubyJmeter
   <stringProp name="HtmlExtractor.default"/>
   <stringProp name="HtmlExtractor.match_number"/>
   <stringProp name="HtmlExtractor.extractor_impl"/>
+  <boolProp name="HtmlExtractor.default_empty_value"/>
 </HtmlExtractor>)
       EOS
       update params

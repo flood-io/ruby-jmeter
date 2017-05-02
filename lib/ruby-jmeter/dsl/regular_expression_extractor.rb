@@ -21,6 +21,7 @@ module RubyJmeter
   <stringProp name="RegexExtractor.default"/>
   <stringProp name="RegexExtractor.match_number"/>
   <stringProp name="Sample.scope">all</stringProp>
+  <boolProp name="RegexExtractor.default_empty_value"/>
 </RegexExtractor>)
       EOS
       update params
