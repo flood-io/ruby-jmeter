@@ -20,6 +20,7 @@ module RubyJmeter
   <boolProp name="JMSSampler.isFireAndForget">true</boolProp>
   <boolProp name="JMSSampler.isNonPersistent">false</boolProp>
   <boolProp name="JMSSampler.useReqMsgIdAsCorrelId">false</boolProp>
+  <boolProp name="JMSSampler.useResMsgIdAsCorrelId">false</boolProp>
   <stringProp name="JMSSampler.timeout"/>
   <stringProp name="HTTPSamper.xml_data"/>
   <stringProp name="JMSSampler.initialContextFactory"/>
