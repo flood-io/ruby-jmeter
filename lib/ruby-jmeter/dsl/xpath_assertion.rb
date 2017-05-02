@@ -20,6 +20,7 @@ module RubyJmeter
   <boolProp name="XPath.whitespace">false</boolProp>
   <boolProp name="XPath.tolerant">false</boolProp>
   <boolProp name="XPath.namespace">false</boolProp>
+  <stringProp name="Assertion.scope">all</stringProp>
 </XPathAssertion>)
       EOS
       update params

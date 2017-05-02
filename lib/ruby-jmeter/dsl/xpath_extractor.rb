@@ -20,6 +20,7 @@ module RubyJmeter
   <boolProp name="XPathExtractor.validate">false</boolProp>
   <boolProp name="XPathExtractor.tolerant">false</boolProp>
   <boolProp name="XPathExtractor.namespace">false</boolProp>
+  <stringProp name="Sample.scope">all</stringProp>
 </XPathExtractor>)
       EOS
       update params
