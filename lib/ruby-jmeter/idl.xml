@@ -609,13 +609,7 @@
             <collectionProp name="Arguments.arguments"/>
           </elementProp>
           <elementProp name="arguments" elementType="JMSProperties">
-            <collectionProp name="JMSProperties.properties">
-              <elementProp name="" elementType="JMSProperty">
-                <stringProp name="JMSProperty.name"> </stringProp>
-                <stringProp name="JMSProperty.value"></stringProp>
-                <stringProp name="JMSProperty.type">java.lang.String</stringProp>
-              </elementProp>
-            </collectionProp>
+            <collectionProp name="JMSProperties.properties"/>
           </elementProp>
         </JMSSampler>
         <hashTree/>
@@ -634,14 +628,8 @@
           <stringProp name="jms.config_msg_type">jms_text_message</stringProp>
           <stringProp name="jms.iterations">1</stringProp>
           <boolProp name="jms.authenticate">false</boolProp>
-          <elementProp name="jms.jmsProperties" elementType="JMSProperties">
-            <collectionProp name="JMSProperties.properties">
-              <elementProp name="" elementType="JMSProperty">
-                <stringProp name="JMSProperty.name"> </stringProp>
-                <stringProp name="JMSProperty.value"></stringProp>
-                <stringProp name="JMSProperty.type">java.lang.String</stringProp>
-              </elementProp>
-            </collectionProp>
+          <elementProp name="arguments" elementType="JMSProperties">
+            <collectionProp name="JMSProperties.properties"/>
           </elementProp>
           <stringProp name="jms.expiration"></stringProp>
           <stringProp name="jms.priority"></stringProp>
