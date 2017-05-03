@@ -29,13 +29,7 @@ module RubyJmeter
     <collectionProp name="Arguments.arguments"/>
   </elementProp>
   <elementProp name="arguments" elementType="JMSProperties">
-    <collectionProp name="JMSProperties.properties">
-      <elementProp name="" elementType="JMSProperty">
-        <stringProp name="JMSProperty.name"> </stringProp>
-        <stringProp name="JMSProperty.value"/>
-        <stringProp name="JMSProperty.type">java.lang.String</stringProp>
-      </elementProp>
-    </collectionProp>
+    <collectionProp name="JMSProperties.properties"/>
   </elementProp>
 </JMSSampler>)
       EOS
