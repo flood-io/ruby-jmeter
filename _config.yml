@@ -1,0 +1,8 @@
+title: Ruby-JMeter
+description: A Ruby based DSL for building JMeter test plans
+google_analytics: UA-42892720-2
+show_downloads: true
+theme: jekyll-theme-minimal
+
+gems:
+  - jekyll-mentions
