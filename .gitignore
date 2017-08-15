@@ -21,3 +21,4 @@ tmp
 *.jtl
 *.bak
 .byebug_history
+.DS_Store
