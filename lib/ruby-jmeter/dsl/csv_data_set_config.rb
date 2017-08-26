@@ -21,6 +21,7 @@ module RubyJmeter
   <boolProp name="recycle">true</boolProp>
   <stringProp name="shareMode">shareMode.all</stringProp>
   <boolProp name="stopThread">false</boolProp>
+  <boolProp name="ignoreFirstLine">false</boolProp>
   <stringProp name="variableNames"/>
 </CSVDataSet>)
       EOS
