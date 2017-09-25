@@ -111,6 +111,7 @@ try {
     visit name: 'REST API query',
       url: '/rest/query',
       always_encode: true,
+      use_equals: true,
       fill_in: {
         'user_id' => '${user_id}',
         'start' => '${start_date}',
