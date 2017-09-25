@@ -196,6 +196,22 @@ test do
 end
 ```
 
+#### User-Defined Cookies
+
+The `cookies` method parameters hash supports `user_defined_cookies`:
+
+```ruby
+test do
+  cookie1 = { value: 'foo', name: 'bar', domain: 'google.co.uk', path: '/' }
+  cookie2 = { value: 'hello', name: 'world', domain: 'google.co.uk', secure: true }
+
+  cookies user_defined_cookies: [ cookie1, cookie2 ]
+end
+```
+
+`name` and `value` are required. `domain` and `path` are optional and default to blank.
+`secure` is optional and defaults to `false`.
+
 ### Cache
 
 You can use the `cache` method to define a Cache Manager:
