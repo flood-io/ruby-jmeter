@@ -9,6 +9,7 @@ module RubyJmeter
             <stringProp name="EXPECTED_VALUE"></stringProp>
             <stringProp name="JSON_PATH"></stringProp>
             <boolProp name="JSONVALIDATION">true</boolProp>
+            <boolProp name="INVERT">false</boolProp>
           </com.atlantbh.jmeter.plugins.jsonutils.jsonpathassertion.JSONPathAssertion>
         EOF
         update params
