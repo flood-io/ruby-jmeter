@@ -3,7 +3,14 @@ require 'ruby-jmeter'
 
 test do
   # user parameters with multiple values
-  visit name: 'Home Page', url: 'https://flooded.io/' do
+  post name: 'oauth', url: 'https://flooded.io/api/oauth',  raw_body: '${token}' do
+    user_parameters names: ['token'],
+    thread_values: {
+      user_1: [
+        '<xml>fidget widget</xml>'
+      ]
+    }
+
     user_parameters names: ['name1', 'name2'],
       thread_values: {
         user_1: [
@@ -18,4 +25,4 @@ test do
       },
       per_iteration: true
   end
-end.run(path: '/usr/share/jmeter/bin/', gui: true)
+end.run(path: '/usr/local/share/jmeter-3.1/bin/', gui: true)
