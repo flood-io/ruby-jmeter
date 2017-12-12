@@ -845,6 +845,7 @@
           <stringProp name="JSONPostProcessor.referenceNames"></stringProp>
           <stringProp name="JSONPostProcessor.jsonPathExprs"></stringProp>
           <stringProp name="JSONPostProcessor.match_numbers"></stringProp>
+          <boolProp name="JSONPostProcessor.compute_concat"/>
         </JSONPostProcessor>
         <hashTree/>
         <JSR223PostProcessor guiclass="TestBeanGUI" testclass="JSR223PostProcessor" testname="JSR223 PostProcessor" enabled="true">
