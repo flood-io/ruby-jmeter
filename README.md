@@ -1,10 +1,12 @@
-# Ruby-JMeter [![Build Status](https://travis-ci.org/flood-io/ruby-jmeter.png)](https://travis-ci.org/flood-io/ruby-jmeter) [![Code Climate](https://codeclimate.com/github/flood-io/ruby-jmeter.png)](https://codeclimate.com/github/flood-io/ruby-jmeter) [![Gem Version](https://badge.fury.io/rb/ruby-jmeter.svg)](http://badge.fury.io/rb/ruby-jmeter)
+# Ruby-JMeter [![Build Status](https://travis-ci.org/flood-io/ruby-jmeter.png)](https://travis-ci.org/flood-io/ruby-jmeter) [![Code Climate](https://codeclimate.com/github/flood-io/ruby-jmeter.png)](https://codeclimate.com/github/flood-io/ruby-jmeter) [![Gem Version](https://badge.fury.io/rb/ruby-jmeter.svg)](http://badge.fury.io/rb/ruby-jmeter) [![Document](https://camo.githubusercontent.com/8b456668e1407a473af6519b654a25b038333544/687474703a2f2f696e63682d63692e6f72672f6769746875622f72656d6f74652d657865632f636f6d6d616e642d64657369676e65722e706e67)](http://www.rubydoc.info/gems/ruby-jmeter/2.1.4/RubyJmeter)
 
 > **Ruby-JMeter** is built and maintained by [Flood IO](https://flood.io?utm_source=github), an easy to use load testing platform for any scale of testing.
 
 Tired of using the JMeter GUI or looking at hairy XML files?
 
 This gem lets you write test plans for JMeter in your favourite text editor, and optionally run them on [flood.io](http://flood.io).
+
+Documentation for this Gem is available on [Rubydoc](http://www.rubydoc.info/gems/ruby-jmeter/2.1.4/RubyJmeter).
 
 ![](https://flood.io/images/logo-flood-medium.png)
 
