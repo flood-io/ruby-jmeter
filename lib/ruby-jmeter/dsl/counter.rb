@@ -17,7 +17,7 @@ module RubyJmeter
   <stringProp name="CounterConfig.start"/>
   <stringProp name="CounterConfig.end"/>
   <stringProp name="CounterConfig.incr"/>
-  <stringProp name="CounterConfig.name"/>
+  <stringProp name="CounterConfig.name">#{testname}</stringProp>
   <stringProp name="CounterConfig.format"/>
   <boolProp name="CounterConfig.per_user">true</boolProp>
   <boolProp name="CounterConfig.reset_on_tg_iteration">true</boolProp>
