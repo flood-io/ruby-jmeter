@@ -116,5 +116,15 @@ module RubyJmeter
       node = RubyJmeter::Plugins::JMXCollector.new(params)
       attach_node(node, &block)
     end
+
+    def webdriver_chromedriver(params = {}, &block)
+      node = RubyJmeter::Plugins::WebDriverChromeDriver.new(params)
+      attach_node(node, &block)
+    end
+
+    def webdriver_sampler(params = {}, &block)
+      node = RubyJmeter::Plugins::WebDriverSampler.new(params)
+      attach_node(node, &block)
+    end
   end
 end

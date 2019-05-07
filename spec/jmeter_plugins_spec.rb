@@ -243,3 +243,58 @@ describe 'jmx collector' do
 
 end
 
+describe 'webdriver chromedriver config' do
+  let(:doc) do
+    test do
+      threads do
+        webdriver_chromedriver name: 'webdriver test name',
+          http_port: 5678,
+          chromedriver_path: "/home/usr/test/chrome"
+
+      end
+    end.to_doc
+  end
+
+  let(:fragment) { doc.search("//com.googlecode.jmeter.plugins.webdriver.config.ChromeDriverConfig").first }
+
+  it 'should have a name' do
+    expect(fragment.attributes['testname'].value).to eq 'webdriver test name'
+  end
+
+  it 'should have a port' do
+    expect(fragment.search("//intProp[@name='WebDriverConfig.http_port']").text).to eq '5678'
+  end
+
+  it 'should configure a path' do
+    expect(fragment.search("//stringProp[@name='ChromeDriverConfig.chromedriver_path']").text).to eq '/home/usr/test/chrome'
+  end
+
+end
+
+describe 'webdriver sampler' do
+  let(:doc) do
+    test do
+      threads do
+        webdriver_sampler name: 'webdriver sampler',
+          language: "c",
+          script: 'WDS.test'
+
+      end
+    end.to_doc
+  end
+
+  let(:fragment) { doc.search("//com.googlecode.jmeter.plugins.webdriver.sampler.WebDriverSampler").first }
+
+  it 'should have a name' do
+    expect(fragment.attributes['testname'].value).to eq 'webdriver sampler'
+  end
+
+  it 'should configure a language' do
+    expect(fragment.search("//stringProp[@name='WebDriverSampler.language']").text).to eq 'c'
+  end
+
+  it 'should configure a script' do
+    expect(fragment.search("//stringProp[@name='WebDriverSampler.script']").text).to eq 'WDS.test'
+  end
+
+end
