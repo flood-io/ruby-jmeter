@@ -43,6 +43,7 @@ module RubyJmeter
         response = RestClient.post "#{params[:endpoint] ? params[:endpoint] : 'https://api.flood.io'}/floods?auth_token=#{token}", post_params
         if response.code == 201
           logger.info "Flood results at: #{JSON.parse(response)["permalink"]}"
+          return JSON.parse(response)
         else
           logger.fatal "Sorry there was an error: #{JSON.parse(response)["error"]}"
         end
