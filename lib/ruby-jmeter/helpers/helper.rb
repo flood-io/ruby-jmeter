@@ -17,12 +17,12 @@ module RubyJmeter
     def update(params)
       params.delete(:name)
       enabled_disabled(params)
-      if params.class == Array
+      if params.is_a?(Array)
         update_collection params
       else
         params.each do |name, value|
           node = @doc.children.xpath("//*[contains(@name,\"#{name.to_s}\")]")
-          if value.class == Nokogiri::XML::Builder
+          if value.is_a?(Nokogiri::XML::Builder)
             node.first.children = value.doc.at_xpath('//builder').children
           else
             node.first.content = value unless node.empty?
