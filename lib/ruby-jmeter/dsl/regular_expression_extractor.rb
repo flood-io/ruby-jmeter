@@ -12,9 +12,10 @@ module RubyJmeter
 
     def initialize(params={})
       testname = params.kind_of?(Array) ? 'RegularExpressionExtractor' : (params[:name] || 'RegularExpressionExtractor')
+      use_headers = params.fetch(:use_headers, false)
       @doc = Nokogiri::XML(<<-EOS.strip_heredoc)
 <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="#{testname}" enabled="true">
-  <stringProp name="RegexExtractor.useHeaders">false</stringProp>
+  <stringProp name="RegexExtractor.useHeaders">#{use_headers}</stringProp>
   <stringProp name="RegexExtractor.refname"/>
   <stringProp name="RegexExtractor.regex"/>
   <stringProp name="RegexExtractor.template"/>

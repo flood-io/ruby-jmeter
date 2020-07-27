@@ -4,11 +4,15 @@ describe 'regular_expression_extractor' do
   describe 'standard scope' do
     let(:doc) do
       test do
-        regex pattern: 'pattern', name: 'my_variable', match_number: 1, default: '424242'
+        regex pattern: 'pattern', name: 'my_variable', match_number: 1, default: '424242', use_headers: true
       end.to_doc
     end
 
     let(:fragment) { doc.search('//RegexExtractor').first }
+
+    it 'matches on scope' do
+      expect(fragment.search(".//stringProp[@name='RegexExtractor.useHeaders']").text).to eq 'true'
+    end
 
     it 'matches on refname' do
       expect(fragment.search(".//stringProp[@name='RegexExtractor.refname']").text).to eq 'my_variable'
