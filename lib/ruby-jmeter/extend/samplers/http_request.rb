@@ -2,7 +2,7 @@ module RubyJmeter
   class ExtendedDSL < DSL
     def http_request(*args, &block)
       params = args.shift || {}
-      params = { url: params }.merge(args.shift || {}) if params.class == String
+      params = { url: params }.merge(args.shift || {}) if params.is_a?(String)
 
       params[:method] ||= case __callee__.to_s
       when 'visit'
