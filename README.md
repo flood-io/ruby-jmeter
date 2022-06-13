@@ -99,6 +99,20 @@ end.run(
   properties: 'jmeter.properties')
 ```
 
+### To get summarised result as HTML output
+You can get final result as summarised html out along with different type of charts by adding output param to your request as like below.
+
+If you add `html_output` as param in your test, that will create a output directory with html format
+```ruby
+test do
+  threads count: 10 do
+    visit name: 'HTML Output', url: 'http://google.com/' do
+    end
+  end
+end.run(html_output: "html_output")
+```
+
+
 ### Running a JMeter Test Plan on Flood IO
 
 You can also execute JMeter test plans on Flood IO using our API. To do so, you require an account and API token. If you don't know your token, sign in to [flood.io](https://flood.io/) and check your account settings.
