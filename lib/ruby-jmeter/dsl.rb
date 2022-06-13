@@ -36,9 +36,11 @@ module RubyJmeter
 
     def run(params = {})
       file(params)
+      html_output_path(params)
+      jtl_file(params)
       logger.warn 'Test executing locally ...'
 
-      cmd = "#{params[:path] ? File.join(params[:path], 'jmeter') : 'jmeter'} #{"-n" unless params[:gui] } -t #{params[:file]} -j #{params[:log] ? params[:log] : 'jmeter.log' } -l #{params[:jtl] ? params[:jtl] : 'jmeter.jtl' } #{build_properties(params[:properties]) if params[:properties]}"
+      cmd = "#{params[:path] ? File.join(params[:path], 'jmeter') : 'jmeter'} #{"-n" unless params[:gui] } -t #{params[:file]} -j #{params[:log] ? params[:log] : 'jmeter.log' } -l #{params[:jtl]} #{"-e -o " + params[:html_output] unless params[:gui]} #{build_properties(params[:properties]) if params[:properties]}"
       logger.debug cmd if params[:debug]
       Open3.popen2e("#{cmd}") do |stdin, stdout_err, wait_thr|
         while line = stdout_err.gets
@@ -75,6 +77,20 @@ module RubyJmeter
     def file(params = {})
       params[:file] ||= 'ruby-jmeter.jmx'
       File.open(params[:file], 'w') { |file| file.write(doc.to_xml(indent: 2)) }
+    end
+
+    def html_output_path(params = {})
+      params[:html_output] ||= 'jmeter_output'
+      if File.directory?( params[:html_output])
+        FileUtils.rm_rf(params[:html_output])
+      end
+    end
+
+    def jtl_file(params = {})
+      params[:jtl] ||= 'jmeter.jtl'
+      if File.file?(params[:jtl])
+        File.delete(params[:jtl])
+      end
     end
 
     def doc

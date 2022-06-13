@@ -22,3 +22,4 @@ tmp
 *.bak
 .byebug_history
 .DS_Store
+jmeter_output/
