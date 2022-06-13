@@ -6,4 +6,4 @@ test do
     visit name: 'HTML Output', url: 'http://google.com/' do
     end
   end
-end.run( html_output: 'jmeter_output')
+end.run(html_output: 'jmeter_output')
